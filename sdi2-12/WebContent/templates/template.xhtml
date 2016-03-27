@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<f:view locale="#{settings.locale}">
+	<h:head>
+		<title>#{msgs.tittle}</title>
+	</h:head>
+	<h:body>
+			<h:form id="form-nav-bar">
+				<p:menubar>
+					<p:menuitem value="#{msgs.navListTrips}" url="#" />
+					<p:menuitem value="Other" url="#" />
+
+					<f:facet name="options">
+						<p:commandButton type="button" value="#{msgs.navLogin}" />
+						<p:commandButton type="button" value="#{msgs.navSignIn}" />
+					</f:facet>
+				</p:menubar>
+			</h:form>
+			<h:form id="form-content">
+				<ui:insert name="content">Aqui van las cosas</ui:insert>
+			</h:form>
+			<h:form id="form-footer">
+				#{msgs.footer}
+			</h:form>
+	</h:body>
+</f:view>
+</html>
+
