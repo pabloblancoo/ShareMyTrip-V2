@@ -2,17 +2,22 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui"
-	template="/templates/template-general.xhtml">
+	xmlns:p="http://primefaces.org/ui" template="/templates/template.xhtml">
 
-	<ui:define name="titulo">
-      #{msgs.tituloHead}
-    </ui:define>
+	<ui:define name="content">
+		<p:dataTable var="viaje" value="#{listarViajes.viajes}">
+			<p:column headerText="Id">
+				<h:outputText value="#{viaje.id}" />
+			</p:column>
+			<p:column headerText="Origen">
+				<h:outputText value="#{viaje.departure.city}" />
+			</p:column>
+			<p:column headerText="Destino">
+				<h:outputText value="#{viaje.destination.city}" />
+			</p:column>
 
-	<ui:define name="cuerpo">
-	</ui:define>
-
-	<ui:define name="pie">
+			
+		</p:dataTable>
 	</ui:define>
 
 </ui:composition>
