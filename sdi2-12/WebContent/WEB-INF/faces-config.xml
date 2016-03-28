@@ -16,7 +16,7 @@
 	<managed-bean>
 		<managed-bean-name>usuario</managed-bean-name>
 		<managed-bean-class>com.sdi.presentation.BeanUsuario</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
+		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 
 	<application>

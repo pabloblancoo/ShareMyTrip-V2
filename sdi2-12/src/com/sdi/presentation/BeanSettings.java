@@ -17,54 +17,44 @@ public class BeanSettings implements Serializable {
 	private static final Locale SPANISH = new Locale("es");
 	private Locale locale = new Locale("es");
 	
-	//ESTA CLASE ESTA SIN TOCAR
-	//ESTA CLASE ESTA SIN TOCAR
-	//ESTA CLASE ESTA SIN TOCAR
-	//ESTA CLASE ESTA SIN TOCAR
-	//ESTA CLASE ESTA SIN TOCAR
-	//ESTA CLASE ESTA SIN TOCAR
-	//ESTA CLASE ESTA SIN TOCAR
-	
-	//SOLO COMENTE PARTES A SOLUCIONAR MAS ADELANTE
-	
-	
-	/*
 	// uso de inyección de dependencia
 	@ManagedProperty(value = "#{alumno}")
-	private BeanAlumno alumno;
+	private BeanUsuario usuario;
 
-	public BeanAlumno getAlumno() {
-		return alumno;
-	}
-
-	public void setAlumno(BeanAlumno alumno) {
-		this.alumno = alumno;
-	}
+	
 
 	// Se inicia correctamente el Managed Bean inyectado si JSF lo hubiera
 	// creado
 	// y en caso contrario se crea.
 	// (hay que tener en cuenta que es un Bean de sesión)
 
+	public BeanUsuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(BeanUsuario usuario) {
+		this.usuario = usuario;
+	}
+
 	// Se usa @PostConstruct, ya que en el contructor no se sabe todavía si
 	// el MBean ya estaba construido y en @PostConstruct SI.
 	@PostConstruct
 	public void init() {
-		System.out.println("BeanSettings - PostConstruct");
-		// Buscamos el alumno en la sesión. Esto es un patrón factoría
-		// claramente.
-		alumno = (BeanAlumno) FacesContext.getCurrentInstance()
-				.getExternalContext().getSessionMap().get(new String("alumno"));
-
-		// si no existe lo creamos e inicializamos
-		if (alumno == null) {
-			System.out.println("BeanSettings - No existia");
-			alumno = new BeanAlumno();
-			FacesContext.getCurrentInstance().getExternalContext()
-					.getSessionMap().put("alumno", alumno);
-		}
+//		System.out.println("BeanSettings - PostConstruct");
+//		// Buscamos el alumno en la sesión. Esto es un patrón factoría
+//		// claramente.
+//		usuario = (BeanUsuario) FacesContext.getCurrentInstance()
+//				.getExternalContext().getSessionMap().get(new String("usuario"));
+//
+//		// si no existe lo creamos e inicializamos
+//		if (usuario == null) {
+//			System.out.println("BeanSettings - No existia");
+//			usuario = new BeanUsuario();
+//			FacesContext.getCurrentInstance().getExternalContext()
+//					.getSessionMap().put("usuario", usuario);
+//		}
 	}
-*/
+
 	// Es sólo a modo de traza.
 	@PreDestroy
 	public void end() {

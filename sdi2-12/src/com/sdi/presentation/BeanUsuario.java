@@ -2,7 +2,7 @@ package com.sdi.presentation;
 
 import java.io.Serializable;
 
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
@@ -13,7 +13,7 @@ import com.sdi.model.UserStatus;
 import com.sdi.util.Comprobante;
 
 @ManagedBean(name="usuario")
-@SessionScoped
+@RequestScoped
 public class BeanUsuario implements Serializable {
 	
 	/**
@@ -165,6 +165,10 @@ public class BeanUsuario implements Serializable {
 			this.email = user.getEmail();
 			this.id = user.getId();
 			this.status = user.getStatus();
+			
+			BeanSettings settings = (BeanSettings) FacesContext.getCurrentInstance()
+					.getExternalContext().getSessionMap().get(new String("settings"));
+			settings.setUsuario(this);
 			return "exito";
 		} else {
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Usuario o contraseña incorrecta"));
@@ -174,6 +178,8 @@ public class BeanUsuario implements Serializable {
 	}
 	public void nada(){
 		int a = 0;
+		BeanSettings settings = (BeanSettings) FacesContext.getCurrentInstance()
+				.getExternalContext().getSessionMap().get(new String("settings"));
 	}
 
 }
