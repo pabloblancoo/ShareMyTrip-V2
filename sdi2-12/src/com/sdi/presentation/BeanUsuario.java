@@ -141,6 +141,7 @@ public class BeanUsuario implements Serializable {
 	public void setStatus(UserStatus status) {
 		this.status = status;
 	}
+	
 	/**
 	 * Metodo que registra al usuario en la base de datos
 	 * @return devuelve el string que indica la vista a carga

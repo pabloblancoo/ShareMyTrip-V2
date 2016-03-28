@@ -5,23 +5,70 @@
 	xmlns:p="http://primefaces.org/ui" template="/templates/template.xhtml">
 
 	<ui:define name="content">
+		<h:outputText value="#{viajes.viaje.departure.city}" /> -> <h:outputText value="#{viajes.viaje.destination.city}" />
+		
 		<p:panelGrid columns="2">
 			<f:facet name="header">
-				Datos del viaje
+				#{msgs.tripGeneralData}
 			</f:facet>
-
-			<h:outputText value="#{msgs.listTripDeparture}" />
-			<h:outputText value="#{viajes.viaje.departure.city}" />
-
-			<h:outputText value="#{msgs.listTripDestination}" />
-			<h:outputText value="#{viajes.viaje.destination.city}" />
 
 			<h:outputText value="#{msgs.listTripAvailablePax}" />
 			<h:outputText value="#{viajes.viaje.availablePax}" />
+			
+			<h:outputText value="#{msgs.tripCost}" />
+			<h:outputText value="#{viajes.viaje.estimatedCost}" />
 
 		</p:panelGrid>
 		
 		<p:panelGrid columns="2">
+			<f:facet name="header">
+				#{msgs.tripDepartureData}
+			</f:facet>
+			
+			<h:outputText value="#{msgs.tripAddress}" />
+			<h:outputText value="#{viajes.viaje.departure.address}" />
+
+			<h:outputText value="#{msgs.tripCity}" />
+			<h:outputText value="#{viajes.viaje.departure.city}" />
+			
+			<h:outputText value="#{msgs.tripState}" />
+			<h:outputText value="#{viajes.viaje.departure.state}" />
+			
+			<h:outputText value="#{msgs.tripZip}" />
+			<h:outputText value="#{viajes.viaje.departure.zipCode}" />
+			
+			<h:outputText value="#{msgs.tripDepartureDate}" />
+			<h:outputText value="#{viajes.viaje.departureDate}">
+				<f:convertDateTime locale="#{settings.locale}" type="date" dateStyle="full" />
+			</h:outputText>
+
+		</p:panelGrid>
+		
+		<p:panelGrid columns="2">
+			<f:facet name="header">
+				#{msgs.tripArrivalData}
+			</f:facet>
+
+			<h:outputText value="#{msgs.tripAddress}" />
+			<h:outputText value="#{viajes.viaje.destination.address}" />
+
+			<h:outputText value="#{msgs.tripCity}" />
+			<h:outputText value="#{viajes.viaje.destination.city}" />
+			
+			<h:outputText value="#{msgs.tripState}" />
+			<h:outputText value="#{viajes.viaje.destination.state}" />
+			
+			<h:outputText value="#{msgs.tripZip}" />
+			<h:outputText value="#{viajes.viaje.destination.zipCode}" />
+			
+			<h:outputText value="#{msgs.tripArrivalDate}" />
+			<h:outputText value="#{viajes.viaje.arrivalDate}" >
+				<f:convertDateTime locale="#{settings.locale}" type="date" dateStyle="full" />
+			</h:outputText>
+
+		</p:panelGrid>
+		
+		<p:panelGrid columns="2" rendered="#{settings.usuario != null}">
 			<f:facet name="header">
 				<h:outputText value="Viajeros" />
 			</f:facet>
