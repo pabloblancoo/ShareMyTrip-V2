@@ -14,7 +14,7 @@
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
-		<managed-bean-name>registro</managed-bean-name>
+		<managed-bean-name>usuario</managed-bean-name>
 		<managed-bean-class>com.sdi.presentation.BeanUsuario</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
@@ -42,14 +42,27 @@
 			<to-view-id>/listado.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-	<navigation-rule>
+	<!-- Asi es mas facil encontrar todo -->
+	
+	<!--   Registro	 -->
+		<navigation-rule>
 		<from-view-id>/registrarse.xhtml</from-view-id>
 		<navigation-case>
-			<from-action>#{registro.registrar}</from-action>
+			<from-action>#{usuario.registrar}</from-action>
 			<from-outcome>exito</from-outcome>
 			<to-view-id>/index.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	<!-- Iniciar sesion	 -->
+	<navigation-rule>
+		<from-view-id>/iniciarSesion.xhtml</from-view-id>
+		<navigation-case>
+			<from-action>#{usuario.iniciarSesion}</from-action>
+			<from-outcome>exito</from-outcome>
+			<to-view-id>/index.xhtml</to-view-id> <!-- Iria a pagina principal del usuario -->
+		</navigation-case>
+	</navigation-rule>
+	
 	<navigation-rule>
 		<from-view-id>/listado.xhtml</from-view-id>
 		<navigation-case>

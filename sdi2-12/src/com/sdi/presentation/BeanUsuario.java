@@ -13,7 +13,7 @@ import com.sdi.model.UserStatus;
 import com.sdi.persistence.UserDao;
 import com.sdi.util.Comprobante;
 
-@ManagedBean(name="registro")
+@ManagedBean(name="usuario")
 @RequestScoped
 public class BeanUsuario {
 	
