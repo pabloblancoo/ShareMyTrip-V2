@@ -13,63 +13,68 @@
 		
  #{msgs.login}
   <h:panelGroup>
-							<p:inputText required="true"
-								requiredMessage="#{msgs.formAlta_iduser_requiredMessage}"
-								validatorMessage="#{msgs.formAlta_iduser_validatorMessage}"
+							<p:inputText value="#{registro.login}" required="true"
+								requiredMessage="#{msgs.signInEmpty}"
 								id="login">
 							</p:inputText>
 							<p:message for="login" />
 						</h:panelGroup>  
   #{msgs.name} 
   <h:panelGroup>
-							<p:inputText required="true"
-								requiredMessage="#{msgs.formAlta_nombre_requiredMessage}"
-								validatorMessage="#{msgs.formAlta_nombre_validatorMessage}"
-								id="nombre">
-								<f:validateLength maximum="20" />
+							<p:inputText value="#{registro.name}" required="true"
+								requiredMessage="#{msgs.signInEmpty}"
+								id="name">
 							</p:inputText>
-							<p:message for="nombre" />
+							<p:message for="name" />
 						</h:panelGroup>
   
   #{msgs.surname} 
   <h:panelGroup>
-							<p:inputText value="#{alumno.apellidos}" required="true"
-								requiredMessage="#{msgs.formAlta_apellidos_requiredMessage}"
-								validatorMessage="#{msgs.formAlta_apellidos_validatorMessage}"
-								id="apellidos">
-								<f:validateLength maximum="40" />
+							<p:inputText value="#{registro.surname}" required="true"
+								requiredMessage="#{msgs.signInEmpty}"
+								id="surname">
 							</p:inputText>
-							<p:message for="apellidos" />
+							<p:message for="surname" />
 						</h:panelGroup>
   
  
   
   #{msgs.email}
   <h:panelGroup>
-							<p:inputText required="true"
-								requiredMessage="#{msgs.formAlta_correo_requiredMessage}"
-								validatorMessage="#{msgs.formAlta_correo_validatorMessage}"
-								id="correo">
+							<p:inputText value="#{registro.email}" required="true"
+								validatorMessage="#{msgs.singInEmailValidator}"
+								requiredMessage="#{msgs.signInEmpty}"
+								id="email">
 								<f:validateRegex pattern=".+@.+\.[a-z]+" />
 							</p:inputText>
-							<p:message for="correo" />
+							<p:message for="email" />
 						</h:panelGroup>
 			
 #{msgs.password}
-  <h:panelGroup>
-							<p:inputText required="true" id="password">
-							</p:inputText>
-							<p:message for="password" />
+  						<h:panelGroup>
+							<p:password value="#{registro.password}" required="true" 
+							requiredMessage="#{msgs.signInEmpty}"
+							feedback="true"
+		                    promptLabel="#{msgs.signInPromptPassword}" weakLabel="#{msgs.signInWeakPassword}"
+		                    goodLabel="#{msgs.signInGoodPassword}" strongLabel="#{msgs.signInStrongPassword}"
+							id="password">
+							</p:password>
+							<p:message for="password" showDetail="true" autoUpdate="true" closable="true"/>
 						</h:panelGroup>
 			
 #{msgs.repassword}
   <h:panelGroup>
-							<p:inputText required="true" id="repassword">
-							</p:inputText>
-							<p:message for="repassword" />
+							<p:password value="#{registro.repassword}" required="true" 
+							requiredMessage="#{msgs.signInEmpty}"
+							feedback="true"
+		                    promptLabel="#{msgs.signInPromptPassword}" weakLabel="#{msgs.signInWeakPassword}"
+		                    goodLabel="#{msgs.signInGoodPassword}" strongLabel="#{msgs.signInStrongPassword}"
+							id="repassword">
+							</p:password>
+							<p:message for="repassword" showDetail="true" autoUpdate="true" closable="true"/>
 						</h:panelGroup>
 					</p:panelGrid>
-					<p:commandButton id="boton" value="#{msgs.navSignIn}" action="#"
+					<p:commandButton id="boton" value="#{msgs.navSignIn}" action="#{registro.registrar}"
 							update="Grid" process="@form">
 						</p:commandButton>
 				</div>

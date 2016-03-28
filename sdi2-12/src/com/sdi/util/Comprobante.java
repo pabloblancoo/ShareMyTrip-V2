@@ -16,9 +16,21 @@ public class Comprobante {
 	 */
 	public static boolean comprobarDatos(String... args){
 		for (String string : args) {
-			if(string == null || string.isEmpty())
+			if(string == null || string.trim().isEmpty())
 				return false;
 		}
+		return true;
+	}
+	
+	/**
+	 * Comprueba si el parametros introducido no es null o vacio
+	 * @param args
+	 * @return True si son correctos
+	 * @return False si estan vacios o es null.
+	 */
+	public static boolean comprobarDato(String param){
+		if(param == null || param.trim().isEmpty())
+			return false;
 		return true;
 	}
 	
