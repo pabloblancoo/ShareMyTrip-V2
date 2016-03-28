@@ -27,6 +27,8 @@ public class BeanUsuario implements Serializable {
 	private String email;
 	private String password;
 	private String repassword;
+	private Long id;
+	private UserStatus status;
 	
 	private FacesContext context = FacesContext.getCurrentInstance();
 	
@@ -99,6 +101,18 @@ public class BeanUsuario implements Serializable {
 		
 	}
 	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public UserStatus getStatus() {
+		return status;
+	}
+	public void setStatus(UserStatus status) {
+		this.status = status;
+	}
 	/**
 	 * Metodo que registra al usuario en la base de datos
 	 * @return devuelve el string que indica la vista a carga
@@ -149,6 +163,8 @@ public class BeanUsuario implements Serializable {
 			this.name = user.getName();
 			this.surname = user.getSurname();
 			this.email = user.getEmail();
+			this.id = user.getId();
+			this.status = user.getStatus();
 			return "exito";
 		} else {
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Usuario o contraseña incorrecta"));
