@@ -217,10 +217,14 @@ public class BeanUsuario implements Serializable {
 			return null;
 		}
 	}
-	public void nada(){
-		int a = 0;
+	
+	/**
+	 * Cierra la sesion activa del usuario
+	 */
+	public void cerrarSesion(){
 		BeanSettings settings = (BeanSettings) FacesContext.getCurrentInstance()
 				.getExternalContext().getSessionMap().get(new String("settings"));
+		settings.setUsuario(null);
 	}
 
 }
