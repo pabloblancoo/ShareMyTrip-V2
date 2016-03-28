@@ -220,11 +220,13 @@ public class BeanUsuario implements Serializable {
 	
 	/**
 	 * Cierra la sesion activa del usuario
+	 * @return
 	 */
-	public void cerrarSesion(){
+	public String cerrarSesion(){
 		BeanSettings settings = (BeanSettings) FacesContext.getCurrentInstance()
 				.getExternalContext().getSessionMap().get(new String("settings"));
 		settings.setUsuario(null);
+		return "exito";
 	}
 
 }
