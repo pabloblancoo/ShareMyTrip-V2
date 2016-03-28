@@ -11,21 +11,24 @@
 		<title>#{msgs.tittle}</title>
 	</h:head>
 	<h:body>
-			<h:form id="form-nav-bar">
-				<p:menubar>
-					<p:menuitem value="#{msgs.navListTrips}" url="./index.xhtml" />
-					<p:menuitem value="Other" url="#" />
+		<h:form id="form-nav-bar">
+			<p:menubar>
+				<p:menuitem value="#{msgs.navListTrips}" url="./index.xhtml" />
 
-					<f:facet name="options">
-						<p:commandButton type="button" value="#{msgs.navLogin}" />
-						<p:commandButton type="button" value="#{msgs.navSignIn}" />
-					</f:facet>
-				</p:menubar>
-			</h:form>
-			<h:form id="form-content" style="padding: 10px;">
-				<ui:insert name="content">Aqui van las cosas</ui:insert>
-			</h:form>
-			<h:form id="form-footer">
+	
+				<p:menuitem rendered="#{settings.usuario == null}"
+				 value="#{msgs.navLogin}"
+					url="./iniciarSesion.xhtml" />
+				<p:menuitem rendered="#{settings.usuario == null}"
+					value="#{msgs.navSignIn}"
+					url="./registrarse.xhtml" />
+
+			</p:menubar>
+		</h:form>
+		<h:form id="form-content" style="padding: 10px;">
+			<ui:insert name="content">Aqui van las cosas</ui:insert>
+		</h:form>
+		<h:form id="form-footer">
 				#{msgs.footer}
 			</h:form>
 	</h:body>
