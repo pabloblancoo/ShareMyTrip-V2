@@ -23,6 +23,10 @@
 					value="#{msgs.navSignIn}"
 					url="./registrarse.xhtml" />
 
+				<p:menuitem rendered="#{settings.usuario != null}"
+					value="#{msgs.navLogout}"
+					action="#{settings.usuario.cerrarSesion}"/>
+					
 			</p:menubar>
 		</h:form>
 		<h:form id="form-content" style="padding: 10px;">
