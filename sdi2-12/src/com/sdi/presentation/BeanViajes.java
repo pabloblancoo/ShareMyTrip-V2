@@ -3,14 +3,17 @@ package com.sdi.presentation;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 
 import com.sdi.infrastructure.Factories;
 import com.sdi.model.Trip;
 
-@ManagedBean(name="listarViajes")
-public class BeanListarViajes {
+@ManagedBean(name="viajes")
+@SessionScoped
+public class BeanViajes {
 	
 	List<Trip> viajes;
+	Trip viaje;
 
 	public List<Trip> getViajes() {
 		if(viajes == null){
@@ -22,6 +25,14 @@ public class BeanListarViajes {
 
 	public void setViajes(List<Trip> viajes) {
 		this.viajes = viajes;
+	}
+
+	public Trip getViaje() {
+		return viaje;
+	}
+
+	public void setViaje(Trip viaje) {
+		this.viaje = viaje;
 	}
 
 }
