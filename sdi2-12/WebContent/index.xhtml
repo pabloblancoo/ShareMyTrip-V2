@@ -23,7 +23,7 @@
 							<h:outputText value="#{viaje.availablePax}" />
 						</p:column>
 						<p:column>
-							<p:commandLink>
+							<p:commandLink action="moreInfo" actionListener="#{viaje.setViaje(viaje)}">
 								<h:outputText value="#{msgs.listTripMoreInfo}"/>
 							</p:commandLink>
 						</p:column>
