@@ -10,7 +10,7 @@ import com.sdi.model.User;
 import com.sdi.model.UserStatus;
 import com.sdi.util.Comprobante;
 
-@ManagedBean(name="registro")
+@ManagedBean(name="usuario")
 @RequestScoped
 public class BeanUsuario {
 	

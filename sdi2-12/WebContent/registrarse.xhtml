@@ -13,7 +13,7 @@
 					<p:panelGrid id="Grid" columns="2" cellpadding="5">
  #{msgs.login}
   <h:panelGroup>
-							<p:inputText value="#{registro.login}" required="true"
+							<p:inputText value="#{usuario.login}" required="true"
 								requiredMessage="#{msgs.signInEmpty}"
 								id="login">
 							</p:inputText>
@@ -21,7 +21,7 @@
 						</h:panelGroup>  
   #{msgs.name} 
   <h:panelGroup>
-							<p:inputText value="#{registro.name}" required="true"
+							<p:inputText value="#{usuario.name}" required="true"
 								requiredMessage="#{msgs.signInEmpty}"
 								id="name">
 							</p:inputText>
@@ -30,7 +30,7 @@
   
   #{msgs.surname} 
   <h:panelGroup>
-							<p:inputText value="#{registro.surname}" required="true"
+							<p:inputText value="#{usuario.surname}" required="true"
 								requiredMessage="#{msgs.signInEmpty}"
 								id="surname">
 							</p:inputText>
@@ -41,7 +41,7 @@
   
   #{msgs.email}
   <h:panelGroup>
-							<p:inputText value="#{registro.email}" required="true"
+							<p:inputText value="#{usuario.email}" required="true"
 								validatorMessage="#{msgs.singInEmailValidator}"
 								requiredMessage="#{msgs.signInEmpty}"
 								id="email">
@@ -52,7 +52,7 @@
 			
 #{msgs.password}
   						<h:panelGroup>
-							<p:password value="#{registro.password}" required="true" 
+							<p:password value="#{usuario.password}" required="true" 
 							requiredMessage="#{msgs.signInEmpty}"
 							feedback="true"
 		                    promptLabel="#{msgs.signInPromptPassword}" weakLabel="#{msgs.signInWeakPassword}"
@@ -64,7 +64,7 @@
 			
 #{msgs.repassword}
   <h:panelGroup>
-							<p:password value="#{registro.repassword}" required="true" 
+							<p:password value="#{usuario.repassword}" required="true" 
 							requiredMessage="#{msgs.signInEmpty}"
 							feedback="true"
 		                    promptLabel="#{msgs.signInPromptPassword}" weakLabel="#{msgs.signInWeakPassword}"
@@ -74,7 +74,7 @@
 							<p:message for="repassword" showDetail="true" autoUpdate="true" closable="true"/>
 						</h:panelGroup>
 					</p:panelGrid>
-					<p:commandButton id="boton" value="#{msgs.navSignIn}" action="#{registro.registrar}"
+					<p:commandButton id="boton" value="#{msgs.navSignIn}" action="#{usuario.registrar}"
 							update="Grid" process="@form">
 						</p:commandButton>
 				</div>
