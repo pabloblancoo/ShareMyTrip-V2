@@ -13,6 +13,11 @@
 		<managed-bean-class>com.sdi.presentation.BeanSettings</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>registro</managed-bean-name>
+		<managed-bean-class>com.sdi.presentation.BeanUsuario</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
 
 	<application>
 		<resource-bundle>
@@ -35,6 +40,14 @@
 			<from-action>#{controller.listado}</from-action>
 			<from-outcome>exito</from-outcome>
 			<to-view-id>/listado.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/registrarse.xhtml</from-view-id>
+		<navigation-case>
+			<from-action>#{registro.registrar}</from-action>
+			<from-outcome>exito</from-outcome>
+			<to-view-id>/index.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>

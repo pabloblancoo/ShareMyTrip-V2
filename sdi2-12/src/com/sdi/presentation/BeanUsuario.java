@@ -1,14 +1,17 @@
 package com.sdi.presentation;
 
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
+import com.sdi.infrastructure.Factories;
 import com.sdi.model.User;
 import com.sdi.model.UserStatus;
 import com.sdi.util.Comprobante;
 
 @ManagedBean(name="registro")
+@RequestScoped
 public class BeanUsuario {
 	
 	private String login;
@@ -91,7 +94,7 @@ public class BeanUsuario {
 	
 	/**
 	 * Metodo que registra al usuario en la base de datos
-	 * @return
+	 * @return devuelve el string que indica la vista a carga
 	 */
 	public String registrar(){
 		
@@ -106,20 +109,19 @@ public class BeanUsuario {
 			
 			user.setLogin(login);
 			user.setName(name);
+			user.setEmail(email);
 			user.setSurname(surname);
 			user.setPassword(password);
 			user.setStatus(UserStatus.ACTIVE);
 			
-			System.out.println("exito");
-			
+			Factories.persistence.newUserDao().save(user);
+						
 			return "exito";
 			
 		}
 		else{
-			context.addMessage("repassword", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No inciden las contraseñas"));
-			
-			System.out.println("fracaso");
-			
+			//context.addMessage("repassword", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No inciden las contraseñas"));
+						
 			return null;
 		}
 		
