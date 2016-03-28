@@ -42,7 +42,7 @@ public class BeanUsuario {
 			this.name = name;
 		}
 		else{
-			context.addMessage("name", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No puede ser vacia"));
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No puede ser vacia"));
 		}
 	}
 	public String getSurname() {
@@ -53,7 +53,7 @@ public class BeanUsuario {
 			this.surname = surname;
 		}
 		else{
-			context.addMessage("surname", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No puede ser vacia"));
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No puede ser vacia"));
 
 		}
 	}
@@ -65,7 +65,7 @@ public class BeanUsuario {
 			this.email = email;
 		}
 		else{
-			context.addMessage("email", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No puede ser vacia"));
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No puede ser vacia"));
 		}
 	}
 	public String getPassword() {
@@ -76,7 +76,7 @@ public class BeanUsuario {
 			this.password = password;
 		}
 		else{
-			context.addMessage("password", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No puede ser vacia"));
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No puede ser vacia"));
 		}
 	}
 	public String getRepassword() {
@@ -100,10 +100,9 @@ public class BeanUsuario {
 		
 		User user = new User();
 		
-//		java.util.List<FacesMessage> lista = context.getMessageList();
-//		for(FacesMessage msg : lista){
-//			System.out.println(msg.getDetail());
-//		}
+		if(context.getMessageList().size() > 0){
+			return null;
+		}
 		
 		if(repassword != null && repassword.equals(password)){
 			
@@ -120,7 +119,7 @@ public class BeanUsuario {
 			
 		}
 		else{
-			//context.addMessage("repassword", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No inciden las contraseñas"));
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No inciden las contraseñas"));
 						
 			return null;
 		}
