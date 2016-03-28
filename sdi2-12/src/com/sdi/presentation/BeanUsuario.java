@@ -1,6 +1,8 @@
 package com.sdi.presentation;
 
-import javax.enterprise.context.RequestScoped;
+import java.io.Serializable;
+
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
@@ -11,8 +13,13 @@ import com.sdi.model.UserStatus;
 import com.sdi.util.Comprobante;
 
 @ManagedBean(name="usuario")
-@RequestScoped
-public class BeanUsuario {
+@SessionScoped
+public class BeanUsuario implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	private String login;
 	private String name;
@@ -123,8 +130,34 @@ public class BeanUsuario {
 						
 			return null;
 		}
-		
-		
+	}
+	
+	/**
+	 * Metodo para iniciar sesion
+	 * 
+	 * @return Devuelve el string de la vista siguiente
+	 */
+	public String iniciarSesion() {
+
+		User user = Factories.persistence.newUserDao().findByLogin(login,
+				password);
+
+		if (user != null) {
+			
+			this.email = user.getEmail();
+			this.login = user.getLogin();
+			this.name = user.getName();
+			this.surname = user.getSurname();
+			this.email = user.getEmail();
+			return "exito";
+		} else {
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Usuario o contraseña incorrecta"));
+			
+			return null;
+		}
+	}
+	public void nada(){
+		int a = 0;
 	}
 
 }

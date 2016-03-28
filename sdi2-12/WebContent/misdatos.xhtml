@@ -10,29 +10,14 @@
 				<div class="ui-grid-col-4"></div>
 				<div class="ui-grid-col-4">
 					<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+					#{usuario.name}
+  					#{usuario.surname}
+					#{usuario.email}
 					<p:panelGrid id="Grid" columns="2" cellpadding="2">
- 					#{msgs.login}
-  					<h:panelGroup>
-						<p:inputText value="#{usuario.login}" required="true"
-							requiredMessage="#{msgs.signInEmpty}"
-							id="login">
-						</p:inputText>
-						<p:message for="login" />
-					</h:panelGroup>  
-  					
-  					#{msgs.password} 
-  					<h:panelGroup>
-						<p:password value="#{usuario.password}" required="true"
-							requiredMessage="#{msgs.signInEmpty}"
-							id="password">
-						</p:password>
-						<p:message for="password" />
-					</h:panelGroup>
-  
-					</p:panelGrid>
-					<p:commandButton id="boton" value="#{msgs.navLogin}" action="#{usuario.iniciarSesion}"
+  						<p:commandButton id="boton" value="#{msgs.navLogin}" action="#{usuario.nada}"
 							update="Grid" process="@form">
 						</p:commandButton>
+					</p:panelGrid>
 				</div>
 			</div>
 		</div>
