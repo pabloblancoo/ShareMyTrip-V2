@@ -1,5 +1,7 @@
 package com.sdi.presentation;
 
+import java.util.ResourceBundle;
+
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -8,6 +10,7 @@ import javax.faces.context.FacesContext;
 import com.sdi.infrastructure.Factories;
 import com.sdi.model.User;
 import com.sdi.model.UserStatus;
+import com.sdi.persistence.UserDao;
 import com.sdi.util.Comprobante;
 
 @ManagedBean(name="usuario")
@@ -22,6 +25,7 @@ public class BeanUsuario {
 	private String repassword;
 	
 	private FacesContext context = FacesContext.getCurrentInstance();
+	private ResourceBundle msgs = context.getApplication().getResourceBundle(context, "msgs");
 	
 	public String getLogin() {
 		return login;
@@ -42,7 +46,12 @@ public class BeanUsuario {
 			this.name = name;
 		}
 		else{
-			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No puede ser vacia"));
+			context.addMessage(null, 
+					new FacesMessage(
+							FacesMessage.SEVERITY_ERROR, 
+							"Error", 
+							msgs.getString("signInEmptyField")
+								.replace("{0}", msgs.getString("name"))));
 		}
 	}
 	public String getSurname() {
@@ -53,7 +62,12 @@ public class BeanUsuario {
 			this.surname = surname;
 		}
 		else{
-			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No puede ser vacia"));
+			context.addMessage(null, 
+					new FacesMessage(
+							FacesMessage.SEVERITY_ERROR, 
+							"Error", 
+							msgs.getString("signInEmptyField")
+								.replace("{0}", msgs.getString("surname"))));
 
 		}
 	}
@@ -65,7 +79,12 @@ public class BeanUsuario {
 			this.email = email;
 		}
 		else{
-			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No puede ser vacia"));
+			context.addMessage(null, 
+					new FacesMessage(
+							FacesMessage.SEVERITY_ERROR, 
+							"Error", 
+							msgs.getString("signInEmptyField")
+								.replace("{0}", msgs.getString("email"))));
 		}
 	}
 	public String getPassword() {
@@ -76,7 +95,12 @@ public class BeanUsuario {
 			this.password = password;
 		}
 		else{
-			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No puede ser vacia"));
+			context.addMessage(null, 
+					new FacesMessage(
+							FacesMessage.SEVERITY_ERROR, 
+							"Error", 
+							msgs.getString("signInEmptyField")
+								.replace("{0}", msgs.getString("password"))));
 		}
 	}
 	public String getRepassword() {
@@ -87,7 +111,12 @@ public class BeanUsuario {
 			this.repassword = repasword;
 		}
 		else{
-			context.addMessage("repassword", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No puede ser vacia"));
+			context.addMessage(null, 
+					new FacesMessage(
+							FacesMessage.SEVERITY_ERROR, 
+							"Error", 
+							msgs.getString("signInEmptyField")
+								.replace("{0}", msgs.getString("repassword"))));
 		}
 		
 	}
@@ -98,33 +127,43 @@ public class BeanUsuario {
 	 */
 	public String registrar(){
 		
-		User user = new User();
-		
 		if(context.getMessageList().size() > 0){
 			return null;
 		}
-		
-		if(repassword != null && repassword.equals(password)){
+		if(!repassword.equals(password)){
 			
-			user.setLogin(login);
-			user.setName(name);
-			user.setEmail(email);
-			user.setSurname(surname);
-			user.setPassword(password);
-			user.setStatus(UserStatus.ACTIVE);
-			
-			Factories.persistence.newUserDao().save(user);
-						
-			return "exito";
-			
-		}
-		else{
-			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No inciden las contraseñas"));
+			context.addMessage(null, 
+					new FacesMessage(
+							FacesMessage.SEVERITY_ERROR, 
+							"Error", 
+							msgs.getString("sigInRepassworWrong")));
 						
 			return null;
 		}
+		User user = new User();
+		UserDao ud = Factories.persistence.newUserDao();
+
+		user.setLogin(login);
+		user.setName(name);
+		user.setEmail(email);
+		user.setSurname(surname);
+		user.setPassword(password);
+		user.setStatus(UserStatus.ACTIVE);
 		
-		
+		if(ud.findByLogin(login) != null){
+			context.addMessage(null, 
+					new FacesMessage(
+							FacesMessage.SEVERITY_ERROR, 
+							"Error", 
+							msgs.getString("sigInLoginYetRegister")));
+						
+			return null;
+		}
+
+		ud.save(user);
+
+		return "exito";
+
 	}
 
 }
