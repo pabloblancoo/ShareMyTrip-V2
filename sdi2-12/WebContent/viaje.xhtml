@@ -5,7 +5,36 @@
 	xmlns:p="http://primefaces.org/ui" template="/templates/template.xhtml">
 
 	<ui:define name="content">
-		#{viajes.viaje.id}
+		<p:panelGrid columns="2">
+			<f:facet name="header">
+				Datos del viaje
+			</f:facet>
+
+			<h:outputText value="#{msgs.listTripDeparture}" />
+			<h:outputText value="#{viajes.viaje.departure.city}" />
+
+			<h:outputText value="#{msgs.listTripDestination}" />
+			<h:outputText value="#{viajes.viaje.destination.city}" />
+
+			<h:outputText value="#{msgs.listTripAvailablePax}" />
+			<h:outputText value="#{viajes.viaje.availablePax}" />
+
+		</p:panelGrid>
+		
+		<p:panelGrid columns="2">
+			<f:facet name="header">
+				<h:outputText value="Viajeros" />
+			</f:facet>
+
+			<h:outputText value="Nombre promotor" />
+			<h:outputText value="#{viajes.promotor.name}" />
+			
+			<ui:repeat var="viajero" value="#{viajes.viajeros}" rendered="#{viajes.viajeros.size() > 0}">
+				<h:outputText value="Acompañante" />
+				<h:outputText value="#{viajero.name}" />
+			</ui:repeat>
+
+		</p:panelGrid>
 	</ui:define>
 
 </ui:composition>
