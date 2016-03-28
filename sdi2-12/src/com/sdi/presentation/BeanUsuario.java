@@ -1,6 +1,7 @@
 package com.sdi.presentation;
 
 import java.util.ResourceBundle;
+import java.io.Serializable;
 
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
@@ -15,7 +16,12 @@ import com.sdi.util.Comprobante;
 
 @ManagedBean(name="usuario")
 @RequestScoped
-public class BeanUsuario {
+public class BeanUsuario implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	private String login;
 	private String name;
@@ -23,6 +29,8 @@ public class BeanUsuario {
 	private String email;
 	private String password;
 	private String repassword;
+	private Long id;
+	private UserStatus status;
 	
 	private FacesContext context = FacesContext.getCurrentInstance();
 	private ResourceBundle msgs = context.getApplication().getResourceBundle(context, "msgs");
@@ -121,6 +129,18 @@ public class BeanUsuario {
 		
 	}
 	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public UserStatus getStatus() {
+		return status;
+	}
+	public void setStatus(UserStatus status) {
+		this.status = status;
+	}
 	/**
 	 * Metodo que registra al usuario en la base de datos
 	 * @return devuelve el string que indica la vista a carga
@@ -164,6 +184,42 @@ public class BeanUsuario {
 
 		return "exito";
 
+	}
+	
+	/**
+	 * Metodo para iniciar sesion
+	 * 
+	 * @return Devuelve el string de la vista siguiente
+	 */
+	public String iniciarSesion() {
+
+		User user = Factories.persistence.newUserDao().findByLogin(login,
+				password);
+
+		if (user != null) {
+			
+			this.email = user.getEmail();
+			this.login = user.getLogin();
+			this.name = user.getName();
+			this.surname = user.getSurname();
+			this.email = user.getEmail();
+			this.id = user.getId();
+			this.status = user.getStatus();
+			
+			BeanSettings settings = (BeanSettings) FacesContext.getCurrentInstance()
+					.getExternalContext().getSessionMap().get(new String("settings"));
+			settings.setUsuario(this);
+			return "exito";
+		} else {
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Usuario o contraseña incorrecta"));
+			
+			return null;
+		}
+	}
+	public void nada(){
+		int a = 0;
+		BeanSettings settings = (BeanSettings) FacesContext.getCurrentInstance()
+				.getExternalContext().getSessionMap().get(new String("settings"));
 	}
 
 }
