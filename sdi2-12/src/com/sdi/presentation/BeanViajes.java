@@ -33,6 +33,11 @@ public class BeanViajes {
 
 	public void setViaje(Trip viaje) {
 		this.viaje = viaje;
+		loadMoreInfo();
+	}
+	
+	public void loadMoreInfo(){
+		System.out.println("Loading cosas...");
 	}
 
 }

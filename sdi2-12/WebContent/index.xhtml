@@ -23,8 +23,11 @@
 							<h:outputText value="#{viaje.availablePax}" />
 						</p:column>
 						<p:column>
-							<p:commandLink action="moreInfo" actionListener="#{viaje.setViaje(viaje)}">
-								<h:outputText value="#{msgs.listTripMoreInfo}"/>
+							<p:commandLink action="moreInfo" type="submit" 
+								value="#{msgs.listTripMoreInfo}"
+								actionListener="#{viajes.setViaje(viaje)}"
+								inmediate="true"
+								>
 							</p:commandLink>
 						</p:column>
 					</p:dataTable>
