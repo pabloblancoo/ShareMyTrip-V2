@@ -1,17 +1,28 @@
 package com.sdi.util;
 
 import java.util.Date;
+import java.util.ResourceBundle;
+
+import javax.faces.context.FacesContext;
 
 import com.sdi.model.Trip;
+import com.sdi.model.TripStatus;
 
 public class MisViajesConEstado {
 	
 	private Trip viaje;
 	private String relacion;
+	private ResourceBundle msgs = FacesContext.getCurrentInstance()
+			.getApplication().getResourceBundle(FacesContext.getCurrentInstance(), "msgs");
 	
 	public MisViajesConEstado(Trip viaje, String relacion) {
 		this.viaje = viaje;
-		this.relacion = relacion;
+		if(!viaje.getStatus().equals(TripStatus.CANCELLED)){
+			this.relacion = relacion;
+		}
+		else{
+			this.relacion = msgs.getString("ownTripCancel");
+		}
 	}
 
 	public Trip getViaje() {
@@ -22,8 +33,20 @@ public class MisViajesConEstado {
 		return relacion;
 	}
 	
-	public boolean isCancelable(){
-		return viaje.getClosingDate().after(new Date()) && !relacion.equals("Promotor");
+	public String isCancelable(){
+		if(!viaje.getClosingDate().after(new Date())){
+			return null;
+		}
+		if(viaje.getStatus().equals(TripStatus.OPEN)){
+			if(relacion.equals(msgs.getString("tripPromoter"))){
+				return  msgs.getString("ownTripCancelTrip");
+			}
+			else{
+				return msgs.getString("ownTripCancelSeat");
+			}
+		}
+		
+		return null;
 	}
 	
 	@Override
