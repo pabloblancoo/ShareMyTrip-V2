@@ -3,6 +3,7 @@ package com.sdi.presentation;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -111,6 +112,22 @@ public class BeanViajes {
 		}
 		
 		return true;
+	}
+	
+	public String solicitarPlaza(){
+		BeanSettings bs = (BeanSettings) FacesContext.getCurrentInstance()
+				.getExternalContext().getSessionMap().get("settings");
+		
+		Application peticion = new Application(bs.getUsuario().getId(), viaje.getId());
+		if(mostrarSolicitarPlaza()){
+			Factories.persistence.newApplicationDao().save(peticion);
+			peticiones.add(peticion);
+			
+			System.out.println("Usuario [" + bs.getUsuario().getLogin() + "] solicito plaza en el viaje [id:" + viaje.getId() +"]");
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Plaza solicitada correctamente"));
+		}
+		
+		return "exito";
 	}
 
 }

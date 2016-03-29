@@ -99,7 +99,11 @@
 						Para ver más información sobre el promotor y los viajeros confirmados debes iniciar sesion o registrarse.
 					</p:panelGrid>
 					<p:panelGrid columns="1" rendered="#{viajes.mostrarSolicitarPlaza()}">
-						Solicitar plaza
+						<p:commandButton value="Solicitar plaza" 
+							action="solicitarPlaza"
+							type="submit"
+							actionListener="#{viajes.solicitarPlaza}"
+							inmediate="true"/>
 					</p:panelGrid>
 				</div>
 			</div>
