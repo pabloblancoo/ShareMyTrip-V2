@@ -2,6 +2,7 @@ package com.sdi.presentation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -27,6 +28,9 @@ public class BeanViajes {
 	User promotor;
 	List<User> viajeros;
 	List<Application> peticiones;
+	
+	private ResourceBundle msgs = FacesContext.getCurrentInstance()
+			.getApplication().getResourceBundle(FacesContext.getCurrentInstance(), "msgs");
 
 	public List<Trip> getViajes() {
 		promotor = null;
@@ -53,6 +57,10 @@ public class BeanViajes {
 		loadMoreInfo();
 	}
 	
+	/**
+	 * Metodo que se encarga de cargar el resto de informacion sobre un viaje
+	 * (promotor, otros viajeros)
+	 */
 	public void loadMoreInfo(){
 		UserDao ud = Factories.persistence.newUserDao();
 		SeatDao sd = Factories.persistence.newSeatDao();
@@ -98,8 +106,8 @@ public class BeanViajes {
 	 * @return boolean true para mostrarlo, false para ocultarlo
 	 */
 	public boolean mostrarSolicitarPlaza(){
-		BeanSettings bs = (BeanSettings) FacesContext.getCurrentInstance()
-					.getExternalContext().getSessionMap().get("settings");
+		BeanSettings bs = (BeanSettings) FacesContext.getCurrentInstance().getExternalContext()
+									.getSessionMap().get("settings");
 		
 		if(bs.getUsuario() == null){
 			return false;
@@ -122,8 +130,8 @@ public class BeanViajes {
 	 */
 	public void solicitarPlaza(){
 		
-		BeanSettings bs = (BeanSettings) FacesContext.getCurrentInstance()
-				.getExternalContext().getSessionMap().get("settings");
+		BeanSettings bs = (BeanSettings) FacesContext.getCurrentInstance().getExternalContext()
+				.getSessionMap().get("settings");
 		FacesMessage msg = null;
 		
 		Application peticion = new Application(bs.getUsuario().getId(), viaje.getId());
@@ -132,10 +140,10 @@ public class BeanViajes {
 			peticiones.add(peticion);
 			
 			System.out.println("Usuario [" + bs.getUsuario().getLogin() + "] solicito plaza en el viaje [id:" + viaje.getId() +"]");
-			msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Plaza solicitada correctamente");
+			msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", msgs.getString("tripApplyInfo"));
 		}
 		else{
-			msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No puedes solicitar plaza");
+			msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", msgs.getString("tripApplyError"));
 		}
 		
 		FacesContext.getCurrentInstance().addMessage(null, msg);

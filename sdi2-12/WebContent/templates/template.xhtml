@@ -16,7 +16,7 @@
 				<p:menuitem value="#{msgs.navListTrips}" url="./index.xhtml" />
 									
 				<p:menuitem rendered="#{settings.usuario != null}"
-					value="Mis viajes"
+					value="#{msgs.navOwnTrips}"
 					url="./misViajes.xhtml"/>
 	
 				<p:menuitem rendered="#{settings.usuario == null}"

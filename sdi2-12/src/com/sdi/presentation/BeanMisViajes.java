@@ -2,6 +2,7 @@ package com.sdi.presentation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
@@ -19,6 +20,9 @@ import com.sdi.util.MisViajesConEstado;
 public class BeanMisViajes {
 
 	List<MisViajesConEstado> viajes;
+	
+	private ResourceBundle msgs = FacesContext.getCurrentInstance()
+			.getApplication().getResourceBundle(FacesContext.getCurrentInstance(), "msgs");
 
 	public List<MisViajesConEstado> getViajes() {
 		viajes = new ArrayList<>();
@@ -38,7 +42,7 @@ public class BeanMisViajes {
 	private void cargarViajesPromotor(List<MisViajesConEstado> misViajes, Long idUsuario) {
 		List<Trip> viajes = Factories.persistence.newTripDao().findByPromoterId(idUsuario);
 		for(Trip viaje : viajes){
-			misViajes.add(new MisViajesConEstado(viaje, "Promotor"));
+			misViajes.add(new MisViajesConEstado(viaje, msgs.getString("tripPromoter")));
 		}
 	}
 
@@ -53,17 +57,17 @@ public class BeanMisViajes {
 			Trip viaje = td.findById(peticion.getTripId());
 			if(plaza != null){
 				if(plaza.getStatus().equals(SeatStatus.ACCEPTED)){
-					misViajes.add(new MisViajesConEstado(viaje, "Admitido"));
+					misViajes.add(new MisViajesConEstado(viaje, msgs.getString("ownTripAccepted")));
 				}
 				else{
-					misViajes.add(new MisViajesConEstado(viaje, "Excluido"));
+					misViajes.add(new MisViajesConEstado(viaje, msgs.getString("ownTripExcluded")));
 				}
 			}
 			else if(plaza == null && viaje.getAvailablePax() > 0){
-				misViajes.add(new MisViajesConEstado(viaje, "Pendiente"));
+				misViajes.add(new MisViajesConEstado(viaje, msgs.getString("ownTripPending")));
 			}
 			else{
-				misViajes.add(new MisViajesConEstado(viaje, "Sin plaza"));
+				misViajes.add(new MisViajesConEstado(viaje, msgs.getString("ownTripNoSeat")));
 			}
 		}
 
