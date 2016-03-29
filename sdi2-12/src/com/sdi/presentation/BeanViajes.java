@@ -114,9 +114,11 @@ public class BeanViajes {
 		return true;
 	}
 	
-	public String solicitarPlaza(){
+	public void solicitarPlaza(){
+		
 		BeanSettings bs = (BeanSettings) FacesContext.getCurrentInstance()
 				.getExternalContext().getSessionMap().get("settings");
+		FacesMessage msg = null;
 		
 		Application peticion = new Application(bs.getUsuario().getId(), viaje.getId());
 		if(mostrarSolicitarPlaza()){
@@ -124,10 +126,15 @@ public class BeanViajes {
 			peticiones.add(peticion);
 			
 			System.out.println("Usuario [" + bs.getUsuario().getLogin() + "] solicito plaza en el viaje [id:" + viaje.getId() +"]");
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Plaza solicitada correctamente"));
+			msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Plaza solicitada correctamente");
+		}
+		else{
+			msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No puedes solicitar plaza");
 		}
 		
-		return "exito";
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+
+		
 	}
 
 }

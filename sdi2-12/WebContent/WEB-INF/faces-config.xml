@@ -88,8 +88,7 @@
 	<navigation-rule>
 		<from-view-id>/viaje.xhtml</from-view-id>
 		<navigation-case>
-			<from-action>#{viajes.solicitarPlaza}</from-action>
-			<from-outcome>exito</from-outcome>
+			<from-outcome>solicitarPlaza</from-outcome>
 			<to-view-id>/index.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
