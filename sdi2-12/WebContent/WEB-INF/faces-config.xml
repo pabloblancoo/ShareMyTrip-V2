@@ -93,6 +93,16 @@
 		</navigation-case>
 	</navigation-rule>
 	
+	<!-- Mis viajes -->
+	<navigation-rule>
+		<from-view-id>/misViaje.xhtml</from-view-id>
+		<navigation-case>
+			<from-action>#{misViajes.cancelarPlaza(viaje)}</from-action>
+			<to-view-id>/misViajes.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	
 	
 	<!-- Cosas Notaneitor -->
 	<navigation-rule>
