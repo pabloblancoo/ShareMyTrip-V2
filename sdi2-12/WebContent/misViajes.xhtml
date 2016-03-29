@@ -26,8 +26,8 @@
 						<p:column headerText="#{msgs.ownTripState}">
 							<h:outputText value="#{viaje.relacion}" />
 						</p:column>
-						<p:column headerText="Opciones">
-							<p:commandLink value="Cancelar plaza" rendered="#{viaje.isCancelable()}"
+						<p:column headerText="#{msgs.ownTripOptions}">
+							<p:commandLink value="#{msgs.ownTripCancel}" rendered="#{viaje.isCancelable()}"
 							type="submit" inmediate="true" update="tabla"
 							actionListener="#{misViajes.cancelarPlaza(viaje)}"/>
 						</p:column>

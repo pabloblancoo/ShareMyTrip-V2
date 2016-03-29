@@ -112,7 +112,7 @@ public class BeanMisViajes {
 			
 		}
 		
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Plaza cancelada con exito"));
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", msgs.getString("ownTripCancelSuccessful")));
 		
 		System.out.println("Plaza/peticion cancelada");
 		
