@@ -13,6 +13,7 @@ import com.sdi.model.Application;
 import com.sdi.model.Seat;
 import com.sdi.model.SeatStatus;
 import com.sdi.model.Trip;
+import com.sdi.model.TripStatus;
 import com.sdi.persistence.SeatDao;
 import com.sdi.persistence.TripDao;
 import com.sdi.util.MisViajesConEstado;
@@ -29,11 +30,11 @@ public class BeanMisViajes {
 		viajes = new ArrayList<>();
 		BeanUsuario usuario = ((BeanSettings) FacesContext.getCurrentInstance()
 				.getExternalContext().getSessionMap().get("settings")).getUsuario();
-		
+
 		cargarViajesPromotor(viajes, usuario.getId());
 		cargarViajes(viajes, usuario.getId());
-		
-		
+
+
 		return viajes;
 	}
 
@@ -83,39 +84,53 @@ public class BeanMisViajes {
 			}
 		}
 	}
-	
+
 	/**
 	 * Metodo que se encarga de cancelar la peticion(y plaza si ha sido admintido)
-	 * del usuario con sesion iniciada y el viaje seleccionado
+	 * o del viaje del usuario con sesion iniciada y el viaje seleccionado
 	 */
-	public String cancelarPlaza(MisViajesConEstado trip){
-		
+	public String cancelar(MisViajesConEstado trip){
+
 		Long idUsuario = ((BeanSettings) FacesContext.getCurrentInstance()
 				.getExternalContext().getSessionMap().get("settings")).getUsuario().getId();
-		
-		Long idTrip = trip.getViaje().getId();
-		
-		SeatDao sd = Factories.persistence.newSeatDao();
-		Seat plaza = sd.findByUserAndTrip(idUsuario, idTrip);
 
-		sd.delete(new Long[]{idUsuario, idTrip});
-		Factories.persistence.newApplicationDao().delete(new Long[]{idUsuario, idTrip});
-		
-		if(plaza != null && plaza.getStatus().equals(SeatStatus.ACCEPTED)){
-			TripDao td = Factories.persistence.newTripDao();
-			
-			Trip viaje = td.findById(idTrip);
-			viaje.setAvailablePax(viaje.getAvailablePax() + 1);
-			
-			td.update(viaje);
-			System.out.println("Plaza liberada en el viaje[id:" + idTrip + "]");
-			
+		if(!trip.getViaje().getPromoterId().equals(idUsuario)){
+
+			Long idTrip = trip.getViaje().getId();
+
+			SeatDao sd = Factories.persistence.newSeatDao();
+			Seat plaza = sd.findByUserAndTrip(idUsuario, idTrip);
+
+			sd.delete(new Long[]{idUsuario, idTrip});
+			Factories.persistence.newApplicationDao().delete(new Long[]{idUsuario, idTrip});
+
+			if(plaza != null && plaza.getStatus().equals(SeatStatus.ACCEPTED)){
+				TripDao td = Factories.persistence.newTripDao();
+
+				Trip viaje = td.findById(idTrip);
+				viaje.setAvailablePax(viaje.getAvailablePax() + 1);
+
+				td.update(viaje);
+				System.out.println("Plaza liberada en el viaje[id:" + idTrip + "]");
+
+			}
+
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", msgs.getString("ownTripCancelSeatSuccessful")));
+
+			System.out.println("Plaza/peticion cancelada");
+
 		}
-		
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", msgs.getString("ownTripCancelSuccessful")));
-		
-		System.out.println("Plaza/peticion cancelada");
-		
+		else{
+			
+			Trip viaje = trip.getViaje();
+			viaje.setStatus(TripStatus.CANCELLED);
+			
+			Factories.persistence.newTripDao().update(viaje);
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", msgs.getString("ownTripCancelTripSuccessful")));
+
+			System.out.println("Viaje cancelado con exito");
+		}
+
 		return null;
 	}
 }
