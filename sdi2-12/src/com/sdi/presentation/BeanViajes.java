@@ -24,6 +24,7 @@ public class BeanViajes {
 	Trip viaje;
 	User promotor;
 	List<User> viajeros;
+	List<Application> peticiones;
 
 	public List<Trip> getViajes() {
 		promotor = null;
@@ -59,7 +60,7 @@ public class BeanViajes {
 		System.out.println("Promotor: " + promotor.getName());
 		viajeros = new ArrayList<>();
 		
-		List<Application> peticiones = Factories.persistence.newApplicationDao().findByTripId(viaje.getId());
+		peticiones = Factories.persistence.newApplicationDao().findByTripId(viaje.getId());
 		
 		for(Application peticion: peticiones){
 			Seat plaza = sd.findByUserAndTrip(peticion.getUserId(), viaje.getId());
@@ -103,8 +104,8 @@ public class BeanViajes {
 		if(bs.getUsuario().getLogin().equals(promotor.getLogin())){
 			return false;
 		}
-		for(User viajero : viajeros){
-			if(bs.getUsuario().getLogin().equals(viajero.getLogin())){
+		for(Application peticion : peticiones){
+			if(bs.getUsuario().getId().equals(peticion.getUserId())){
 				return false;
 			}
 		}
