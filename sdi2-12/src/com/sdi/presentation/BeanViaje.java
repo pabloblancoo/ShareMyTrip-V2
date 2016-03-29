@@ -52,6 +52,7 @@ public class BeanViaje implements Serializable{
 	private Long promoterId;
 
 	private FacesContext context = FacesContext.getCurrentInstance();
+	@SuppressWarnings("unused")
 	private ResourceBundle msgs = context.getApplication().getResourceBundle(context, "msgs");
 	
 	List<String> provincias = new ArrayList<>();

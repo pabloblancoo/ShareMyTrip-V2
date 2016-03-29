@@ -9,7 +9,6 @@
 			<div class="ui-grid-row" >
 				<div class="ui-grid-col-4"></div>
 				<div class="ui-grid-col-4">
-					<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 					#{msgs.tripDepartureData}
 					<p:panelGrid id="Grid" columns="2" cellpadding="5" >
  						#{msgs.tripAddress}
@@ -54,7 +53,9 @@
   						<h:panelGroup>
 							<p:inputText value="#{viaje.departureZipCode}" required="true" 
 							requiredMessage="#{msgs.signInEmpty}"
+							validatorMessage="#{msgs.singInZipCodeValidator}"
 							id="departureZipCode">
+							<f:validateRegex pattern="\d*" />
 							</p:inputText>
 							<p:message for="departureZipCode"/>
 						</h:panelGroup>
@@ -121,7 +122,9 @@
   						<h:panelGroup>
 							<p:inputText value="#{viaje.arrivalZipCode}" required="true" 
 							requiredMessage="#{msgs.signInEmpty}"
+							validatorMessage="#{msgs.singInZipCodeValidator}"
 							id="arrivalZipCode">
+							<f:validateRegex pattern="\d*" />
 							</p:inputText>
 							<p:message for="arrivalZipCode"/>
 						</h:panelGroup>
@@ -192,7 +195,7 @@
 					</p:panelGrid>
 					
 					<p:commandButton id="boton" value="#{msgs.navRegisterTrip}" action="#{viaje.registrarViaje}"
-							update="Grid" process="@form">
+							update="Grid Grid2 Grid3" process="@form">
 						</p:commandButton>
 				</div>
 			</div>
