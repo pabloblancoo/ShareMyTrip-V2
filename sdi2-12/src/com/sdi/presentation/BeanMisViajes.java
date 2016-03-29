@@ -1,0 +1,121 @@
+package com.sdi.presentation;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
+
+import com.sdi.infrastructure.Factories;
+import com.sdi.model.Application;
+import com.sdi.model.Seat;
+import com.sdi.model.SeatStatus;
+import com.sdi.model.Trip;
+import com.sdi.persistence.SeatDao;
+import com.sdi.persistence.TripDao;
+import com.sdi.util.MisViajesConEstado;
+
+@ManagedBean(name="misViajes")
+public class BeanMisViajes {
+
+	List<MisViajesConEstado> viajes;
+
+	private ResourceBundle msgs = FacesContext.getCurrentInstance()
+			.getApplication().getResourceBundle(FacesContext.getCurrentInstance(), "msgs");
+
+	public List<MisViajesConEstado> getViajes() {
+		viajes = new ArrayList<>();
+		BeanUsuario usuario = ((BeanSettings) FacesContext.getCurrentInstance()
+				.getExternalContext().getSessionMap().get("settings")).getUsuario();
+		
+		cargarViajesPromotor(viajes, usuario.getId());
+		cargarViajes(viajes, usuario.getId());
+		
+		
+		return viajes;
+	}
+
+	public void setViajes(List<MisViajesConEstado> viajes) {
+		this.viajes = viajes;
+	}
+
+	/**
+	 * Metodo que cargar los viajes en los que es promotor el usuario pasado como parametro
+	 * @param misViajes lista a la que se quieren añadir los viajes
+	 * @param idUsuario id del usuario del que se buscan los viajes
+	 */
+	private void cargarViajesPromotor(List<MisViajesConEstado> misViajes, Long idUsuario) {
+		List<Trip> viajes = Factories.persistence.newTripDao().findByPromoterId(idUsuario);
+		for(Trip viaje : viajes){
+			misViajes.add(new MisViajesConEstado(viaje, msgs.getString("tripPromoter")));
+		}
+	}
+
+	/**
+	 * Metodo que cargar los viajes con relacion(excepto promotor) al usuario que se pasa como parametro
+	 * @param misViajes lista a la que se quieren añadir los viajes
+	 * @param idUsuario id del usuario del que se buscan los viajes
+	 */
+	private void cargarViajes(List<MisViajesConEstado> misViajes, Long idUsuario){
+
+		List<Application> peticiones = Factories.persistence.newApplicationDao().findByUserId(idUsuario);
+		SeatDao sd = Factories.persistence.newSeatDao();
+		TripDao td = Factories.persistence.newTripDao();
+
+		for(Application peticion : peticiones){
+			Seat plaza = sd.findByUserAndTrip(idUsuario, peticion.getTripId());
+			Trip viaje = td.findById(peticion.getTripId());
+			if(plaza != null){
+				if(plaza.getStatus().equals(SeatStatus.ACCEPTED)){
+					misViajes.add(new MisViajesConEstado(viaje, msgs.getString("ownTripAccepted")));
+				}
+				else{
+					misViajes.add(new MisViajesConEstado(viaje, msgs.getString("ownTripExcluded")));
+				}
+			}
+			else if(plaza == null && viaje.getAvailablePax() > 0){
+				misViajes.add(new MisViajesConEstado(viaje, msgs.getString("ownTripPending")));
+			}
+			else{
+				misViajes.add(new MisViajesConEstado(viaje, msgs.getString("ownTripNoSeat")));
+			}
+		}
+	}
+	
+	/**
+	 * Metodo que se encarga de cancelar la peticion(y plaza si ha sido admintido)
+	 * del usuario con sesion iniciada y el viaje seleccionado
+	 */
+	public String cancelarPlaza(MisViajesConEstado trip){
+		
+		Long idUsuario = ((BeanSettings) FacesContext.getCurrentInstance()
+				.getExternalContext().getSessionMap().get("settings")).getUsuario().getId();
+		
+		Long idTrip = trip.getViaje().getId();
+		
+		SeatDao sd = Factories.persistence.newSeatDao();
+		Seat plaza = sd.findByUserAndTrip(idUsuario, idTrip);
+
+		sd.delete(new Long[]{idUsuario, idTrip});
+		Factories.persistence.newApplicationDao().delete(new Long[]{idUsuario, idTrip});
+		
+		if(plaza != null && plaza.getStatus().equals(SeatStatus.ACCEPTED)){
+			TripDao td = Factories.persistence.newTripDao();
+			
+			Trip viaje = td.findById(idTrip);
+			viaje.setAvailablePax(viaje.getAvailablePax() + 1);
+			
+			td.update(viaje);
+			System.out.println("Plaza liberada en el viaje[id:" + idTrip + "]");
+			
+		}
+		
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", msgs.getString("ownTripCancelSuccessful")));
+		
+		System.out.println("Plaza/peticion cancelada");
+		
+		return null;
+	}
+}
