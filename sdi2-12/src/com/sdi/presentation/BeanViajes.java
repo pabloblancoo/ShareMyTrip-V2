@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 import com.sdi.infrastructure.Factories;
 import com.sdi.model.Application;
@@ -85,6 +86,30 @@ public class BeanViajes {
 
 	public void setViajeros(List<User> viajeros) {
 		this.viajeros = viajeros;
+	}
+	
+	/**
+	 * Metodo que sirve para comprobar si se debe mostrar el boton de solicitar
+	 * plaza en un viaje
+	 * @return boolean true para mostrarlo, false para ocultarlo
+	 */
+	public boolean mostrarSolicitarPlaza(){
+		BeanSettings bs = (BeanSettings) FacesContext.getCurrentInstance()
+					.getExternalContext().getSessionMap().get("settings");
+		
+		if(bs.getUsuario() == null){
+			return false;
+		}
+		if(bs.getUsuario().getLogin().equals(promotor.getLogin())){
+			return false;
+		}
+		for(User viajero : viajeros){
+			if(bs.getUsuario().getLogin().equals(viajero.getLogin())){
+				return false;
+			}
+		}
+		
+		return true;
 	}
 
 }

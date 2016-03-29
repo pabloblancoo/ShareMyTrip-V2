@@ -98,6 +98,9 @@
 					<p:panelGrid columns="1" rendered="#{settings.usuario == null}">
 						Para ver más información sobre el promotor y los viajeros confirmados debes iniciar sesion o registrarse.
 					</p:panelGrid>
+					<p:panelGrid columns="1" rendered="#{viajes.mostrarSolicitarPlaza()}">
+						Solicitar plaza
+					</p:panelGrid>
 				</div>
 			</div>
 		</div>
