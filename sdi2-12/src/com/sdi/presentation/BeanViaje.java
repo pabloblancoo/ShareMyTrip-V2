@@ -3,17 +3,21 @@ package com.sdi.presentation;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
+import com.sdi.infrastructure.Factories;
+import com.sdi.model.AddressPoint;
+import com.sdi.model.Trip;
 import com.sdi.model.TripStatus;
+import com.sdi.model.Waypoint;
+import com.sdi.util.Comprobante;
 
 @ManagedBean(name="viaje")
 @RequestScoped
@@ -32,7 +36,7 @@ public class BeanViaje implements Serializable{
 	private String departureCountry;
 	private String departureZipCode;	
 	private String departureWaypointStr;
-	private String departureDate;
+	private Date departureDate;
 	
 	private String arrivalAddress;
 	private String arrivalCity;
@@ -40,12 +44,12 @@ public class BeanViaje implements Serializable{
 	private String arrivalCountry;
 	private String arrivalZipCode;
 	private String arrivalWaypointStr;
-	private String arrivalDate;
+	private Date arrivalDate;
 	
-	private String closingDate;
-	private String availablePax; 
-	private String maxPax;
-	private String estimatedCost;
+	private Date closingDate;
+	private int availablePax; 
+	private int maxPax;
+	private Double estimatedCost;
 	private String comments;
 	private TripStatus status;
 	
@@ -122,37 +126,35 @@ public class BeanViaje implements Serializable{
 		this.id = id;
 	}
 
-	public String getClosingDate() {
+	public Date getClosingDate() {
 		return closingDate;
 	}
 
-	public void setClosingDate(String closingDate) {
+	public void setClosingDate(Date closingDate) {
 		this.closingDate = closingDate;
 	}
 
-	
-
-	public String getAvailablePax() {
+	public int getAvailablePax() {
 		return availablePax;
 	}
 
-	public void setAvailablePax(String availablePax) {
+	public void setAvailablePax(int availablePax) {
 		this.availablePax = availablePax;
 	}
 
-	public String getMaxPax() {
+	public int getMaxPax() {
 		return maxPax;
 	}
 
-	public void setMaxPax(String maxPax) {
+	public void setMaxPax(int maxPax) {
 		this.maxPax = maxPax;
 	}
 
-	public String getEstimatedCost() {
+	public Double getEstimatedCost() {
 		return estimatedCost;
 	}
 
-	public void setEstimatedCost(String estimatedCost) {
+	public void setEstimatedCost(Double estimatedCost) {
 		this.estimatedCost = estimatedCost;
 	}
 
@@ -279,37 +281,20 @@ public class BeanViaje implements Serializable{
 		this.arrivalWaypointStr = arrivalWaypointStr;
 	}
 
-	
-	
-	public String getArrivalDate() {
-		return arrivalDate;
-	}
-
-	public void setArrivalDate(String arrivalDate) {
-		this.arrivalDate = arrivalDate;
-	}
-
-	public String getDepartureDate() {
+	public Date getDepartureDate() {
 		return departureDate;
 	}
 
-	public void setDepartureDate(String departureDate) {
+	public void setDepartureDate(Date departureDate) {
 		this.departureDate = departureDate;
 	}
 
-	/**
-	 * Registra un viaje nuevo en la Base de Datos
-	 * @return
-	 */
-	public String registrarViaje(){
-		
-		//Sin acabar
-		//Sin acabar
-		//Sin acabar
-		//Sin acabar
-		int a = 0;
-		
-		return null;
+	public Date getArrivalDate() {
+		return arrivalDate;
+	}
+
+	public void setArrivalDate(Date arrivalDate) {
+		this.arrivalDate = arrivalDate;
 	}
 
 	public List<String> getProvincias() {
@@ -336,4 +321,75 @@ public class BeanViaje implements Serializable{
 		return retorno;
 	}
 	
+	/**
+	 * Registra un viaje nuevo en la Base de Datos
+	 * @return
+	 */
+	public String registrarViaje() {
+		Trip trip = new Trip();
+		AddressPoint departure;
+		AddressPoint destination;
+		Waypoint salida = Comprobante.comprobarPunto(departureWaypointStr);
+		Waypoint llegada = Comprobante.comprobarPunto(arrivalWaypointStr);
+		BeanUsuario usuario = ((BeanSettings) context.getExternalContext()
+				.getSessionMap().get(new String("settings"))).getUsuario();
+		if (usuario != null) {
+
+			if (salida == null)
+				salida = new Waypoint(0.0, 0.0);
+			if (llegada == null)
+				llegada = new Waypoint(0.0, 0.0);
+			departure = new AddressPoint(departureAddress, departureCity,
+					departureState, departureCountry, departureZipCode, salida);
+			destination = new AddressPoint(arrivalAddress, arrivalCity,
+					arrivalState, arrivalCountry, arrivalZipCode, llegada);
+			
+			if (closingDate.before(departureDate)) {		//Fecha de cierre antes de la salida
+				if (departureDate.before(arrivalDate)) {	//Fecha de llegada, despues de salida
+					if(maxPax > availablePax){
+					trip.setDeparture(departure);
+					trip.setDestination(destination);
+					trip.setArrivalDate(arrivalDate);
+					trip.setDepartureDate(departureDate);
+					trip.setClosingDate(closingDate);
+					trip.setAvailablePax(availablePax);
+					trip.setMaxPax(maxPax);
+					trip.setEstimatedCost(estimatedCost);
+					trip.setComments(comments);
+					trip.setStatus(TripStatus.OPEN);
+
+					trip.setPromoterId(usuario.getId());
+
+					Factories.persistence.newTripDao().save(trip);
+					return "exito";
+					}
+					else{
+						context.addMessage(
+								null,
+								new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
+										"No puede haber mas plazas disponibles que existentes"));
+						return null;
+					}
+				}
+				else{
+					context.addMessage(
+							null,
+							new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
+									"La fecha de llegada debe ser posterior a la de salida"));
+					return null;
+				}
+			} else {
+				context.addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
+								"La fecha limite debe ser anterior a la fecha de salida"));
+				return null;
+			}
+		} else {
+			context.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_ERROR, "Error",
+					"No has iniciado sesion"));
+			return "usuario_no_valido";
+		}
+	}
 }

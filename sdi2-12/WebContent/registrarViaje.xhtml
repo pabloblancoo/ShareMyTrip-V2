@@ -9,6 +9,7 @@
 			<div class="ui-grid-row" >
 				<div class="ui-grid-col-4"></div>
 				<div class="ui-grid-col-4">
+				<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 					#{msgs.tripDepartureData}
 					<p:panelGrid id="Grid" columns="2" cellpadding="5" >
  						#{msgs.tripAddress}
@@ -92,10 +93,11 @@
 						</h:panelGroup>  
   						#{msgs.tripCity} 
   						<h:panelGroup>
-							<p:inputText value="#{viaje.arrivalCity}" required="true"
+							<p:autoComplete value="#{viaje.arrivalCity}" required="true"
+								completeMethod="#{viaje.completarProvincias}"
 								requiredMessage="#{msgs.signInEmpty}"
 								id="arrivalCity">
-							</p:inputText>
+							</p:autoComplete>
 							<p:message for="arrivalCity" />
 						</h:panelGroup>
   
@@ -186,10 +188,10 @@
 			
 						#{msgs.tripDeadLine}
   						<h:panelGroup>
-							<p:inputText value="#{viaje.closingDate}" required="true" 
+							<p:calendar value="#{viaje.closingDate}" required="true" 
 							requiredMessage="#{msgs.signInEmpty}"
 							id="closingDate">
-							</p:inputText>
+							</p:calendar>
 							<p:message for="closingDate"/>
 						</h:panelGroup>
 					</p:panelGrid>
