@@ -1,12 +1,18 @@
 package com.sdi.presentation;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
+
 import com.sdi.model.TripStatus;
 
 @ManagedBean(name="viaje")
@@ -48,6 +54,64 @@ public class BeanViaje implements Serializable{
 	private FacesContext context = FacesContext.getCurrentInstance();
 	private ResourceBundle msgs = context.getApplication().getResourceBundle(context, "msgs");
 	
+	List<String> provincias = new ArrayList<>();
+	
+	@PostConstruct
+	private void init(){
+		provincias.add("Alava");
+		provincias.add("Albacete");
+		provincias.add("Alicante");
+		provincias.add("Almeria");
+		provincias.add("Asturias");
+		provincias.add("Avila");
+		provincias.add("Badajoz");
+		provincias.add("Barcelona");
+		provincias.add("Burgos");
+		provincias.add("Caceres");
+		provincias.add("Cadiz");
+		provincias.add("Cantabria");
+		provincias.add("Castellon");
+		provincias.add("Ciudad Real");
+		provincias.add("Cordoba");
+		provincias.add("La Coruña");
+		provincias.add("Cuenca");
+		provincias.add("Gerona");
+		provincias.add("Granada");
+		provincias.add("Guadalajara");
+		provincias.add("Gipuzcoa");
+		provincias.add("Huelva");
+		provincias.add("Huesca");
+		provincias.add("Islas Baleares");
+		provincias.add("Jaen");
+		provincias.add("Leon");
+		provincias.add("Lerida");
+		provincias.add("Lugo");
+		provincias.add("Madrid");
+		provincias.add("Malaga");
+		provincias.add("Murcia");
+		provincias.add("Navarra");
+		provincias.add("Orense");
+		provincias.add("Palencia");
+		provincias.add("Las palmas");
+		provincias.add("Pontevedra");
+		provincias.add("La rioja");
+		provincias.add("Salamanca");
+		provincias.add("Segovia");
+		provincias.add("Sevilla");
+		provincias.add("Soria");
+		provincias.add("Tarragona");
+		provincias.add("Santa Cruz de Tenerife");
+		provincias.add("Teruel");
+		provincias.add("Toledo");
+		provincias.add("Valencia");
+		provincias.add("Valladolid");
+		provincias.add("Vizcaya");
+		provincias.add("Zamora");
+		provincias.add("Zaragoza");
+		provincias.add("Ceuta");
+		provincias.add("Melilla");
+		
+	}
 	
 	public Long getId() {
 		return id;
@@ -246,7 +310,29 @@ public class BeanViaje implements Serializable{
 		
 		return null;
 	}
-	
-	
+
+	public List<String> getProvincias() {
+		return provincias;
+	}
+
+	public void setProvincias(List<String> provincias) {
+		this.provincias = provincias;
+	}
+
+	/**
+	 * Metodo para completar el input de las provincias
+	 * 
+	 * Filtra el array de provincias si contienen el String como parametro
+	 * @param str Texto para filtrar provincias
+	 * @return Lista de provincias que contienen el valor
+	 */
+	public List<String> completarProvincias(String str){
+		List<String> retorno = new ArrayList<>();
+		for (String string : provincias) {
+			if(string.toLowerCase().contains(str.toLowerCase()))
+				retorno.add(string);
+		}
+		return retorno;
+	}
 	
 }

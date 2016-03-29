@@ -23,10 +23,12 @@
   						
   						#{msgs.tripCity} 
   						<h:panelGroup>
-							<p:inputText value="#{viaje.departureCity}" required="true"
+							<p:autoComplete value="#{viaje.departureCity}" required="true"
+								completeMethod="#{viaje.completarProvincias}"
 								requiredMessage="#{msgs.signInEmpty}"
 								id="departureCity">
-							</p:inputText>
+								
+							</p:autoComplete>
 							<p:message for="departureCity" />
 						</h:panelGroup>
   
@@ -59,8 +61,7 @@
 			
 						#{msgs.tripGPS}
   						<h:panelGroup>
-							<p:inputText value="#{viaje.departureWaypointStr}" required="true" 
-							requiredMessage="#{msgs.signInEmpty}"
+							<p:inputText value="#{viaje.departureWaypointStr}"
 							id="departureWaypointStr">
 							</p:inputText>
 							<p:message for="departureWaypointStr" />
@@ -109,6 +110,7 @@
    						#{msgs.tripCountry}
   						<h:panelGroup>
 							<p:inputText value="#{viaje.arrivalCountry}" required="true"
+								completeMethod="#{viaje.completarProvincias}"
 								requiredMessage="#{msgs.signInEmpty}"
 								id="arrivalCountry">
 							</p:inputText>
@@ -126,8 +128,7 @@
 			
 						#{msgs.tripGPS}
   						<h:panelGroup>
-							<p:inputText value="#{viaje.arrivalWaypointStr}" required="true" 
-							requiredMessage="#{msgs.signInEmpty}"
+							<p:inputText value="#{viaje.arrivalWaypointStr}"
 							id="arrivalWaypointStr">
 							</p:inputText>
 							<p:message for="arrivalWaypointStr" />

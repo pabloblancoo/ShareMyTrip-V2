@@ -123,3 +123,4 @@ INSERT INTO TUSERS VALUES(331,'user6@mail.com','user6','nombre6','user6',0,'apel
 INSERT INTO TUSERS VALUES(332,'user7@mail.com','user7','nombre7','user7',0,'apellido7')
 INSERT INTO TUSERS VALUES(333,'user8@mail.com','user8','nombre8','user8',0,'apellido8')
 INSERT INTO TUSERS VALUES(334,'user9@mail.com','user9','nombre9','user9',0,'apellido9')
+INSERT INTO TUSERS VALUES(336,'asd@a.c','a','as','a',0,'asd')
