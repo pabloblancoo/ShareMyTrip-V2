@@ -22,6 +22,7 @@ import com.sdi.persistence.UserDao;
 public class BeanViajes {
 	
 	List<Trip> viajes;
+	Long lastUpdate;
 	Trip viaje;
 	User promotor;
 	List<User> viajeros;
@@ -31,7 +32,8 @@ public class BeanViajes {
 		promotor = null;
 		viajeros = new ArrayList<>();
 		
-		if(viajes == null){
+		if(viajes == null || System.currentTimeMillis() - lastUpdate > (1*60)*1000){
+			lastUpdate = System.currentTimeMillis();
 			viajes = Factories.persistence.newTripDao().findAllOpenAndPaxAvailables();
 			System.out.println("Viajes cargados: " + viajes.size());
 		}
@@ -114,6 +116,10 @@ public class BeanViajes {
 		return true;
 	}
 	
+	/**
+	 * Método que inserta una solicitud para el viaje actual y el usuario que 
+	 * ha iniciado sesión
+	 */
 	public void solicitarPlaza(){
 		
 		BeanSettings bs = (BeanSettings) FacesContext.getCurrentInstance()
