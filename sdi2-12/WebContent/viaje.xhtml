@@ -7,17 +7,17 @@
 	<ui:define name="content">
 		<div class="ui-grid ui-grid-responsive">
 			<div class="ui-grid.row">
-				<div class="ui-grid-col-12" style="text-align:center;">
-				<h1>
-					<h:outputText value="#{viajes.viaje.departure.city}" />
-					<h:outputText value=" -> " />
-					<h:outputText value="#{viajes.viaje.destination.city}" />
+				<div class="ui-grid-col-12" style="text-align: center;">
+					<h1>
+						<h:outputText value="#{viajes.viaje.departure.city}" />
+						<h:outputText value=" -> " />
+						<h:outputText value="#{viajes.viaje.destination.city}" />
 					</h1>
 				</div>
 			</div>
 			<div class="ui-grid-row">
 				<div class="ui-grid-col-4"></div>
-				<div class="ui-grid-col-4" style="text-align:center;">
+				<div class="ui-grid-col-4" style="text-align: center;">
 
 					<p:panelGrid columns="2">
 						<f:facet name="header">
@@ -82,59 +82,48 @@
 
 					</p:panelGrid>
 
-					<p:panelGrid columns="2" rendered="#{settings.usuario != null}">
+					<p:panelGrid columns="1" rendered="#{settings.usuario != null}">
 						<f:facet name="header">
-							<h:outputText value="#{msgs.tripTravelers}" />
+							<h:outputText value="#{msgs.tripPromoter}" />
 						</f:facet>
-
-						<h:outputText value="#{msgs.tripPromoter}" />
 						<h:outputText value="#{viajes.promotor.name}" />
 
-						<ui:repeat var="viajero" value="#{viajes.viajeros}"
-							rendered="#{viajes.viajeros.size() > 0}">
-							
-							<h:outputText value="#{msgs.tripTraveler}" />
-						</ui:repeat>
-						<ui:repeat var="viajero" value="#{viajes.viajeros}"
-							rendered="#{viajes.viajeros.size() > 0}">
-							
-							<h:outputText value="#{viajero.user.name}" />
-						</ui:repeat>
-
 					</p:panelGrid>
+					<h3></h3>
+					<p:dataTable rendered="#{settings.usuario != null}" var="viajero"
+						value="#{viajes.viajeros}">
+						<p:column headerText="#{msgs.tripTraveler}">
+							<h:outputText value="#{viajero.user.name}" />
+						</p:column>
+					</p:dataTable>
+
+					<p:dataTable rendered="#{viajes.isPromotorViaje()}" var="pendiente"
+						value="#{viajes.pendientes}">
+						<p:column headerText="#{msgs.name}">
+							<h:outputText value="#{pendiente.user.name}" />
+						</p:column>
+						<p:column headerText="#{msgs.ownTripState}">
+							<h:outputText value="#{pendiente.status}" />
+						</p:column>
+						<p:column headerText="#{msgs.ownTripOptions}">
+							<p:commandLink rendered="#{pendiente.excludable}" value="Excluir"
+								actionListener="#{viajes.exclude(pendiente)}"
+								update="form-content" />
+							<br />
+							<p:commandLink rendered="#{pendiente.acceptable}" value="Admitir"
+								actionListener="#{viajes.accept(pendiente)}"
+								update="form-content" />
+						</p:column>
+					</p:dataTable>
 					<p:panelGrid columns="1" rendered="#{settings.usuario == null}">
 						#{msgs.tripMoreInfo}
 					</p:panelGrid>
-					<p:panelGrid columns="1" rendered="#{viajes.mostrarSolicitarPlaza()}">
-						<p:commandButton value="#{msgs.tripApply}" 
-							action="solicitarPlaza"
-							type="submit"
-							actionListener="#{viajes.solicitarPlaza}"
-							inmediate="true"/>
+					<p:panelGrid columns="1"
+						rendered="#{viajes.mostrarSolicitarPlaza()}">
+						<p:commandButton value="#{msgs.tripApply}" action="solicitarPlaza"
+							type="submit" actionListener="#{viajes.solicitarPlaza}"
+							inmediate="true" />
 					</p:panelGrid>
-					<p:dataTable rendered="#{viajes.isPromotorViaje()}" var="pendiente" value="#{viajes.pendientes}">
-						<p:column headerText="Nombre">
-							<h:outputText value="#{pendiente.user.name}" />
-						</p:column>
-						<p:column headerText="Estado">
-							<h:outputText value="#{pendiente.status}" />
-						</p:column>
-						<p:column headerText="Opciones">
-							<p:commandLink
-								rendered="#{pendiente.excludable}"
-								value="Excluir"
-								actionListener="#{viajes.exclude(pendiente)}"
-								update="form-content"
-								/>
-							<br/>
-							<p:commandLink 
-								rendered="#{pendiente.acceptable}"
-								value="Admitir"
-								actionListener="#{viajes.accept(pendiente)}"
-								update="form-content"
-								/>
-						</p:column>
-					</p:dataTable>
 				</div>
 			</div>
 		</div>
