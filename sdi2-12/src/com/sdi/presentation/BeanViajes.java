@@ -12,11 +12,11 @@ import javax.faces.context.FacesContext;
 import com.sdi.infrastructure.Factories;
 import com.sdi.model.Application;
 import com.sdi.model.Seat;
-import com.sdi.model.SeatStatus;
 import com.sdi.model.Trip;
 import com.sdi.model.User;
 import com.sdi.persistence.SeatDao;
 import com.sdi.persistence.UserDao;
+import com.sdi.util.Viajero;
 
 @ManagedBean(name="viajes")
 @SessionScoped
@@ -26,7 +26,8 @@ public class BeanViajes {
 	Long lastUpdate;
 	Trip viaje;
 	User promotor;
-	List<User> viajeros;
+	List<Viajero> viajeros;
+	List<Viajero> pendientes;
 	List<Application> peticiones;
 	
 	private ResourceBundle msgs = FacesContext.getCurrentInstance()
@@ -69,19 +70,36 @@ public class BeanViajes {
 		
 		promotor = ud.findById(viaje.getPromoterId());
 		System.out.println("Promotor: " + promotor.getName());
+		
+		//---------------------
 		viajeros = new ArrayList<>();
+		pendientes = new ArrayList<>();
 		
 		peticiones = Factories.persistence.newApplicationDao().findByTripId(viaje.getId());
 		
 		for(Application peticion: peticiones){
 			Seat plaza = sd.findByUserAndTrip(peticion.getUserId(), viaje.getId());
-			if(plaza != null && plaza.getStatus().equals(SeatStatus.ACCEPTED)){
-				viajeros.add(ud.findById(plaza.getUserId()));
+			User user = ud.findById(peticion.getUserId());
+			
+			Viajero viajero = new Viajero(user, viaje, peticion, plaza);
+			
+			if(viajero.getStatus().equals(msgs.getString("ownTripAccepted"))){
+				viajeros.add(viajero);
 			}
+			
+			pendientes.add(viajero);
 		}
 		
 		System.out.println("Loaded " + viajeros.size() + " viajeros");
 		
+	}
+
+	public List<Viajero> getPendientes() {
+		return pendientes;
+	}
+
+	public void setPendientes(List<Viajero> pendientes) {
+		this.pendientes = pendientes;
 	}
 
 	public User getPromotor() {
@@ -92,11 +110,11 @@ public class BeanViajes {
 		this.promotor = promotor;
 	}
 
-	public List<User> getViajeros() {
+	public List<Viajero> getViajeros() {
 		return viajeros;
 	}
 
-	public void setViajeros(List<User> viajeros) {
+	public void setViajeros(List<Viajero> viajeros) {
 		this.viajeros = viajeros;
 	}
 	
@@ -148,7 +166,11 @@ public class BeanViajes {
 		
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 
-		
+	}
+	
+	public boolean isPromotorViaje(){
+		return ((BeanSettings) FacesContext.getCurrentInstance().getExternalContext()
+				.getSessionMap().get("settings")).getUsuario().getId().equals(viaje.getPromoterId());
 	}
 
 }
