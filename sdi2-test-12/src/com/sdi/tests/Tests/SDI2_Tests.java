@@ -10,6 +10,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import com.sdi.tests.pageobjects.POInicioSesion;
 import com.sdi.tests.pageobjects.PORegistro;
 import com.sdi.tests.utils.SeleniumUtils;
 
@@ -36,7 +37,7 @@ public class SDI2_Tests {
 	public void end()
 	{
 		//Cerramos el navegador
-		//driver.quit();
+		driver.quit();
 	}
 
 	//PRUEBAS
@@ -45,7 +46,7 @@ public class SDI2_Tests {
 	@Test	
     public void t01_RegVal() throws InterruptedException {
 		driver.get("http://localhost:8280/sdi2-12/registrarse.xhtml");
-		new PORegistro().rellenaFormulario(driver, "test",  "test",  "test",  "test@test.com",  "test");
+		new PORegistro().rellenaFormulario(driver, "test",  "test",  "test",  "test@test.com",  "test", "test");
 		
 		Thread.sleep(1000);
 		
@@ -55,16 +56,34 @@ public class SDI2_Tests {
 	//	2.	[RegInval] Registro de Usuario con datos inválidos (contraseñas diferentes).
     @Test
     public void t02_RegInval() {
+    	
+    	driver.get("http://localhost:8280/sdi2-12/registrarse.xhtml");
+		new PORegistro().rellenaFormulario(driver, "test2",  "test2",  "test2",  "test2@test.com",  "test", "test2");
+		
+		SeleniumUtils.EsperaCargaPagina(driver, "class", "ui-messages-error", 10);
+		SeleniumUtils.textoPresentePagina(driver, "Error");
     
     }
 	//	3.	[IdVal] Identificación de Usuario registrado con datos válidos.
     @Test
-    public void t03_IdVal() {
+    public void t03_IdVal() throws InterruptedException {
+    	
+    	driver.get("http://localhost:8280/sdi2-12/iniciarSesion.xhtml");
+		new POInicioSesion().rellenaFormulario(driver, "test", "test");
+		
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "test", 10); 
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "test@test.com", 10); 
     
     }
 	//	4.	[IdInval] Identificación de usuario registrado con datos inválidos.
     @Test
     public void t04_IdInval() {
+    	
+    	driver.get("http://localhost:8280/sdi2-12/iniciarSesion.xhtml");
+		new POInicioSesion().rellenaFormulario(driver, "test2", "test");
+		
+		SeleniumUtils.EsperaCargaPagina(driver, "class", "ui-messages-error", 10); 
+		SeleniumUtils.textoPresentePagina(driver, "Error");
     
     }
 	//	5.	[AccInval] Intento de acceso con URL desde un usuario no público (no identificado). Intento de acceso a vistas de acceso privado. 

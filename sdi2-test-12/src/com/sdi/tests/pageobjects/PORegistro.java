@@ -7,7 +7,7 @@ import org.openqa.selenium.WebElement;
 public class PORegistro {
 	
 	public void rellenaFormulario(WebDriver driver, String login, String name, 
-			String surname, String email, String password){
+			String surname, String email, String password, String repassword){
 		
 		WebElement element = driver.findElement(By.id("form-content:login"));
 		element.click();
@@ -37,7 +37,7 @@ public class PORegistro {
 		element = driver.findElement(By.id("form-content:repassword"));
 		element.click();
 		element.clear();
-		element.sendKeys(password);
+		element.sendKeys(repassword);
 		
 		By boton = By.id("form-content:boton");
 		driver.findElement(boton).click();	
