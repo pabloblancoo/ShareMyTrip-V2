@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
@@ -17,17 +19,18 @@ import com.sdi.model.AddressPoint;
 import com.sdi.model.Trip;
 import com.sdi.model.TripStatus;
 import com.sdi.model.Waypoint;
+import com.sdi.persistence.PersistenceException;
 import com.sdi.util.Comprobante;
 
 @ManagedBean(name="viaje")
-@RequestScoped
+@SessionScoped
 public class BeanViaje implements Serializable{
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+	boolean salidaDefecto, llegadaDefecto, informacionDefecto;
 	private Long id;
 	
 	private String departureAddress;
@@ -56,7 +59,6 @@ public class BeanViaje implements Serializable{
 	private Long promoterId;
 
 	private FacesContext context = FacesContext.getCurrentInstance();
-	@SuppressWarnings("unused")
 	private ResourceBundle msgs = context.getApplication().getResourceBundle(context, "msgs");
 	
 	List<String> provincias = new ArrayList<>();
@@ -116,6 +118,11 @@ public class BeanViaje implements Serializable{
 		provincias.add("Ceuta");
 		provincias.add("Melilla");
 		
+	}
+	
+	@PreDestroy
+	public void avisame(){
+		System.out.println("Se meure el bean");
 	}
 	
 	public Long getId() {
@@ -305,6 +312,31 @@ public class BeanViaje implements Serializable{
 		this.provincias = provincias;
 	}
 
+	
+	public boolean isSalidaDefecto() {
+		return salidaDefecto;
+	}
+
+	public void setSalidaDefecto(boolean salidaDefecto) {
+		this.salidaDefecto = salidaDefecto;
+	}
+
+	public boolean isLlegadaDefecto() {
+		return llegadaDefecto;
+	}
+
+	public void setLlegadaDefecto(boolean llegadaDefecto) {
+		this.llegadaDefecto = llegadaDefecto;
+	}
+
+	public boolean isInformacionDefecto() {
+		return informacionDefecto;
+	}
+
+	public void setInformacionDefecto(boolean informacionDefecto) {
+		this.informacionDefecto = informacionDefecto;
+	}
+
 	/**
 	 * Metodo para completar el input de las provincias
 	 * 
@@ -331,7 +363,8 @@ public class BeanViaje implements Serializable{
 		AddressPoint destination;
 		Waypoint salida = Comprobante.comprobarPunto(departureWaypointStr);
 		Waypoint llegada = Comprobante.comprobarPunto(arrivalWaypointStr);
-		BeanUsuario usuario = ((BeanSettings) context.getExternalContext()
+		BeanUsuario usuario = ((BeanSettings) FacesContext.getCurrentInstance()
+				.getExternalContext()
 				.getSessionMap().get(new String("settings"))).getUsuario();
 		if (usuario != null) {
 
@@ -344,9 +377,9 @@ public class BeanViaje implements Serializable{
 			destination = new AddressPoint(arrivalAddress, arrivalCity,
 					arrivalState, arrivalCountry, arrivalZipCode, llegada);
 			
-			if (closingDate.before(departureDate)) {		//Fecha de cierre antes de la salida
-				if (departureDate.before(arrivalDate)) {	//Fecha de llegada, despues de salida
-					if(maxPax > availablePax){
+			if (closingDate.compareTo(departureDate) <= 0) {		//Fecha de cierre antes de la salida
+				if (departureDate.compareTo(arrivalDate) <= 0) {	//Fecha de llegada, despues de salida
+					if(maxPax >= availablePax){
 					trip.setDeparture(departure);
 					trip.setDestination(destination);
 					trip.setArrivalDate(arrivalDate);
@@ -360,36 +393,98 @@ public class BeanViaje implements Serializable{
 
 					trip.setPromoterId(usuario.getId());
 
+					try{
 					Factories.persistence.newTripDao().save(trip);
+					}catch(PersistenceException e){
+						FacesContext.getCurrentInstance().addMessage(
+								null,
+								new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
+										"No puedes tener 2 viajes a la misma hora"));
+						return null;
+					}
 					return "exito";
 					}
 					else{
-						context.addMessage(
+						FacesContext.getCurrentInstance().addMessage(
 								null,
 								new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
-										"No puede haber mas plazas disponibles que existentes"));
+										"#{msgs.errorSaveTrip}"));
 						return null;
 					}
 				}
 				else{
-					context.addMessage(
+					FacesContext.getCurrentInstance().addMessage(
 							null,
 							new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
-									"La fecha de llegada debe ser posterior a la de salida"));
+									"#{msgs.errorArrivalDate}"));
 					return null;
 				}
 			} else {
-				context.addMessage(
+				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
-								"La fecha limite debe ser anterior a la fecha de salida"));
+								"#{msgs.errorClosingDate}"));
 				return null;
 			}
 		} else {
-			context.addMessage(null, new FacesMessage(
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
 					FacesMessage.SEVERITY_ERROR, "Error",
-					"No has iniciado sesion"));
+					"#{errorMaxPax}"));
 			return "usuario_no_valido";
 		}
+	}
+	
+	/**
+	 * Pone unos datos validos precargados en los campos de registrar viaje
+	 */
+	public void cargarDatos(){
+		departureAddress = "Uria";
+		departureCity = "Oviedo";
+		departureState = "Asturias";
+		departureCountry = "España";
+		departureZipCode = "33070";	
+		departureWaypointStr = "0.0 ; 0,0";
+		departureDate = new Date();
+		
+		arrivalAddress = "Gran via";
+		arrivalCity = "Madrid";
+		arrivalState = "Madrid";
+		arrivalCountry = "España";
+		arrivalZipCode = "28080";
+		arrivalWaypointStr = "0.0 ; 0.0";
+		arrivalDate = new Date();
+		
+		closingDate = new Date();
+		availablePax = 5; 
+		maxPax = 5;
+		estimatedCost = 10.0;
+		comments = "Viaje barato a madrid";
+	}
+	
+	/**
+	 * 
+	 */
+	public void borrarDatos(){
+		departureAddress = "";
+		departureCity = "";
+		departureState = "";
+		departureCountry = "";
+		departureZipCode = "";	
+		departureWaypointStr = "";
+		departureDate = null;
+		
+		arrivalAddress = "";
+		arrivalCity = "";
+		arrivalState = "";
+		arrivalCountry = "";
+		arrivalZipCode = "";
+		arrivalWaypointStr = "";
+		arrivalDate = null;
+		
+		closingDate = null;
+		availablePax = 0; 
+		maxPax = 0;
+		estimatedCost = 0.0;
+		comments = "";
 	}
 }

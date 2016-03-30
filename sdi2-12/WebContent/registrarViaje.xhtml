@@ -5,11 +5,23 @@
 	xmlns:p="http://primefaces.org/ui" template="/templates/template.xhtml">
 
 	<ui:define name="content">
+	
+		<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+				<p:commandButton id="botonRecargaSalida" value="#{msgs.preloadedTrip}"
+				action="#{viaje.cargarDatos}" immediate="true" >
+				<f:ajax render ="Grid Grid2 Grid3"/>
+			</p:commandButton>
+				<p:commandButton id="botonVaciar" value="#{msgs.clearTrip}"
+				action="#{viaje.borrarDatos}" immediate="true" >
+				<f:ajax render ="Grid Grid2 Grid3"/>
+			</p:commandButton>
+			
 		<div class="ui-grid ui-grid-responsive">
+			
 			<div class="ui-grid-row" >
-				<div class="ui-grid-col-4"></div>
+			
 				<div class="ui-grid-col-4">
-				<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+					
 					#{msgs.tripDepartureData}
 					<p:panelGrid id="Grid" columns="2" cellpadding="5" >
  						#{msgs.tripAddress}
@@ -81,6 +93,11 @@
 					
 					
 					
+				</div>
+					
+					
+				<div class="ui-grid-col-4">
+				
 					#{msgs.tripArrivalData}
 					<p:panelGrid id="Grid2" columns="2" cellpadding="5" >
  						#{msgs.tripAddress}
@@ -148,7 +165,13 @@
 							<p:message for="arrivalDate"/>
 						</h:panelGroup>
 					</p:panelGrid>
+					</div>
 					
+					
+					
+					
+					
+					<div class="ui-grid-col-4">
 					#{msgs.tripArrivalData}
 					<p:panelGrid id="Grid3" columns="2" cellpadding="5" >
  						#{msgs.tripMaxPax}
@@ -195,13 +218,16 @@
 							<p:message for="closingDate"/>
 						</h:panelGroup>
 					</p:panelGrid>
+					</div>
 					
-					<p:commandButton id="boton" value="#{msgs.navRegisterTrip}" action="#{viaje.registrarViaje}"
-							update="Grid Grid2 Grid3" process="@form">
-						</p:commandButton>
 				</div>
+				
+				<p:commandButton id="boton" value="#{msgs.navRegisterTrip}" action="#{viaje.registrarViaje}"
+					update="Grid Grid2 Grid3" process="@form">
+				</p:commandButton>
+						
 			</div>
-		</div>
+		
 
 	</ui:define>
 
