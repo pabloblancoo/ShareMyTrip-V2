@@ -212,7 +212,6 @@ public class BeanViajes {
 		
 		viaje.setAvailablePax( viaje.getAvailablePax() - 1);
 		td.update(viaje);
-		viajero.setTrip(viaje);
 		viajeros.add(viajero);
 		
 		System.out.println("Plaza confirmada para " + viajero.getUser().getName() + " en el viaje [id:"+ viaje.getId() +"]");
@@ -247,7 +246,6 @@ public class BeanViajes {
 		
 		viaje.setAvailablePax( viaje.getAvailablePax() + 1);
 		td.update(viaje);
-		viajero.setTrip(viaje);
 		for(int i = 0; i < viajeros.size(); i++){
 			if(viajeros.get(i).getUser().getId().equals(viajero.getUser().getId())){
 				viajeros.remove(i);

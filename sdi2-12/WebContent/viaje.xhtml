@@ -121,14 +121,14 @@
 						</p:column>
 						<p:column headerText="Opciones">
 							<p:commandLink
-								rendered="#{!pendiente.excluded}"
+								rendered="#{pendiente.excludable}"
 								value="Excluir"
 								actionListener="#{viajes.exclude(pendiente)}"
 								update="form-content"
 								/>
 							<br/>
 							<p:commandLink 
-								rendered="#{!pendiente.accepted}"
+								rendered="#{pendiente.acceptable}"
 								value="Admitir"
 								actionListener="#{viajes.accept(pendiente)}"
 								update="form-content"
