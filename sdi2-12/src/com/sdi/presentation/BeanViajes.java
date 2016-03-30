@@ -224,6 +224,7 @@ public class BeanViajes {
 		Transaction t = p.newTransaction();
 		SeatDao sd = p.newSeatDao();
 		TripDao td = p.newTripDao();
+		boolean restorePax = false;
 		
 		t.begin();
 		
@@ -242,9 +243,12 @@ public class BeanViajes {
 			viajero.getSeat().setStatus(SeatStatus.EXCLUDED);
 			
 			sd.update(viajero.getSeat());
+			restorePax = true;
 		}
 		
-		viaje.setAvailablePax( viaje.getAvailablePax() + 1);
+		if(restorePax) {
+			viaje.setAvailablePax( viaje.getAvailablePax() + 1);
+		}
 		td.update(viaje);
 		for(int i = 0; i < viajeros.size(); i++){
 			if(viajeros.get(i).getUser().getId().equals(viajero.getUser().getId())){
