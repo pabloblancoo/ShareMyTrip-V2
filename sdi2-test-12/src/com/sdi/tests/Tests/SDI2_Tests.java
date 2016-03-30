@@ -78,6 +78,12 @@ public class SDI2_Tests {
 	//	4.	[IdInval] Identificación de usuario registrado con datos inválidos.
     @Test
     public void t04_IdInval() {
+    	
+    	driver.get("http://localhost:8280/sdi2-12/iniciarSesion.xhtml");
+		new POInicioSesion().rellenaFormulario(driver, "test2", "test");
+		
+		SeleniumUtils.EsperaCargaPagina(driver, "class", "ui-messages-error", 10); 
+		SeleniumUtils.textoPresentePagina(driver, "Error");
     
     }
 	//	5.	[AccInval] Intento de acceso con URL desde un usuario no público (no identificado). Intento de acceso a vistas de acceso privado. 
