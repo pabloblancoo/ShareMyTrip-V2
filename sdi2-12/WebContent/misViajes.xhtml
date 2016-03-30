@@ -9,30 +9,41 @@
 			<div class="ui-grid-row">
 				<div class="ui-grid-col-1"></div>
 				<div class="ui-grid-col-10">
-				<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
-					<p:dataTable id="tabla" var="viaje" value="#{misViajes.viajes}">
-						<p:column headerText="#{msgs.listTripDeparture}">
-							<h:outputText value="#{viaje.viaje.departure.city}" />
-						</p:column>
-						<p:column headerText="#{msgs.listTripDestination}">
-							<h:outputText value="#{viaje.viaje.destination.city}" />
-						</p:column>
-						<p:column headerText="#{msgs.ownTripClosingDate}">
-							<h:outputText value="#{viaje.viaje.closingDate}">
-							<f:convertDateTime locale="#{settings.locale}" type="date"
-								dateStyle="full" />
-						</h:outputText>
-						</p:column>
-						<p:column headerText="#{msgs.ownTripState}">
-							<h:outputText value="#{viaje.relacion}" />
-						</p:column>
-						<p:column headerText="#{msgs.ownTripOptions}">
-							<p:commandLink value="#{viaje.isCancelable()}" rendered="#{viaje.isCancelable() != null}"
-							type="submit" inmediate="true" update="tabla"
-							actionListener="#{misViajes.cancelar(viaje)}"/>
-						</p:column>
-						
-					</p:dataTable>
+					<p:messages id="messages" showDetail="true" autoUpdate="true"
+						closable="true" />
+
+						<p:dataTable id="tabla" var="viajev" value="#{misViajes.viajes}"
+							rowIndexVar="index">
+
+							<p:column>
+								<p:selectBooleanCheckbox rendered="#{viajev.isCancelable() != null}" value="#{viajev.seleccionado}" />
+							</p:column>
+							<p:column headerText="#{msgs.listTripDeparture}">
+								<h:outputText value="#{viajev.viaje.departure.city}" />
+							</p:column>
+							<p:column headerText="#{msgs.listTripDestination}">
+								<h:outputText value="#{viajev.viaje.destination.city}" />
+							</p:column>
+							<p:column headerText="#{msgs.ownTripClosingDate}">
+								<h:outputText value="#{viajev.viaje.closingDate}">
+									<f:convertDateTime locale="#{settings.locale}" type="date"
+										dateStyle="full" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="#{msgs.ownTripState}">
+								<h:outputText value="#{viajev.relacion}" />
+							</p:column>
+							<p:column headerText="#{msgs.ownTripOptions}">
+								<p:commandLink value="#{viajev.isCancelable()}"
+									rendered="#{viajev.isCancelable() != null}" type="submit"
+									inmediate="true" update="tabla"
+									actionListener="#{misViajes.cancelar(viajev)}" />
+							</p:column>
+
+						</p:dataTable>
+
+					<p:commandButton value="Cancelar seleccionados" type="submit"
+						update="tabla" actionListener="#{misViajes.cancelacionMultiple()}" />
 				</div>
 			</div>
 		</div>

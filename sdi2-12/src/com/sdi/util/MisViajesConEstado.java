@@ -12,6 +12,8 @@ public class MisViajesConEstado {
 	
 	private Trip viaje;
 	private String relacion;
+	private boolean seleccionado;
+	
 	private ResourceBundle msgs = FacesContext.getCurrentInstance()
 			.getApplication().getResourceBundle(FacesContext.getCurrentInstance(), "msgs");
 	
@@ -52,6 +54,14 @@ public class MisViajesConEstado {
 	@Override
 	public String toString() {
 		return "Viaje: " + viaje.toString() + ", relacion: " + relacion;
+	}
+
+	public boolean isSeleccionado() {
+		return seleccionado;
+	}
+
+	public void setSeleccionado(boolean seleccionado) {
+		this.seleccionado = seleccionado;
 	}
 
 }
