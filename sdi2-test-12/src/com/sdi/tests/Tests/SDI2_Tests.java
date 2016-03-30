@@ -10,6 +10,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import com.sdi.tests.pageobjects.POInicioSesion;
 import com.sdi.tests.pageobjects.PORegistro;
 import com.sdi.tests.utils.SeleniumUtils;
 
@@ -36,7 +37,7 @@ public class SDI2_Tests {
 	public void end()
 	{
 		//Cerramos el navegador
-		//driver.quit();
+		driver.quit();
 	}
 
 	//PRUEBAS
@@ -65,7 +66,13 @@ public class SDI2_Tests {
     }
 	//	3.	[IdVal] Identificación de Usuario registrado con datos válidos.
     @Test
-    public void t03_IdVal() {
+    public void t03_IdVal() throws InterruptedException {
+    	
+    	driver.get("http://localhost:8280/sdi2-12/iniciarSesion.xhtml");
+		new POInicioSesion().rellenaFormulario(driver, "test", "test");
+		
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "test", 10); 
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "test@test.com", 10); 
     
     }
 	//	4.	[IdInval] Identificación de usuario registrado con datos inválidos.
