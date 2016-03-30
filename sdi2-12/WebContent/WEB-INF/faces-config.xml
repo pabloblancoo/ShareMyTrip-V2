@@ -37,15 +37,6 @@
 			<from-outcome>error</from-outcome>
 			<to-view-id>/error.xhtml</to-view-id>
 		</navigation-case>
-		<navigation-case>
-			<from-outcome>alta</from-outcome>
-			<to-view-id>/altaForm.xhtml</to-view-id>
-		</navigation-case>
-		<navigation-case>
-			<from-action>#{controller.listado}</from-action>
-			<from-outcome>exito</from-outcome>
-			<to-view-id>/listado.xhtml</to-view-id>
-		</navigation-case>
 		<!-- Cerrar sesion -->
 		<navigation-case>
 			<from-action>#{settings.usuario.cerrarSesion}</from-action>

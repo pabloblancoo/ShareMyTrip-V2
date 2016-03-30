@@ -8,6 +8,10 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+import com.sdi.tests.pageobjects.PORegistro;
+import com.sdi.tests.utils.SeleniumUtils;
 
 //Ordenamos las pruebas por el nombre del método
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) 
@@ -24,9 +28,9 @@ public class SDI2_Tests {
 	public void run()
 	{
 		//Creamos el driver para Firefox. Recomendable usar Firefox.
-		//driver = new FirefoxDriver();
+		driver = new FirefoxDriver();
 		//Vamos a la página principal de mi aplicación
-		//driver.get("http://localhost:8280/sdi2-n");			
+		//driver.get("http://localhost:8280/sdi2-12");			
 	}
 	@After
 	public void end()
@@ -39,8 +43,14 @@ public class SDI2_Tests {
 	
 	//	1.	[RegVal] Registro de Usuario con datos válidos.
 	@Test	
-    public void t01_RegVal() {
-    
+    public void t01_RegVal() throws InterruptedException {
+		driver.get("http://localhost:8280/sdi2-12/registrarse.xhtml");
+		new PORegistro().rellenaFormulario(driver, "test",  "test",  "test",  "test@test.com",  "test");
+		
+		Thread.sleep(1000);
+		
+		SeleniumUtils.EsperaCargaPagina(driver, "id", "login", 10); 
+		
     }
 	//	2.	[RegInval] Registro de Usuario con datos inválidos (contraseñas diferentes).
     @Test
