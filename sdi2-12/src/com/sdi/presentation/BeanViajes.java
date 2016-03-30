@@ -15,18 +15,22 @@ import com.sdi.model.Seat;
 import com.sdi.model.SeatStatus;
 import com.sdi.model.Trip;
 import com.sdi.model.User;
+import com.sdi.persistence.PersistenceFactory;
 import com.sdi.persistence.SeatDao;
+import com.sdi.persistence.Transaction;
+import com.sdi.persistence.TripDao;
 import com.sdi.persistence.UserDao;
+import com.sdi.util.Viajero;
 
 @ManagedBean(name="viajes")
 @SessionScoped
 public class BeanViajes {
 	
 	List<Trip> viajes;
-	Long lastUpdate;
 	Trip viaje;
 	User promotor;
-	List<User> viajeros;
+	List<Viajero> viajeros;
+	List<Viajero> pendientes;
 	List<Application> peticiones;
 	
 	private ResourceBundle msgs = FacesContext.getCurrentInstance()
@@ -36,11 +40,9 @@ public class BeanViajes {
 		promotor = null;
 		viajeros = new ArrayList<>();
 		
-		if(viajes == null || System.currentTimeMillis() - lastUpdate > (1*60)*1000){
-			lastUpdate = System.currentTimeMillis();
-			viajes = Factories.persistence.newTripDao().findAllOpenAndPaxAvailables();
-			System.out.println("Viajes cargados: " + viajes.size());
-		}
+		viajes = Factories.persistence.newTripDao().findAllOpenAndPaxAvailables();
+		System.out.println("Viajes cargados: " + viajes.size());
+
 		return viajes;
 	}
 
@@ -69,19 +71,36 @@ public class BeanViajes {
 		
 		promotor = ud.findById(viaje.getPromoterId());
 		System.out.println("Promotor: " + promotor.getName());
+		
+		//---------------------
 		viajeros = new ArrayList<>();
+		pendientes = new ArrayList<>();
 		
 		peticiones = Factories.persistence.newApplicationDao().findByTripId(viaje.getId());
 		
 		for(Application peticion: peticiones){
 			Seat plaza = sd.findByUserAndTrip(peticion.getUserId(), viaje.getId());
-			if(plaza != null && plaza.getStatus().equals(SeatStatus.ACCEPTED)){
-				viajeros.add(ud.findById(plaza.getUserId()));
+			User user = ud.findById(peticion.getUserId());
+			
+			Viajero viajero = new Viajero(user, viaje, peticion, plaza);
+			
+			if(viajero.getStatus().equals(msgs.getString("ownTripAccepted"))){
+				viajeros.add(viajero);
 			}
+			
+			pendientes.add(viajero);
 		}
 		
 		System.out.println("Loaded " + viajeros.size() + " viajeros");
 		
+	}
+
+	public List<Viajero> getPendientes() {
+		return pendientes;
+	}
+
+	public void setPendientes(List<Viajero> pendientes) {
+		this.pendientes = pendientes;
 	}
 
 	public User getPromotor() {
@@ -92,11 +111,11 @@ public class BeanViajes {
 		this.promotor = promotor;
 	}
 
-	public List<User> getViajeros() {
+	public List<Viajero> getViajeros() {
 		return viajeros;
 	}
 
-	public void setViajeros(List<User> viajeros) {
+	public void setViajeros(List<Viajero> viajeros) {
 		this.viajeros = viajeros;
 	}
 	
@@ -148,7 +167,98 @@ public class BeanViajes {
 		
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 
+	}
+	
+	/**
+	 * Metodo que devuelve true si el usuario con sesion iniciada es el promotor
+	 * @return boolean
+	 */
+	public boolean isPromotorViaje(){
+		BeanUsuario u = ((BeanSettings) FacesContext.getCurrentInstance().getExternalContext()
+				.getSessionMap().get("settings")).getUsuario();
 		
+		if(u == null){
+			return false;
+		}
+		
+		return u.getId().equals(viaje.getPromoterId());
+	}
+	
+	
+	public void accept(Viajero viajero){
+		PersistenceFactory p = Factories.persistence;
+		Transaction t = p.newTransaction();
+		SeatDao sd = p.newSeatDao();
+		TripDao td = p.newTripDao();
+		
+		t.begin();
+		
+		if(viajero.getSeat() == null){
+			Seat seat = new Seat();
+			seat.setComment("");
+			seat.setStatus(SeatStatus.ACCEPTED);
+			seat.setTripId(viaje.getId());
+			seat.setUserId(viajero.getUser().getId());
+		
+			sd.save(seat);
+			
+			viajero.setSeat(seat);
+		}
+		else{
+			viajero.getSeat().setStatus(SeatStatus.ACCEPTED);
+			
+			sd.update(viajero.getSeat());
+		}
+		
+		viaje.setAvailablePax( viaje.getAvailablePax() - 1);
+		td.update(viaje);
+		viajeros.add(viajero);
+		
+		System.out.println("Plaza confirmada para " + viajero.getUser().getName() + " en el viaje [id:"+ viaje.getId() +"]");
+		
+		t.commit();
+	}
+	
+	public void exclude(Viajero viajero){
+		PersistenceFactory p = Factories.persistence;
+		Transaction t = p.newTransaction();
+		SeatDao sd = p.newSeatDao();
+		TripDao td = p.newTripDao();
+		boolean restorePax = false;
+		
+		t.begin();
+		
+		if(viajero.getSeat() == null){
+			Seat seat = new Seat();
+			seat.setComment("");
+			seat.setStatus(SeatStatus.EXCLUDED);
+			seat.setTripId(viaje.getId());
+			seat.setUserId(viajero.getUser().getId());
+		
+			sd.save(seat);
+			
+			viajero.setSeat(seat);
+		}
+		else{
+			viajero.getSeat().setStatus(SeatStatus.EXCLUDED);
+			
+			sd.update(viajero.getSeat());
+			restorePax = true;
+		}
+		
+		if(restorePax) {
+			viaje.setAvailablePax( viaje.getAvailablePax() + 1);
+		}
+		td.update(viaje);
+		for(int i = 0; i < viajeros.size(); i++){
+			if(viajeros.get(i).getUser().getId().equals(viajero.getUser().getId())){
+				viajeros.remove(i);
+			}
+		}
+		
+		System.out.println("Plaza excluida para " + viajero.getUser().getName() + " en el viaje [id:"+ viaje.getId() +"]");
+		
+		t.commit();
 	}
 
 }
