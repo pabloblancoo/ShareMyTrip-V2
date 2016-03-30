@@ -45,7 +45,7 @@ public class SDI2_Tests {
 	@Test	
     public void t01_RegVal() throws InterruptedException {
 		driver.get("http://localhost:8280/sdi2-12/registrarse.xhtml");
-		new PORegistro().rellenaFormulario(driver, "test",  "test",  "test",  "test@test.com",  "test");
+		new PORegistro().rellenaFormulario(driver, "test",  "test",  "test",  "test@test.com",  "test", "test");
 		
 		Thread.sleep(1000);
 		
@@ -55,6 +55,12 @@ public class SDI2_Tests {
 	//	2.	[RegInval] Registro de Usuario con datos inválidos (contraseñas diferentes).
     @Test
     public void t02_RegInval() {
+    	
+    	driver.get("http://localhost:8280/sdi2-12/registrarse.xhtml");
+		new PORegistro().rellenaFormulario(driver, "test2",  "test2",  "test2",  "test2@test.com",  "test", "test2");
+		
+		SeleniumUtils.EsperaCargaPagina(driver, "class", "ui-messages-error", 10);
+		SeleniumUtils.textoPresentePagina(driver, "Error");
     
     }
 	//	3.	[IdVal] Identificación de Usuario registrado con datos válidos.
