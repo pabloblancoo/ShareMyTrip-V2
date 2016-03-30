@@ -85,7 +85,7 @@ public class Comprobante {
 		Waypoint punto = null;
 		
 		try {
-			String[] array = arg.split(",");
+			String[] array = arg.split(";");
 			punto = new Waypoint(Double.parseDouble(array[0]), Double.parseDouble(array[1]));
 			
 		} catch (Exception e) {

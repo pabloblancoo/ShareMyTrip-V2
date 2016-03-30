@@ -4,11 +4,6 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
 	version="2.2">
 	<managed-bean>
-		<managed-bean-name>controller</managed-bean-name>
-		<managed-bean-class>com.sdi.presentation.BeanTrips</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
-	</managed-bean>
-	<managed-bean>
 		<managed-bean-name>settings</managed-bean-name>
 		<managed-bean-class>com.sdi.presentation.BeanSettings</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
@@ -21,6 +16,11 @@
 	<managed-bean>
 		<managed-bean-name>viajes</managed-bean-name>
 		<managed-bean-class>com.sdi.presentation.BeanViajes</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>viaje</managed-bean-name>
+		<managed-bean-class>com.sdi.presentation.BeanViaje</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 
@@ -84,6 +84,19 @@
 		</navigation-case>
 	</navigation-rule>
 	
+	<!-- Registrar viajes -->
+	
+	<navigation-rule>
+		<from-view-id>/registrarViaje.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>exito</from-outcome>
+			<to-view-id>/index.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>usuario_no_valido</from-outcome>
+			<to-view-id>/iniciarSesion.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 	<!-- Vista viaje -->
 	<navigation-rule>
 		<from-view-id>/viaje.xhtml</from-view-id>
@@ -103,6 +116,7 @@
 	</navigation-rule>
 	
 	
+
 	
 	<!-- Cosas Notaneitor -->
 	<navigation-rule>

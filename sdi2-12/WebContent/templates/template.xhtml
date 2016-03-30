@@ -30,6 +30,10 @@
 					value="#{msgs.navLogout}"
 					action="#{settings.usuario.cerrarSesion}"/>
 					
+				<p:menuitem rendered="#{settings.usuario != null}"
+				value="#{msgs.navRegisterTrip}"
+				url="./registrarViaje.xhtml" />
+					
 			</p:menubar>
 		</h:form>
 		<h:form id="form-content" style="padding: 10px;">
