@@ -115,7 +115,18 @@
 							<h:outputText value="#{pendiente.status}" />
 						</p:column>
 						<p:column headerText="Opciones">
-							
+							<p:commandLink
+								rendered="#{!pendiente.excluded}"
+								value="Excluir"
+								actionListener="#{viajes.exclude(pendiente)}"
+								update="@all"
+								/>
+							<br/>
+							<p:commandLink 
+								rendered="#{!pendiente.accepted}"
+								value="Admitir"
+								actionListener="#{viajes.accept(pendiente)}"
+								/>
 						</p:column>
 					</p:dataTable>
 				</div>

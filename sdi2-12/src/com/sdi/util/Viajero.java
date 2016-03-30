@@ -72,7 +72,11 @@ public class Viajero {
 	}
 	
 	public boolean isAccepted(){
-		return true;
+		return getStatus().equals(msgs.getString("ownTripAccepted"));
+	}
+	
+	public boolean isExcluded(){
+		return getStatus().equals(msgs.getString("ownTripExcluded"));
 	}
 
 }

@@ -12,10 +12,15 @@ import javax.faces.context.FacesContext;
 import com.sdi.infrastructure.Factories;
 import com.sdi.model.Application;
 import com.sdi.model.Seat;
+import com.sdi.model.SeatStatus;
 import com.sdi.model.Trip;
 import com.sdi.model.User;
+import com.sdi.persistence.PersistenceFactory;
 import com.sdi.persistence.SeatDao;
+import com.sdi.persistence.Transaction;
+import com.sdi.persistence.TripDao;
 import com.sdi.persistence.UserDao;
+import com.sdi.persistence.impl.TransactionJdbcImpl;
 import com.sdi.util.Viajero;
 
 @ManagedBean(name="viajes")
@@ -168,9 +173,56 @@ public class BeanViajes {
 
 	}
 	
+	/**
+	 * Metodo que devuelve true si el usuario con sesion iniciada es el promotor
+	 * @return boolean
+	 */
 	public boolean isPromotorViaje(){
-		return ((BeanSettings) FacesContext.getCurrentInstance().getExternalContext()
-				.getSessionMap().get("settings")).getUsuario().getId().equals(viaje.getPromoterId());
+		BeanUsuario u = ((BeanSettings) FacesContext.getCurrentInstance().getExternalContext()
+				.getSessionMap().get("settings")).getUsuario();
+		
+		if(u == null){
+			return false;
+		}
+		
+		return u.getId().equals(viaje.getPromoterId());
+	}
+	
+	
+	public void accept(Viajero viajero){
+		PersistenceFactory p = Factories.persistence;
+		Transaction t = p.newTransaction();
+		SeatDao sd = p.newSeatDao();
+		TripDao td = p.newTripDao();
+		
+		t.begin();
+		
+		if(viajero.getSeat() == null){
+			Seat seat = new Seat();
+			seat.setComment("");
+			seat.setStatus(SeatStatus.ACCEPTED);
+			seat.setTripId(viaje.getId());
+			seat.setUserId(viajero.getUser().getId());
+		
+			sd.save(seat);
+			
+			viajero.setSeat(seat);
+		}
+		else{
+			viajero.getSeat().setStatus(SeatStatus.ACCEPTED);
+			
+			sd.update(viajero.getSeat());
+		}
+		
+		viaje.setAvailablePax( viaje.getAvailablePax() - 1);
+		td.update(viaje);
+		viajero.setTrip(viaje);
+		
+		t.commit();
+	}
+	
+	public void exclude(Viajero viajero){
+		System.out.println("Excluido");
 	}
 
 }
