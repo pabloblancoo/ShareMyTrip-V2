@@ -82,21 +82,28 @@
 
 					<p:panelGrid columns="2" rendered="#{settings.usuario != null}">
 						<f:facet name="header">
-							<h:outputText value="Viajeros" />
+							<h:outputText value="#{msgs.tripTravelers}" />
 						</f:facet>
 
-						<h:outputText value="Nombre promotor" />
+						<h:outputText value="#{msgs.tripPromoter}" />
 						<h:outputText value="#{viajes.promotor.name}" />
 
 						<ui:repeat var="viajero" value="#{viajes.viajeros}"
 							rendered="#{viajes.viajeros.size() > 0}">
-							<h:outputText value="Acompañante" />
+							<h:outputText value="#{msgs.tripTraveler}" />
 							<h:outputText value="#{viajero.name}" />
 						</ui:repeat>
 
 					</p:panelGrid>
 					<p:panelGrid columns="1" rendered="#{settings.usuario == null}">
-						Para ver más información sobre el promotor y los viajeros confirmados debes iniciar sesion o registrarse.
+						#{msgs.tripMoreInfo}
+					</p:panelGrid>
+					<p:panelGrid columns="1" rendered="#{viajes.mostrarSolicitarPlaza()}">
+						<p:commandButton value="#{msgs.tripApply}" 
+							action="solicitarPlaza"
+							type="submit"
+							actionListener="#{viajes.solicitarPlaza}"
+							inmediate="true"/>
 					</p:panelGrid>
 				</div>
 			</div>

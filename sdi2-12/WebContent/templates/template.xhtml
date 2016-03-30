@@ -14,7 +14,10 @@
 		<h:form id="form-nav-bar">
 			<p:menubar>
 				<p:menuitem value="#{msgs.navListTrips}" url="./index.xhtml" />
-
+									
+				<p:menuitem rendered="#{settings.usuario != null}"
+					value="#{msgs.navOwnTrips}"
+					url="./misViajes.xhtml"/>
 	
 				<p:menuitem rendered="#{settings.usuario == null}"
 				 value="#{msgs.navLogin}"
