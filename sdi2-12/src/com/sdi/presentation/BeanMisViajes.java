@@ -34,7 +34,6 @@ public class BeanMisViajes {
 		cargarViajesPromotor(viajes, usuario.getId());
 		cargarViajes(viajes, usuario.getId());
 
-
 		return viajes;
 	}
 
@@ -91,6 +90,29 @@ public class BeanMisViajes {
 	 */
 	public String cancelar(MisViajesConEstado trip){
 
+		cancelarPrivado(trip);
+
+		return null;
+	}
+	
+	/**
+	 * Metodo que apartir de la lista de los indices de los viajes seleccionados
+	 * obtiene el viaje y se lo pasa al metodo cancelar para que lo cancele
+	 */
+	public String cancelacionMultiple(){
+		int cancelados = 0;
+		
+		for(MisViajesConEstado viaje: viajes){
+			if(viaje.isSeleccionado()){
+				cancelados++;
+				cancelarPrivado(viaje);
+			}
+		}
+		System.out.println("Cancelados " + cancelados + " viajes/plazas.");
+		return null;
+	}
+	
+	private void cancelarPrivado(MisViajesConEstado trip){
 		Long idUsuario = ((BeanSettings) FacesContext.getCurrentInstance()
 				.getExternalContext().getSessionMap().get("settings")).getUsuario().getId();
 
@@ -130,7 +152,6 @@ public class BeanMisViajes {
 
 			System.out.println("Viaje cancelado con exito");
 		}
-
-		return null;
 	}
+	
 }
