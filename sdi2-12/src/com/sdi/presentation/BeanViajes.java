@@ -20,7 +20,6 @@ import com.sdi.persistence.SeatDao;
 import com.sdi.persistence.Transaction;
 import com.sdi.persistence.TripDao;
 import com.sdi.persistence.UserDao;
-import com.sdi.persistence.impl.TransactionJdbcImpl;
 import com.sdi.util.Viajero;
 
 @ManagedBean(name="viajes")
@@ -28,7 +27,6 @@ import com.sdi.util.Viajero;
 public class BeanViajes {
 	
 	List<Trip> viajes;
-	Long lastUpdate;
 	Trip viaje;
 	User promotor;
 	List<Viajero> viajeros;
@@ -42,11 +40,9 @@ public class BeanViajes {
 		promotor = null;
 		viajeros = new ArrayList<>();
 		
-		if(viajes == null || System.currentTimeMillis() - lastUpdate > (1*60)*1000){
-			lastUpdate = System.currentTimeMillis();
-			viajes = Factories.persistence.newTripDao().findAllOpenAndPaxAvailables();
-			System.out.println("Viajes cargados: " + viajes.size());
-		}
+		viajes = Factories.persistence.newTripDao().findAllOpenAndPaxAvailables();
+		System.out.println("Viajes cargados: " + viajes.size());
+
 		return viajes;
 	}
 
@@ -217,12 +213,50 @@ public class BeanViajes {
 		viaje.setAvailablePax( viaje.getAvailablePax() - 1);
 		td.update(viaje);
 		viajero.setTrip(viaje);
+		viajeros.add(viajero);
+		
+		System.out.println("Plaza confirmada para " + viajero.getUser().getName() + " en el viaje [id:"+ viaje.getId() +"]");
 		
 		t.commit();
 	}
 	
 	public void exclude(Viajero viajero){
-		System.out.println("Excluido");
+		PersistenceFactory p = Factories.persistence;
+		Transaction t = p.newTransaction();
+		SeatDao sd = p.newSeatDao();
+		TripDao td = p.newTripDao();
+		
+		t.begin();
+		
+		if(viajero.getSeat() == null){
+			Seat seat = new Seat();
+			seat.setComment("");
+			seat.setStatus(SeatStatus.EXCLUDED);
+			seat.setTripId(viaje.getId());
+			seat.setUserId(viajero.getUser().getId());
+		
+			sd.save(seat);
+			
+			viajero.setSeat(seat);
+		}
+		else{
+			viajero.getSeat().setStatus(SeatStatus.EXCLUDED);
+			
+			sd.update(viajero.getSeat());
+		}
+		
+		viaje.setAvailablePax( viaje.getAvailablePax() + 1);
+		td.update(viaje);
+		viajero.setTrip(viaje);
+		for(int i = 0; i < viajeros.size(); i++){
+			if(viajeros.get(i).getUser().getId().equals(viajero.getUser().getId())){
+				viajeros.remove(i);
+			}
+		}
+		
+		System.out.println("Plaza excluida para " + viajero.getUser().getName() + " en el viaje [id:"+ viaje.getId() +"]");
+		
+		t.commit();
 	}
 
 }

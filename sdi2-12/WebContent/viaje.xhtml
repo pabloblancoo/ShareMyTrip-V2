@@ -92,7 +92,12 @@
 
 						<ui:repeat var="viajero" value="#{viajes.viajeros}"
 							rendered="#{viajes.viajeros.size() > 0}">
+							
 							<h:outputText value="#{msgs.tripTraveler}" />
+						</ui:repeat>
+						<ui:repeat var="viajero" value="#{viajes.viajeros}"
+							rendered="#{viajes.viajeros.size() > 0}">
+							
 							<h:outputText value="#{viajero.user.name}" />
 						</ui:repeat>
 
@@ -119,13 +124,14 @@
 								rendered="#{!pendiente.excluded}"
 								value="Excluir"
 								actionListener="#{viajes.exclude(pendiente)}"
-								update="@all"
+								update="form-content"
 								/>
 							<br/>
 							<p:commandLink 
 								rendered="#{!pendiente.accepted}"
 								value="Admitir"
 								actionListener="#{viajes.accept(pendiente)}"
+								update="form-content"
 								/>
 						</p:column>
 					</p:dataTable>
