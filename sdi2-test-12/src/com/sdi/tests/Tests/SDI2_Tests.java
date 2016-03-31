@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -119,7 +120,33 @@ public class SDI2_Tests {
     }
 	//	7.	[RegViajeInVal] Registro de un viaje nuevo con datos inválidos. 
     @Test
-    public void t07_RegViajeInVal() {
+    public void t07_RegViajeInVal() throws InterruptedException {
+    	
+    	driver.get("http://localhost:8280/sdi2-12/iniciarSesion.xhtml");
+		new POInicioSesion().rellenaFormulario(driver, "test", "test");
+		
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "test", 10); 
+		SeleniumUtils.textoPresentePagina(driver, "test@test.com"); 
+		
+		// Sesion iniciada
+    	
+    	List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "form-nav-bar:registrarViaje", 2); 
+		elementos.get(0).click();
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "cod", 10);
+		
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "form-content:botonRecargaSalida", 2);
+		elementos.get(0).click();
+		
+		Thread.sleep(1000);
+		
+		WebElement element = driver.findElement(By.id("form-content:availablePax"));
+		element.click();
+		element.clear();
+		element.sendKeys("6");
+		
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "form-content:boton", 2);
+		elementos.get(2).click();
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "Error", 10); 
     
     }
 	//	8.	[EditViajeVal] Edición de viaje existente con datos válidos.
