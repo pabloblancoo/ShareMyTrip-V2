@@ -437,14 +437,19 @@ public class BeanViaje implements Serializable{
 	/**
 	 * Pone unos datos validos precargados en los campos de registrar viaje
 	 */
+	@SuppressWarnings("deprecation")
 	public void cargarDatos(){
+		
+		Date fecha = new Date();
+		fecha.setDate(fecha.getDate() + 2);
+		
 		departureAddress = "Uria";
 		departureCity = "Oviedo";
 		departureState = "Asturias";
 		departureCountry = "España";
 		departureZipCode = "33070";	
 		departureWaypointStr = "0.0 ; 0,0";
-		departureDate = new Date();
+		departureDate = fecha;
 
 		arrivalAddress = "Gran via";
 		arrivalCity = "Madrid";
@@ -452,9 +457,9 @@ public class BeanViaje implements Serializable{
 		arrivalCountry = "España";
 		arrivalZipCode = "28080";
 		arrivalWaypointStr = "0.0 ; 0.0";
-		arrivalDate = new Date();
+		arrivalDate = fecha;
 
-		closingDate = new Date();
+		closingDate = fecha;
 		availablePax = 5; 
 		maxPax = 5;
 		estimatedCost = 10.0;
