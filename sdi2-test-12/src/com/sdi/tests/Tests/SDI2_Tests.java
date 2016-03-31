@@ -223,6 +223,28 @@ public class SDI2_Tests {
 	//	17.	[i18N1] Cambio del idioma por defecto a un segundo idioma. (Probar algunas vistas)
     @Test
     public void t17_i18N1() {
+    	
+    	driver.get("http://localhost:8280/sdi2-12/");
+    	
+    	SeleniumUtils.EsperaCargaPagina(driver, "text", "List trips", 10);
+    	
+    	WebElement element = driver.findElement(By.id("form-footer:languajeES"));
+    	element.click();
+    	
+    	SeleniumUtils.EsperaCargaPagina(driver, "text", "Listado de viajes", 10);
+    	
+    	element = driver.findElement(By.id("form-nav-bar:iniciarSesion"));
+    	element.click();
+    	
+    	SeleniumUtils.EsperaCargaPagina(driver, "text", "Contraseña", 10);
+    	
+    	element = driver.findElement(By.id("form-nav-bar:registrarse"));
+    	element.click();
+    	
+    	SeleniumUtils.EsperaCargaPagina(driver, "text", "Nombre", 10);
+    	SeleniumUtils.EsperaCargaPagina(driver, "text", "Apellidos", 10);
+    	SeleniumUtils.EsperaCargaPagina(driver, "text", "Correo electronico", 10);
+    	SeleniumUtils.EsperaCargaPagina(driver, "text", "Contraseña", 10);
     
     }
 	//	18.	[i18N2] Cambio del idioma por defecto a un segundo idioma y vuelta al idioma por defecto. (Probar algunas vistas)
