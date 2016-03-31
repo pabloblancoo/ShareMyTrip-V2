@@ -23,6 +23,11 @@
 		<managed-bean-class>com.sdi.presentation.BeanViaje</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>misViaje</managed-bean-name>
+		<managed-bean-class>com.sdi.presentation.BeanMisViajes</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
 
 	<application>
 		<resource-bundle>
@@ -39,8 +44,7 @@
 		</navigation-case>
 		<!-- Cerrar sesion -->
 		<navigation-case>
-			<from-action>#{settings.usuario.cerrarSesion}</from-action>
-			<from-outcome>exito</from-outcome>
+			<from-outcome>cerrarSesion</from-outcome>
 			<to-view-id>/index.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
