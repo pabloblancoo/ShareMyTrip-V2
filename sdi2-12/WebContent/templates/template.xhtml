@@ -15,10 +15,10 @@
 			<p:menubar>
 				<p:menuitem value="#{msgs.navListTrips}" url="/index.xhtml" />
 
-				<p:menuitem rendered="#{settings.usuario != null}"
+				<p:menuitem id="misViajes" rendered="#{settings.usuario != null}"
 					value="#{msgs.navOwnTrips}" url="/a/misViajes.xhtml" />
 
-				<p:menuitem rendered="#{settings.usuario != null}"
+				<p:menuitem id="registrarViaje" rendered="#{settings.usuario != null}"
 					value="#{msgs.navRegisterTrip}" url="/a/registrarViaje.xhtml" />
 
 				<p:menuitem rendered="#{settings.usuario == null}"
