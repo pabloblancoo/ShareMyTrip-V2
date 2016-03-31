@@ -51,6 +51,7 @@ public class SDI2_Tests {
 		new PORegistro().rellenaFormulario(driver, "test",  "test",  "test",  "test@test.com",  "test", "test");
 
 		SeleniumUtils.EsperaCargaPagina(driver, "id", "login", 10); 
+		SeleniumUtils.textoNoPresentePagina(driver, "Error");
 
 	}
 	//	2.	[RegInval] Registro de Usuario con datos inválidos (contraseñas diferentes).
