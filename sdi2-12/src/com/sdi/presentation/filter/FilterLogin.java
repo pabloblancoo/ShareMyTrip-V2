@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.sdi.presentation.BeanSettings;
-import com.sdi.presentation.BeanUsuario;
 
 @WebFilter(
 		dispatcherTypes = {DispatcherType.REQUEST},
@@ -31,16 +30,20 @@ public class FilterLogin implements Filter{
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse res,
 			FilterChain chain) throws IOException, ServletException {
-
-		BeanUsuario usuario = ((BeanSettings) ((HttpServletRequest)req)
-				.getSession().getAttribute(new String("settings"))).getUsuario();
-
-		if(usuario == null){
-			String path = ((HttpServletRequest)req).getContextPath();
+		
+		HttpServletRequest requ = ((HttpServletRequest)req);
+		
+		if(requ.getSession() == null
+				|| requ.getSession().getAttribute("settings") == null
+				|| ((BeanSettings)requ.getSession().getAttribute("settings")).getUsuario() == null){
+			
+			String path = requ.getContextPath();
 			((HttpServletResponse)res).sendRedirect(path + "/index.xhtml"); 
+			
 		}
-
-		chain.doFilter(req, res);
+		else{
+			chain.doFilter(req, res);
+		}
 
 	}
 
