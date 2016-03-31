@@ -11,23 +11,23 @@
 				<div class="ui-grid-col-10">
 				<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 					<h1>#{msgs.navListTrips}</h1>
-					<p:dataTable var="viaje" value="#{viajes.viajes}" emptyMessage="#{msgs.empty}">
+					<p:dataTable var="viajev" value="#{viajes.viajes}">
 						<p:column headerText="Id">
-							<h:outputText value="#{viaje.id}" />
+							<h:outputText value="#{viajev.id}" />
 						</p:column>
 						<p:column headerText="#{msgs.listTripDeparture}">
-							<h:outputText value="#{viaje.departure.city}" />
+							<h:outputText value="#{viajev.departure.city}" />
 						</p:column>
 						<p:column headerText="#{msgs.listTripDestination}">
-							<h:outputText value="#{viaje.destination.city}" />
+							<h:outputText value="#{viajev.destination.city}" />
 						</p:column>
 						<p:column headerText="#{msgs.listTripAvailablePax}">
-							<h:outputText value="#{viaje.availablePax}" />
+							<h:outputText value="#{viajev.availablePax}" />
 						</p:column>
 						<p:column>
 							<p:commandLink action="moreInfo" type="submit" 
 								value="#{msgs.listTripMoreInfo}"
-								actionListener="#{viajes.setViaje(viaje)}"
+								actionListener="#{viajes.setViaje(viajev)}"
 								inmediate="true"
 								>
 							</p:commandLink>

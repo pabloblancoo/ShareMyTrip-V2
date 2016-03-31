@@ -1,5 +1,6 @@
 package com.sdi.presentation;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -47,7 +48,7 @@ public class BeanViajes {
 		this.viajes = viajes;
 	}
 
-	public Trip getViaje() {
+	public Trip getViaje() throws IOException {
 		return viaje;
 	}
 
@@ -61,7 +62,7 @@ public class BeanViajes {
 	 * (promotor, otros viajeros)
 	 */
 	public void loadMoreInfo(){
-		 ResourceBundle msgs = FacesContext.getCurrentInstance()
+		ResourceBundle msgs = FacesContext.getCurrentInstance()
 					.getApplication().getResourceBundle(FacesContext.getCurrentInstance(), "msgs");
 		
 		UserDao ud = Factories.persistence.newUserDao();
