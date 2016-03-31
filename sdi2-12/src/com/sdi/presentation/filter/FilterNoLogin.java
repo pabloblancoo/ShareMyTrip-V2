@@ -33,9 +33,11 @@ public class FilterNoLogin implements Filter{
 		
 		HttpServletRequest requ = ((HttpServletRequest)req);
 		
-		if(requ.getSession() != null
+		if((requ.getSession() != null
 				&& requ.getSession().getAttribute("settings") != null
-				&& ((BeanSettings)requ.getSession().getAttribute("settings")).getUsuario() == null){
+				&& ((BeanSettings)requ.getSession().getAttribute("settings")).getUsuario() == null)
+				|| requ.getSession() == null
+				|| requ.getSession().getAttribute("settings") == null){
 			
 			chain.doFilter(req, res);
 			
