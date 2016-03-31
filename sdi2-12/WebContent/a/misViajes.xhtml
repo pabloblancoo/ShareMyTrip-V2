@@ -34,7 +34,7 @@
 								<h:outputText value="#{viajev.relacion}" />
 							</p:column>
 							<p:column headerText="#{msgs.ownTripOptions}">
-								<p:commandLink value="#{viajev.isCancelable()}"
+								<p:commandLink id="cancelarViaje" value="#{viajev.isCancelable()}"
 									rendered="#{viajev.isCancelable() != null}" type="submit"
 									inmediate="true" update="tabla"
 									actionListener="#{misViajes.cancelar(viajev)}" />
