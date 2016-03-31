@@ -31,8 +31,10 @@ public class BeanMisViajes {
 		BeanUsuario usuario = ((BeanSettings) FacesContext.getCurrentInstance()
 				.getExternalContext().getSessionMap().get("settings")).getUsuario();
 
-		cargarViajesPromotor(viajes, usuario.getId());
-		cargarViajes(viajes, usuario.getId());
+		if(usuario != null){
+			cargarViajesPromotor(viajes, usuario.getId());
+			cargarViajes(viajes, usuario.getId());
+		}
 
 		return viajes;
 	}
