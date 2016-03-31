@@ -170,7 +170,27 @@ public class SDI2_Tests {
     }
 	//	11.	[CancelMulViajeVal] Cancelación de múltiples viajes existentes por un promotor.
     @Test
-    public void t11_CancelMulViajeVal() {
+    public void t11_CancelMulViajeVal() throws InterruptedException {
+        	
+        	t06_RegViajeVal();
+        	Thread.sleep(1500);
+        	t06_RegViajeVal();
+        	    	
+        	WebElement element = driver.findElement(By.id("form-nav-bar:misViajes"));
+        	element.click();
+        	
+        	List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "class", "ui-chkbox-box", 2);
+        	Actions builder = new Actions(driver);
+            builder.moveToElement(elementos.get(elementos.size() - 1)).perform(); 
+            elementos.get(elementos.size() - 1).click();
+            builder.moveToElement(elementos.get(elementos.size() - 2)).perform(); 
+            elementos.get(elementos.size() - 2).click();
+        	
+        	element = driver.findElement(By.id("form-content:botonCancelar"));
+        	element.click();
+        	
+        	SeleniumUtils.EsperaCargaPagina(driver, "class", "ui-messages-info", 10);
+        	SeleniumUtils.textoPresentePagina(driver, "Info");
     	
     }
 	//	12.	[Ins1ViajeAceptVal] Inscribir en un viaje un solo usuario y ser admitido por el promotor.
