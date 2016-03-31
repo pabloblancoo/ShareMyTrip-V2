@@ -32,9 +32,6 @@ public class BeanViajes {
 	List<Viajero> viajeros;
 	List<Viajero> pendientes;
 	List<Application> peticiones;
-	
-	private ResourceBundle msgs = FacesContext.getCurrentInstance()
-			.getApplication().getResourceBundle(FacesContext.getCurrentInstance(), "msgs");
 
 	public List<Trip> getViajes() {
 		promotor = null;
@@ -64,6 +61,9 @@ public class BeanViajes {
 	 * (promotor, otros viajeros)
 	 */
 	public void loadMoreInfo(){
+		 ResourceBundle msgs = FacesContext.getCurrentInstance()
+					.getApplication().getResourceBundle(FacesContext.getCurrentInstance(), "msgs");
+		
 		UserDao ud = Factories.persistence.newUserDao();
 		SeatDao sd = Factories.persistence.newSeatDao();
 		
@@ -148,6 +148,8 @@ public class BeanViajes {
 	 * ha iniciado sesión
 	 */
 	public void solicitarPlaza(){
+		ResourceBundle msgs = FacesContext.getCurrentInstance()
+					.getApplication().getResourceBundle(FacesContext.getCurrentInstance(), "msgs");
 		
 		BeanSettings bs = (BeanSettings) FacesContext.getCurrentInstance().getExternalContext()
 				.getSessionMap().get("settings");

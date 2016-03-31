@@ -24,7 +24,7 @@
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
-		<managed-bean-name>misViaje</managed-bean-name>
+		<managed-bean-name>misViajes</managed-bean-name>
 		<managed-bean-class>com.sdi.presentation.BeanMisViajes</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>

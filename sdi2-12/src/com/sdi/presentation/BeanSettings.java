@@ -3,9 +3,9 @@ package com.sdi.presentation;
 import java.io.Serializable;
 import java.util.Locale;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-import javax.faces.bean.*;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
@@ -17,16 +17,8 @@ public class BeanSettings implements Serializable {
 	private static final Locale SPANISH = new Locale("es");
 	private Locale locale = new Locale("en");
 	
-	// uso de inyección de dependencia
 	@ManagedProperty(value = "#{usuario}")
 	private BeanUsuario usuario;
-
-	
-
-	// Se inicia correctamente el Managed Bean inyectado si JSF lo hubiera
-	// creado
-	// y en caso contrario se crea.
-	// (hay que tener en cuenta que es un Bean de sesión)
 
 	public BeanUsuario getUsuario() {
 		return usuario;
@@ -36,36 +28,7 @@ public class BeanSettings implements Serializable {
 		this.usuario = usuario;
 	}
 
-	// Se usa @PostConstruct, ya que en el contructor no se sabe todavía si
-	// el MBean ya estaba construido y en @PostConstruct SI.
-	@PostConstruct
-	public void init() {
-//		System.out.println("BeanSettings - PostConstruct");
-//		// Buscamos el alumno en la sesión. Esto es un patrón factoría
-//		// claramente.
-//		usuario = (BeanUsuario) FacesContext.getCurrentInstance()
-//				.getExternalContext().getSessionMap().get(new String("usuario"));
-//
-//		// si no existe lo creamos e inicializamos
-//		if (usuario == null) {
-//			System.out.println("BeanSettings - No existia");
-//			usuario = new BeanUsuario();
-//			FacesContext.getCurrentInstance().getExternalContext()
-//					.getSessionMap().put("usuario", usuario);
-//		}
-	}
-
-	// Es sólo a modo de traza.
-	@PreDestroy
-	public void end() {
-		System.out.println("BeanSettings - PreDestroy");
-	}
-
 	public Locale getLocale() {
-		// Aqui habria que cambiar algo de código para coger locale del
-		// navegador
-		// la primera vez que se accede a getLocale(), de momento dejamos como
-		// idioma de partida “es”
 		return (locale);
 	}
 
@@ -73,8 +36,6 @@ public class BeanSettings implements Serializable {
 		locale = SPANISH;
 		try {
 			FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
-//			if (alumno != null)
-//				alumno.iniciaAlumno(null);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -84,8 +45,6 @@ public class BeanSettings implements Serializable {
 		locale = ENGLISH;
 		try {
 			FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
-//			if (alumno != null)
-//				alumno.iniciaAlumno(null);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

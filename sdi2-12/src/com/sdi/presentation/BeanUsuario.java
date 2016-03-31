@@ -18,9 +18,6 @@ import com.sdi.util.Comprobante;
 @RequestScoped
 public class BeanUsuario implements Serializable {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	private String login;
