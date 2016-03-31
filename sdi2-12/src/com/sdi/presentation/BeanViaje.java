@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -24,10 +25,8 @@ import com.sdi.util.Comprobante;
 @SessionScoped
 public class BeanViaje implements Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
+	
 	boolean salidaDefecto, llegadaDefecto, informacionDefecto;
 	private Long id;
 
@@ -353,6 +352,10 @@ public class BeanViaje implements Serializable{
 	 * @return
 	 */
 	public String registrarViaje() {
+		
+		ResourceBundle msgs = FacesContext.getCurrentInstance()
+				.getApplication().getResourceBundle(FacesContext.getCurrentInstance(), "msgs");
+		
 		Trip trip = new Trip();
 		AddressPoint departure;
 		AddressPoint destination;
@@ -395,15 +398,16 @@ public class BeanViaje implements Serializable{
 							FacesContext.getCurrentInstance().addMessage(
 									null,
 									new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
-											"No puedes tener 2 viajes a la misma hora"));
+											msgs.getString("errorSaveTrip")));
 							return null;
 						}
 						
 						FacesContext.getCurrentInstance().addMessage(
 								null,
 								new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-										"Viaje registrado con exito"));
+										msgs.getString("infoCreateTrip")));
 						
+						borrarDatos();
 						System.out.println("Viaje creado con exito");
 						return "exito";
 					}
@@ -411,7 +415,7 @@ public class BeanViaje implements Serializable{
 						FacesContext.getCurrentInstance().addMessage(
 								null,
 								new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
-										"#{msgs.errorSaveTrip}"));
+										msgs.getString("errorSaveTrip")));
 						return null;
 					}
 				}
@@ -419,14 +423,14 @@ public class BeanViaje implements Serializable{
 					FacesContext.getCurrentInstance().addMessage(
 							null,
 							new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
-									"#{msgs.errorArrivalDate}"));
+									msgs.getString("errorArrivalDate")));
 					return null;
 				}
 			} else {
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
-								"#{msgs.errorClosingDate}"));
+								msgs.getString("errorClosingDate")));
 				return null;
 			}
 		} 
