@@ -16,7 +16,7 @@
 							rowIndexVar="index">
 
 							<p:column>
-								<p:selectBooleanCheckbox rendered="#{viajev.isCancelable() != null}" value="#{viajev.seleccionado}" />
+								<p:selectBooleanCheckbox id="check" rendered="#{viajev.isCancelable() != null}" value="#{viajev.seleccionado}" />
 							</p:column>
 							<p:column headerText="#{msgs.listTripDeparture}">
 								<h:outputText value="#{viajev.viaje.departure.city}" />
@@ -42,7 +42,8 @@
 
 						</p:dataTable>
 
-					<p:commandButton value="Cancelar seleccionados" type="submit"
+					<p:commandButton id="botonCancelar"
+						value="Cancelar seleccionados" type="submit"
 						update="tabla" actionListener="#{misViajes.cancelacionMultiple()}" />
 				</div>
 			</div>
