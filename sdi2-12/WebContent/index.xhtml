@@ -11,7 +11,7 @@
 				<div class="ui-grid-col-10">
 				<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 					<h1>#{msgs.navListTrips}</h1>
-					<p:dataTable var="viaje" value="#{viajes.viajes}">
+					<p:dataTable var="viaje" value="#{viajes.viajes}" emptyMessage="#{msgs.empty}">
 						<p:column headerText="Id">
 							<h:outputText value="#{viaje.id}" />
 						</p:column>

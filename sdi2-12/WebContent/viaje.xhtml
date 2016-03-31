@@ -91,14 +91,14 @@
 					</p:panelGrid>
 					<h3></h3>
 					<p:dataTable rendered="#{settings.usuario != null}" var="viajero"
-						value="#{viajes.viajeros}">
+						value="#{viajes.viajeros}" emptyMessage="#{msgs.empty}">
 						<p:column headerText="#{msgs.tripTraveler}">
 							<h:outputText value="#{viajero.user.name}" />
 						</p:column>
 					</p:dataTable>
 
 					<p:dataTable rendered="#{viajes.isPromotorViaje()}" var="pendiente"
-						value="#{viajes.pendientes}">
+						value="#{viajes.pendientes}" emptyMessage="#{msgs.empty}">
 						<p:column headerText="#{msgs.name}">
 							<h:outputText value="#{pendiente.user.name}" />
 						</p:column>

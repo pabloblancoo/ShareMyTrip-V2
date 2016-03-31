@@ -13,7 +13,7 @@
 						closable="true" />
 
 						<p:dataTable id="tabla" var="viajev" value="#{misViajes.viajes}"
-							rowIndexVar="index">
+							rowIndexVar="index" emptyMessage="#{msgs.empty}">
 
 							<p:column>
 								<p:selectBooleanCheckbox id="check" rendered="#{viajev.isCancelable() != null}" value="#{viajev.seleccionado}" />
