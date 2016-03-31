@@ -37,7 +37,7 @@ public class SDI2_Tests {
 	public void end()
 	{
 		//Cerramos el navegador
-		driver.quit();
+		//driver.quit();
 	}
 
 	//PRUEBAS
@@ -47,8 +47,6 @@ public class SDI2_Tests {
     public void t01_RegVal() throws InterruptedException {
 		driver.get("http://localhost:8280/sdi2-12/registrarse.xhtml");
 		new PORegistro().rellenaFormulario(driver, "test",  "test",  "test",  "test@test.com",  "test", "test");
-		
-		Thread.sleep(1000);
 		
 		SeleniumUtils.EsperaCargaPagina(driver, "id", "login", 10); 
 		
@@ -72,7 +70,7 @@ public class SDI2_Tests {
 		new POInicioSesion().rellenaFormulario(driver, "test", "test");
 		
 		SeleniumUtils.EsperaCargaPagina(driver, "text", "test", 10); 
-		SeleniumUtils.EsperaCargaPagina(driver, "text", "test@test.com", 10); 
+		SeleniumUtils.textoPresentePagina(driver, "test@test.com"); 
     
     }
 	//	4.	[IdInval] Identificación de usuario registrado con datos inválidos.
@@ -95,10 +93,31 @@ public class SDI2_Tests {
     }
 	//	6.	[RegViajeVal] Registro de un viaje nuevo con datos válidos.
     @Test
-    public void t06_RegViajeVal() {
+    public void t06_RegViajeVal() throws InterruptedException {
+    	
+    	driver.get("http://localhost:8280/sdi2-12/iniciarSesion.xhtml");
+		new POInicioSesion().rellenaFormulario(driver, "test", "test");
+		
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "test", 10); 
+		SeleniumUtils.textoPresentePagina(driver, "test@test.com"); 
+		
+		// Sesion iniciada
+		
+		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "form-nav-bar:registrarViaje", 2); 
+		elementos.get(0).click();
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "cod", 10);
+		
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "form-content:botonRecargaSalida", 2);
+		elementos.get(0).click();
+		
+		Thread.sleep(1000);
+		
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "form-content:boton", 2);
+		elementos.get(2).click();
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "Info", 10); 
     
     }
-	//	7.	[RegViajeInVal] Registro de un viaje nuevo con datos inválidos.
+	//	7.	[RegViajeInVal] Registro de un viaje nuevo con datos inválidos. 
     @Test
     public void t07_RegViajeInVal() {
     
