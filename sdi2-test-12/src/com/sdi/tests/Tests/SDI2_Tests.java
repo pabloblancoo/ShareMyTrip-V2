@@ -173,10 +173,12 @@ public class SDI2_Tests {
     public void t11_CancelMulViajeVal() throws InterruptedException {
         	
         	t06_RegViajeVal();
+        	WebElement element = driver.findElement(By.id("form-nav-bar:cerrarSesion"));
+        	element.click();
         	Thread.sleep(1500);
         	t06_RegViajeVal();
         	    	
-        	WebElement element = driver.findElement(By.id("form-nav-bar:misViajes"));
+        	element = driver.findElement(By.id("form-nav-bar:misViajes"));
         	element.click();
         	
         	List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "class", "ui-chkbox-box", 2);
