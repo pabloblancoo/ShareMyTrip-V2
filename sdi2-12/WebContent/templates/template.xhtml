@@ -14,26 +14,23 @@
 		<h:form id="form-nav-bar">
 			<p:menubar>
 				<p:menuitem value="#{msgs.navListTrips}" url="./index.xhtml" />
-									
-				<p:menuitem rendered="#{settings.usuario != null}"
-					value="#{msgs.navOwnTrips}"
-					url="./misViajes.xhtml"/>
-	
-				<p:menuitem rendered="#{settings.usuario == null}"
-				 value="#{msgs.navLogin}"
-					url="./iniciarSesion.xhtml" />
-				<p:menuitem rendered="#{settings.usuario == null}"
-					value="#{msgs.navSignIn}"
-					url="./registrarse.xhtml" />
 
 				<p:menuitem rendered="#{settings.usuario != null}"
-					value="#{msgs.navLogout}"
-					action="#{settings.usuario.cerrarSesion}"/>
-					
+					value="#{msgs.navOwnTrips}" url="./a/misViajes.xhtml" />
+
 				<p:menuitem rendered="#{settings.usuario != null}"
-				value="#{msgs.navRegisterTrip}"
-				url="./registrarViaje.xhtml" />
-					
+					value="#{msgs.navRegisterTrip}" url="./a/registrarViaje.xhtml" />
+
+				<p:menuitem rendered="#{settings.usuario == null}"
+					value="#{msgs.navLogin}" url="./iniciarSesion.xhtml" />
+				<p:menuitem rendered="#{settings.usuario == null}"
+					value="#{msgs.navSignIn}" url="./registrarse.xhtml" />
+
+				<p:menuitem rendered="#{settings.usuario != null}"
+					value="#{msgs.navLogout}" action="#{settings.usuario.cerrarSesion}" />
+
+
+
 			</p:menubar>
 		</h:form>
 		<h:form id="form-content" style="padding: 10px;">
