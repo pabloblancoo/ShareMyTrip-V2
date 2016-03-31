@@ -4,11 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -25,14 +23,14 @@ import com.sdi.util.Comprobante;
 @ManagedBean(name="viaje")
 @SessionScoped
 public class BeanViaje implements Serializable{
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	boolean salidaDefecto, llegadaDefecto, informacionDefecto;
 	private Long id;
-	
+
 	private String departureAddress;
 	private String departureCity;
 	private String departureState;
@@ -40,7 +38,7 @@ public class BeanViaje implements Serializable{
 	private String departureZipCode;	
 	private String departureWaypointStr;
 	private Date departureDate;
-	
+
 	private String arrivalAddress;
 	private String arrivalCity;
 	private String arrivalState;
@@ -48,21 +46,18 @@ public class BeanViaje implements Serializable{
 	private String arrivalZipCode;
 	private String arrivalWaypointStr;
 	private Date arrivalDate;
-	
+
 	private Date closingDate;
 	private int availablePax; 
 	private int maxPax;
 	private Double estimatedCost;
 	private String comments;
 	private TripStatus status;
-	
+
 	private Long promoterId;
 
-	private FacesContext context = FacesContext.getCurrentInstance();
-	private ResourceBundle msgs = context.getApplication().getResourceBundle(context, "msgs");
-	
 	List<String> provincias = new ArrayList<>();
-	
+
 	@PostConstruct
 	private void init(){
 		provincias.add("Alava");
@@ -117,14 +112,14 @@ public class BeanViaje implements Serializable{
 		provincias.add("Zaragoza");
 		provincias.add("Ceuta");
 		provincias.add("Melilla");
-		
+
 	}
-	
+
 	@PreDestroy
 	public void avisame(){
 		System.out.println("Se meure el bean");
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -229,7 +224,7 @@ public class BeanViaje implements Serializable{
 		this.departureZipCode = departureZipCode;
 	}
 
-	
+
 	public String getArrivalAddress() {
 		return arrivalAddress;
 	}
@@ -270,7 +265,7 @@ public class BeanViaje implements Serializable{
 		this.arrivalZipCode = arrivalZipCode;
 	}
 
-	
+
 	public String getDepartureWaypointStr() {
 		return departureWaypointStr;
 	}
@@ -312,7 +307,7 @@ public class BeanViaje implements Serializable{
 		this.provincias = provincias;
 	}
 
-	
+
 	public boolean isSalidaDefecto() {
 		return salidaDefecto;
 	}
@@ -352,7 +347,7 @@ public class BeanViaje implements Serializable{
 		}
 		return retorno;
 	}
-	
+
 	/**
 	 * Registra un viaje nuevo en la Base de Datos
 	 * @return
@@ -366,6 +361,7 @@ public class BeanViaje implements Serializable{
 		BeanUsuario usuario = ((BeanSettings) FacesContext.getCurrentInstance()
 				.getExternalContext()
 				.getSessionMap().get(new String("settings"))).getUsuario();
+
 		if (usuario != null) {
 
 			if (salida == null)
@@ -376,33 +372,40 @@ public class BeanViaje implements Serializable{
 					departureState, departureCountry, departureZipCode, salida);
 			destination = new AddressPoint(arrivalAddress, arrivalCity,
 					arrivalState, arrivalCountry, arrivalZipCode, llegada);
-			
+
 			if (closingDate.compareTo(departureDate) <= 0) {		//Fecha de cierre antes de la salida
 				if (departureDate.compareTo(arrivalDate) <= 0) {	//Fecha de llegada, despues de salida
 					if(maxPax >= availablePax){
-					trip.setDeparture(departure);
-					trip.setDestination(destination);
-					trip.setArrivalDate(arrivalDate);
-					trip.setDepartureDate(departureDate);
-					trip.setClosingDate(closingDate);
-					trip.setAvailablePax(availablePax);
-					trip.setMaxPax(maxPax);
-					trip.setEstimatedCost(estimatedCost);
-					trip.setComments(comments);
-					trip.setStatus(TripStatus.OPEN);
+						trip.setDeparture(departure);
+						trip.setDestination(destination);
+						trip.setArrivalDate(arrivalDate);
+						trip.setDepartureDate(departureDate);
+						trip.setClosingDate(closingDate);
+						trip.setAvailablePax(availablePax);
+						trip.setMaxPax(maxPax);
+						trip.setEstimatedCost(estimatedCost);
+						trip.setComments(comments);
+						trip.setStatus(TripStatus.OPEN);
 
-					trip.setPromoterId(usuario.getId());
+						trip.setPromoterId(usuario.getId());
 
-					try{
-					Factories.persistence.newTripDao().save(trip);
-					}catch(PersistenceException e){
+						try{
+							Factories.persistence.newTripDao().save(trip);
+						}catch(PersistenceException e){
+							FacesContext.getCurrentInstance().addMessage(
+									null,
+									new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
+											"No puedes tener 2 viajes a la misma hora"));
+							return null;
+						}
+						
 						FacesContext.getCurrentInstance().addMessage(
 								null,
-								new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
-										"No puedes tener 2 viajes a la misma hora"));
-						return null;
-					}
-					return "exito";
+								new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+										"Viaje registrado con exito"));
+						
+						System.out.println("Viaje creado con exito");
+						return "exito";
 					}
 					else{
 						FacesContext.getCurrentInstance().addMessage(
@@ -426,14 +429,11 @@ public class BeanViaje implements Serializable{
 								"#{msgs.errorClosingDate}"));
 				return null;
 			}
-		} else {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
-					FacesMessage.SEVERITY_ERROR, "Error",
-					"#{errorMaxPax}"));
-			return "usuario_no_valido";
-		}
+		} 
+
+		return null;
 	}
-	
+
 	/**
 	 * Pone unos datos validos precargados en los campos de registrar viaje
 	 */
@@ -445,7 +445,7 @@ public class BeanViaje implements Serializable{
 		departureZipCode = "33070";	
 		departureWaypointStr = "0.0 ; 0,0";
 		departureDate = new Date();
-		
+
 		arrivalAddress = "Gran via";
 		arrivalCity = "Madrid";
 		arrivalState = "Madrid";
@@ -453,14 +453,14 @@ public class BeanViaje implements Serializable{
 		arrivalZipCode = "28080";
 		arrivalWaypointStr = "0.0 ; 0.0";
 		arrivalDate = new Date();
-		
+
 		closingDate = new Date();
 		availablePax = 5; 
 		maxPax = 5;
 		estimatedCost = 10.0;
 		comments = "Viaje barato a madrid";
 	}
-	
+
 	/**
 	 * 
 	 */
@@ -472,7 +472,7 @@ public class BeanViaje implements Serializable{
 		departureZipCode = "";	
 		departureWaypointStr = "";
 		departureDate = null;
-		
+
 		arrivalAddress = "";
 		arrivalCity = "";
 		arrivalState = "";
@@ -480,7 +480,7 @@ public class BeanViaje implements Serializable{
 		arrivalZipCode = "";
 		arrivalWaypointStr = "";
 		arrivalDate = null;
-		
+
 		closingDate = null;
 		availablePax = 0; 
 		maxPax = 0;

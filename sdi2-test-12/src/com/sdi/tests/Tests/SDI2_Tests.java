@@ -89,7 +89,9 @@ public class SDI2_Tests {
 	//	5.	[AccInval] Intento de acceso con URL desde un usuario no público (no identificado). Intento de acceso a vistas de acceso privado. 
     @Test
     public void t05_AccInval() {
-    
+    	driver.get("http://localhost:8280/sdi2-12/a/misDatos.xhtml");
+    	SeleniumUtils.EsperaCargaPagina(driver, "text", "List", 10); 
+    	
     }
 	//	6.	[RegViajeVal] Registro de un viaje nuevo con datos válidos.
     @Test
