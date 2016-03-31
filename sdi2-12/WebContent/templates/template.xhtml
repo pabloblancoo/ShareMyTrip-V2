@@ -40,6 +40,21 @@
 		</h:form>
 		<h:form id="form-footer">
 				#{msgs.footer}
+				<div id="idiomas" style="float:right">
+					<p:commandLink 
+					value="#{msgs.languajeES}"
+					id="languajeES"
+					update="@all"
+					actionListener="#{settings.setSpanish}"
+					/>
+					&nbsp;
+					<p:commandLink
+					value="#{msgs.languajeEN}"
+					id="languajeEN"
+					update="@all"
+					actionListener="#{settings.setEnglish}"
+					/>
+				</div>
 			</h:form>
 	</h:body>
 </f:view>
