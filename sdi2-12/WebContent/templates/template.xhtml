@@ -13,7 +13,7 @@
 	<h:body>
 		<h:form id="form-nav-bar">
 			<p:menubar>
-				<p:menuitem value="#{msgs.navListTrips}" url="/index.xhtml" />
+				<p:menuitem id="listado" value="#{msgs.navListTrips}" url="/index.xhtml" />
 
 				<p:menuitem id="misViajes" rendered="#{settings.usuario != null}"
 					value="#{msgs.navOwnTrips}" url="/a/misViajes.xhtml" />
@@ -21,9 +21,9 @@
 				<p:menuitem id="registrarViaje" rendered="#{settings.usuario != null}"
 					value="#{msgs.navRegisterTrip}" url="/a/registrarViaje.xhtml" />
 
-				<p:menuitem rendered="#{settings.usuario == null}"
+				<p:menuitem id="iniciarSesion" rendered="#{settings.usuario == null}"
 					value="#{msgs.navLogin}" url="/iniciarSesion.xhtml" />
-				<p:menuitem rendered="#{settings.usuario == null}"
+				<p:menuitem id="registrarse" rendered="#{settings.usuario == null}"
 					value="#{msgs.navSignIn}" url="/registrarse.xhtml" />
 
 				<p:menuitem id="cerrarSesion" rendered="#{settings.usuario != null}"
@@ -40,6 +40,21 @@
 		</h:form>
 		<h:form id="form-footer">
 				#{msgs.footer}
+				<div id="idiomas" style="float:right">
+					<p:commandLink 
+					value="#{msgs.languajeES}"
+					id="languajeES"
+					update="@all"
+					actionListener="#{settings.setSpanish}"
+					/>
+					&nbsp;
+					<p:commandLink
+					value="#{msgs.languajeEN}"
+					id="languajeEN"
+					update="@all"
+					actionListener="#{settings.setEnglish}"
+					/>
+				</div>
 			</h:form>
 	</h:body>
 </f:view>
