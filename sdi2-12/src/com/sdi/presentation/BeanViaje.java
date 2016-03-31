@@ -4,11 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -57,9 +55,6 @@ public class BeanViaje implements Serializable{
 	private TripStatus status;
 	
 	private Long promoterId;
-
-	private FacesContext context = FacesContext.getCurrentInstance();
-	private ResourceBundle msgs = context.getApplication().getResourceBundle(context, "msgs");
 	
 	List<String> provincias = new ArrayList<>();
 	
