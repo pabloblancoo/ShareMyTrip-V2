@@ -10,6 +10,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.interactions.Actions;
 
 import com.sdi.tests.pageobjects.POInicioSesion;
 import com.sdi.tests.pageobjects.PORegistro;
@@ -45,7 +46,7 @@ public class SDI2_Tests {
 	
 	//	1.	[RegVal] Registro de Usuario con datos válidos.
 	@Test	
-    public void t01_RegVal() throws InterruptedException {
+    public void t01_RegVal() {
 		driver.get("http://localhost:8280/sdi2-12/registrarse.xhtml");
 		new PORegistro().rellenaFormulario(driver, "test",  "test",  "test",  "test@test.com",  "test", "test");
 		
@@ -65,7 +66,7 @@ public class SDI2_Tests {
     }
 	//	3.	[IdVal] Identificación de Usuario registrado con datos válidos.
     @Test
-    public void t03_IdVal() throws InterruptedException {
+    public void t03_IdVal() {
     	
     	driver.get("http://localhost:8280/sdi2-12/iniciarSesion.xhtml");
 		new POInicioSesion().rellenaFormulario(driver, "test", "test");
@@ -96,11 +97,7 @@ public class SDI2_Tests {
     @Test
     public void t06_RegViajeVal() throws InterruptedException {
     	
-    	driver.get("http://localhost:8280/sdi2-12/iniciarSesion.xhtml");
-		new POInicioSesion().rellenaFormulario(driver, "test", "test");
-		
-		SeleniumUtils.EsperaCargaPagina(driver, "text", "test", 10); 
-		SeleniumUtils.textoPresentePagina(driver, "test@test.com"); 
+    	t03_IdVal();
 		
 		// Sesion iniciada
 		
@@ -122,11 +119,7 @@ public class SDI2_Tests {
     @Test
     public void t07_RegViajeInVal() throws InterruptedException {
     	
-    	driver.get("http://localhost:8280/sdi2-12/iniciarSesion.xhtml");
-		new POInicioSesion().rellenaFormulario(driver, "test", "test");
-		
-		SeleniumUtils.EsperaCargaPagina(driver, "text", "test", 10); 
-		SeleniumUtils.textoPresentePagina(driver, "test@test.com"); 
+    	t03_IdVal();
 		
 		// Sesion iniciada
     	
@@ -162,12 +155,23 @@ public class SDI2_Tests {
 	//	10.	[CancelViajeVal] Cancelación de un viaje existente por un promotor.
     @Test
     public void t10_CancelViajeVal() {
+    	
+    	t03_IdVal();
+    	
+    	WebElement element = driver.findElement(By.id("form-nav-bar:misViajes"));
+    	element.click();
+    	
+    	List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "cancelarViaje", 2);
+    	elementos.get(elementos.size() - 1).click();
+    	
+    	SeleniumUtils.EsperaCargaPagina(driver, "class", "ui-messages-info", 10);
+    	SeleniumUtils.textoPresentePagina(driver, "Info");
     
     }
 	//	11.	[CancelMulViajeVal] Cancelación de múltiples viajes existentes por un promotor.
     @Test
     public void t11_CancelMulViajeVal() {
-    
+    	
     }
 	//	12.	[Ins1ViajeAceptVal] Inscribir en un viaje un solo usuario y ser admitido por el promotor.
     @Test
