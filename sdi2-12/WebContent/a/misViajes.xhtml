@@ -24,10 +24,12 @@
 								rendered="#{viajev.isCancelable() != null}"
 								value="#{viajev.seleccionado}" />
 						</p:column>
-						<p:column headerText="#{msgs.listTripDeparture}">
+						<p:column headerText="#{msgs.listTripDeparture}"
+							filterBy="#{viajev.viaje.departure.city}" filterMatchMode="contains">
 							<h:outputText value="#{viajev.viaje.departure.city}" />
 						</p:column>
-						<p:column headerText="#{msgs.listTripDestination}">
+						<p:column headerText="#{msgs.listTripDestination}"
+							filterBy="#{viajev.viaje.destination.city}" filterMatchMode="contains">
 							<h:outputText value="#{viajev.viaje.destination.city}" />
 						</p:column>
 						<p:column headerText="#{msgs.listDeparture}">
