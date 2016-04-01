@@ -15,10 +15,12 @@
 						<p:column headerText="Id">
 							<h:outputText value="#{viajev.id}" />
 						</p:column>
-						<p:column headerText="#{msgs.listTripDeparture}">
+						<p:column headerText="#{msgs.listTripDeparture}"
+							filterBy="#{viajev.departure.city}" filterMatchMode="contains">
 							<h:outputText value="#{viajev.departure.city}" />
 						</p:column>
-						<p:column headerText="#{msgs.listTripDestination}">
+						<p:column headerText="#{msgs.listTripDestination}"
+							filterBy="#{viajev.destination.city}" filterMatchMode="contains">
 							<h:outputText value="#{viajev.destination.city}" />
 						</p:column>
 						<p:column headerText="#{msgs.listTripAvailablePax}">
