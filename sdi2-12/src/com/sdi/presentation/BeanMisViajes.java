@@ -167,9 +167,14 @@ public class BeanMisViajes {
 
 		BeanViaje viaje = (BeanViaje) FacesContext.getCurrentInstance()
 				.getExternalContext().getSessionMap().get(new String("viaje"));
-		if(viaje == null)
+		if(viaje == null){
 			viaje = new BeanViaje();
+			FacesContext.getCurrentInstance()
+			.getExternalContext().getSessionMap().put(new String("viaje"), viaje);
+		}
 		viaje.cargarViaje(trip.getViaje());
+		
+		
 
 		return "editar";
 	}

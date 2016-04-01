@@ -475,7 +475,6 @@ public class BeanViaje implements Serializable{
 	 * 
 	 */
 	public void borrarDatos(){
-		System.out.println("borro");
 		departureAddress = "";
 		departureCity = "";
 		departureState = "";
@@ -596,7 +595,7 @@ public class BeanViaje implements Serializable{
 										msgs.getString("infoupdateTrip")));
 						
 						borrarDatos();
-						System.out.println("Viaje creado con exito");
+						System.out.println("Viaje actualizado con exito");
 						return "exito";
 					}
 					else{
