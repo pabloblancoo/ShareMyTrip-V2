@@ -257,6 +257,7 @@ public class BeanViaje implements Serializable{
 	}
 
 	public String getArrivalZipCode() {
+		System.out.println(arrivalZipCode);
 		return arrivalZipCode;
 	}
 
@@ -275,6 +276,7 @@ public class BeanViaje implements Serializable{
 
 
 	public String getArrivalWaypointStr() {
+		System.out.println(arrivalWaypointStr);
 		return arrivalWaypointStr;
 	}
 
@@ -474,6 +476,7 @@ public class BeanViaje implements Serializable{
 	 * 
 	 */
 	public void borrarDatos(){
+		System.out.println("borro");
 		departureAddress = "";
 		departureCity = "";
 		departureState = "";
@@ -517,6 +520,8 @@ public class BeanViaje implements Serializable{
 		arrivalState = viaje.getDestination().getState();
 		arrivalCountry = viaje.getDestination().getCountry();
 		arrivalZipCode = viaje.getDestination().getZipCode();
+		System.out.println("-"+arrivalZipCode);
+		System.out.println("+"+getArrivalZipCode());
 		arrivalWaypointStr = (viaje.getDestination().getWaypoint().getLat() + " ; " + viaje.getDestination().getWaypoint().getLon());
 		arrivalDate = viaje.getArrivalDate();
 
