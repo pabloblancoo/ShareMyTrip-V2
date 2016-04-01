@@ -214,7 +214,35 @@ public class SDI2_Tests {
 	}
 	//	15.	[CancelNoPromotorVal] Un usuario no promotor Cancela plaza.
 	@Test
-	public void t15_CancelNoPromotorVal() {
+	public void t15_CancelNoPromotorVal() throws InterruptedException {
+		
+		t06_RegViajeVal();
+		WebElement element = driver.findElement(By.id("form-nav-bar:cerrarSesion"));
+		element.click();
+		
+		driver.get("http://localhost:8280/sdi2-12/registrarse.xhtml");
+		new PORegistro().rellenaFormulario(driver, "test2",  "test2",  "test2",  "test2@test.com",  "test", "test");
+		Thread.sleep(1000);
+		new POInicioSesion().rellenaFormulario(driver, "test2", "test");
+		element = driver.findElement(By.id("form-nav-bar:listado"));
+		element.click();
+		
+		List<WebElement> elements = SeleniumUtils.EsperaCargaPagina(driver, "id", "moreInfo", 10); 
+		elements.get(elements.size() - 1).click();
+		
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "->", 10); 
+		element = driver.findElement(By.id("form-content:solicitarPlaza"));
+		element.click();
+		
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "Info", 10);
+		element = driver.findElement(By.id("form-nav-bar:misViajes"));
+		element.click();
+		
+		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "cancelarViaje", 10);
+		elementos.get(elementos.size() - 1).click();
+
+		SeleniumUtils.EsperaCargaPagina(driver, "class", "ui-messages-info", 10);
+		SeleniumUtils.textoPresentePagina(driver, "Info");
 
 	}
 	//	16.	[Rech1ViajeVal] Inscribir en un viaje un usuario que será admitido y después rechazarlo por el promotor.
