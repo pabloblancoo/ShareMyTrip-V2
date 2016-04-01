@@ -51,7 +51,7 @@ public class SDI2_Tests {
 		new PORegistro().rellenaFormulario(driver, "test",  "test",  "test",  "test@test.com",  "test", "test");
 
 		Thread.sleep(1000);
- 
+
 		SeleniumUtils.textoNoPresentePagina(driver, "Error");
 
 	}
@@ -276,17 +276,75 @@ public class SDI2_Tests {
 	}
 	//	19.	[OpFiltrado] Prueba para el filtrado opcional.
 	@Test
-	public void t19_OpFiltrado() {
+	public void t19_OpFiltrado() throws InterruptedException {
+		driver.get("http://localhost:8280/sdi2-12/");
+		
+		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "class", "ui-column-filter", 2); 
+		
+		//Obtengo los datos que hay antes de filtrado
+		List<WebElement> datos = SeleniumUtils.EsperaCargaPagina(driver, "class", "ui-widget-content", 2); 
 
+		elementos.get(1).click();
+
+		Actions builder = new Actions(driver);	
+		//Filtro por algo que hara desaparecer todas las opciones
+		builder.sendKeys("+").perform();
+		Thread.sleep(5000);
+		
+		//Una vez filtrado tiene que haber menos datos
+		List<WebElement> datosFiltrados = SeleniumUtils.EsperaCargaPagina(driver, "class", "ui-widget-content", 2);
+		org.junit.Assert.assertTrue(datos.size() > datosFiltrados.size());
 	}
 	//	20.	[OpOrden] Prueba para la ordenación opcional.
 	@Test
-	public void t20_OpOrden() {
+	public void t20_OpOrden() throws InterruptedException {
+		driver.get("http://localhost:8280/sdi2-12/");
+		
+		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "class", "sortable-column-icon", 2); 
+		elementos.get(0).click();			
+		Thread.sleep(1500); 
+		
+		//Obtengo las filas
+		List<WebElement> filas = driver.findElements(By.cssSelector("tbody > tr"));
+		String primero = filas.get(0).findElements(By.tagName("td")).get(0).getText();
+		
+		//Compruebo que estan correctamente ordenadas
+		for(WebElement fila: filas){
+			WebElement actual = fila.findElements(By.tagName("td")).get(0);
+			org.junit.Assert.assertTrue(actual.getText().compareTo(primero) >= 0);
+		}
+		
 
 	}
 	//	21.	[OpPag] Prueba para la paginación opcional.
 	@Test
-	public void t21_OpPag() {
+	public void t21_OpPag() throws InterruptedException {
+		
+		//Creamos 6 viajes para que al menos exita una 2 pagina(los 3 de los otros test y 3 aqui)
+		t06_RegViajeVal();
+		WebElement element = driver.findElement(By.id("form-nav-bar:cerrarSesion"));
+		element.click();
+		Thread.sleep(1500);
+		t06_RegViajeVal();
+		element = driver.findElement(By.id("form-nav-bar:cerrarSesion"));
+		element.click();
+		Thread.sleep(1500);
+		t06_RegViajeVal();
+		//
+		
+		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "class", "ui-paginator-next", 2); 
+				
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "text", "(1", 2); 
+
+		Actions builder = new Actions(driver);
+        builder.moveToElement(elementos.get(0)).perform();   
+        elementos.get(0).click();
+		
+      	elementos = SeleniumUtils.EsperaCargaPagina(driver, "class", "ui-paginator-next", 2); 
+        builder.moveToElement(elementos.get(1)).perform();   
+        elementos.get(1).click();
+
+      	elementos = SeleniumUtils.EsperaCargaPagina(driver, "text", "(2", 2); 
 
 	}
 	//	22.	[OpMante] Prueba del mantenimiento programado opcional.
