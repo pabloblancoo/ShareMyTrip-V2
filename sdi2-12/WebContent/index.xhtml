@@ -15,22 +15,27 @@
 						rows="10"
                          paginator="true"
                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                         rowsPerPageTemplate="2,10,15">
+                         rowsPerPageTemplate="2,5,10"
+                         sortMode="multiple">
 						<p:column headerText="#{msgs.listTripDeparture}"
-							filterBy="#{viajev.departure.city}" filterMatchMode="contains">
+							filterBy="#{viajev.departure.city}" filterMatchMode="contains"
+							sortBy="#{viajev.departure.city}">
 							<h:outputText value="#{viajev.departure.city}" />
 						</p:column>
 						<p:column headerText="#{msgs.listTripDestination}"
-							filterBy="#{viajev.destination.city}" filterMatchMode="contains">
+							filterBy="#{viajev.destination.city}" filterMatchMode="contains"
+							sortBy="#{viajev.destination.city}">
 							<h:outputText value="#{viajev.destination.city}" />
 						</p:column>
-						<p:column headerText="#{msgs.listDeparture}">
+						<p:column headerText="#{msgs.listDeparture}"
+							sortBy="#{viajev.departureDate}">
 							<h:outputText value="#{viajev.departureDate}">
 									<f:convertDateTime locale="#{settings.locale}" type="date"
 										dateStyle="short" />
 								</h:outputText>
 						</p:column>
-						<p:column headerText="#{msgs.listTripAvailablePax}">
+						<p:column headerText="#{msgs.listTripAvailablePax}"
+							sortBy="#{viajev.availablePax}">
 							<h:outputText value="#{viajev.availablePax}" />
 						</p:column>
 						<p:column>

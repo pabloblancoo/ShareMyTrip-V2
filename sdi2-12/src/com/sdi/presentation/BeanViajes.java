@@ -38,8 +38,12 @@ public class BeanViajes {
 		promotor = null;
 		viajeros = new ArrayList<>();
 		
-		viajes = Factories.persistence.newTripDao().findAllOpenAndPaxAvailables();
-		System.out.println("Viajes cargados: " + viajes.size());
+		List<Trip> viajesDB = Factories.persistence.newTripDao().findAllOpenAndPaxAvailables();
+		
+		if(viajes == null || (viajesDB != null && viajes.size() != viajesDB.size())){
+			viajes = viajesDB;
+			System.out.println("Viajes cargados: " + viajes.size());
+		}
 
 		return viajes;
 	}
