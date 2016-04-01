@@ -295,7 +295,37 @@ public class SDI2_Tests {
 	}
 	//	21.	[OpPag] Prueba para la paginación opcional.
 	@Test
-	public void t21_OpPag() {
+	public void t21_OpPag() throws InterruptedException {
+		
+		//Creamos 6 viajes para que al menos exita una 2 pagina(los 3 de los otros test y 3 aqui)
+		t06_RegViajeVal();
+		WebElement element = driver.findElement(By.id("form-nav-bar:cerrarSesion"));
+		element.click();
+		Thread.sleep(1500);
+		t06_RegViajeVal();
+		element = driver.findElement(By.id("form-nav-bar:cerrarSesion"));
+		element.click();
+		Thread.sleep(1500);
+		t06_RegViajeVal();
+		
+		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "class", "ui-paginator-next", 2); 
+				
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "text", "(1", 2); 
+
+		Actions builder = new Actions(driver);
+        builder.moveToElement(elementos.get(0)).perform();   
+        elementos.get(0).click();
+		
+		//Esperamos de nuevo
+      	elementos = SeleniumUtils.EsperaCargaPagina(driver, "class", "ui-paginator-next", 2); 
+      	
+        //movemos el raton sobre el botón "siguiente pagina" (el de abajo)		
+        builder.moveToElement(elementos.get(1)).perform();   
+		//Pinchamos el botón
+        elementos.get(1).click();
+
+		//Ahora comprobamos que se ha cargado la pagina 3 de 20.
+      	elementos = SeleniumUtils.EsperaCargaPagina(driver, "text", "(2", 2); 
 
 	}
 	//	22.	[OpMante] Prueba del mantenimiento programado opcional.
