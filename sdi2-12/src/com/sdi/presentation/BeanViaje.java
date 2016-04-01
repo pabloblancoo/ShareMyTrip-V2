@@ -116,7 +116,7 @@ public class BeanViaje implements Serializable{
 
 	@PreDestroy
 	public void avisame(){
-		System.out.println("Se meure el bean");
+		System.out.println("Se muere el bean");
 	}
 
 	public Long getId() {
@@ -509,7 +509,7 @@ public class BeanViaje implements Serializable{
 		departureState = viaje.getDeparture().getState();
 		departureCountry = viaje.getDeparture().getCountry();
 		departureZipCode = viaje.getDeparture().getZipCode();	
-		departureWaypointStr = viaje.getDeparture().getWaypoint().toString();
+		departureWaypointStr = (viaje.getDeparture().getWaypoint().getLat() + " ; " + viaje.getDeparture().getWaypoint().getLon());
 		departureDate = viaje.getDepartureDate();
 
 		arrivalAddress = viaje.getDestination().getAddress();
@@ -517,7 +517,7 @@ public class BeanViaje implements Serializable{
 		arrivalState = viaje.getDestination().getState();
 		arrivalCountry = viaje.getDestination().getCountry();
 		arrivalZipCode = viaje.getDestination().getZipCode();
-		arrivalWaypointStr = viaje.getDestination().getWaypoint().toString();
+		arrivalWaypointStr = (viaje.getDestination().getWaypoint().getLat() + " ; " + viaje.getDestination().getWaypoint().getLon());
 		arrivalDate = viaje.getArrivalDate();
 
 		closingDate = viaje.getClosingDate();
