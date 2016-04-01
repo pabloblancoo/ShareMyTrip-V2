@@ -533,6 +533,10 @@ public class BeanViaje implements Serializable{
 		
 	}
 
+	/**
+	 * Actualiza el viaje con los datos del Bean
+	 * @return
+	 */
 	public String actualizarViaje(){
 		ResourceBundle msgs = FacesContext.getCurrentInstance()
 				.getApplication().getResourceBundle(FacesContext.getCurrentInstance(), "msgs");
@@ -587,7 +591,7 @@ public class BeanViaje implements Serializable{
 						FacesContext.getCurrentInstance().addMessage(
 								null,
 								new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-										msgs.getString("infoCreateTrip")));
+										msgs.getString("infoupdateTrip")));
 						
 						borrarDatos();
 						System.out.println("Viaje creado con exito");
