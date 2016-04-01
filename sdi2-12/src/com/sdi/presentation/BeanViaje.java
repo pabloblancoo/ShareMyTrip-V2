@@ -8,9 +8,11 @@ import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import com.sdi.infrastructure.Factories;
@@ -22,7 +24,7 @@ import com.sdi.persistence.PersistenceException;
 import com.sdi.util.Comprobante;
 
 @ManagedBean(name="viaje")
-@SessionScoped
+@ViewScoped
 public class BeanViaje implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -111,6 +113,7 @@ public class BeanViaje implements Serializable{
 		provincias.add("Zaragoza");
 		provincias.add("Ceuta");
 		provincias.add("Melilla");
+		System.out.println("Me estoy creando, soy un viaje");
 
 	}
 

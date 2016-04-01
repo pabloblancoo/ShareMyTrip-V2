@@ -9,8 +9,10 @@
 			<div class="ui-grid.row">
 				<div class="ui-grid-col-12" style="text-align: center;">
 					<h1>
+						<h:outputText value="#{msgs.from}"/>
 						<h:outputText value="#{viajes.viaje.departure.city}" />
-						<h:outputText value=" -> " />
+						<br/>
+						<h:outputText value="#{msgs.to}"/>
 						<h:outputText value="#{viajes.viaje.destination.city}" />
 					</h1>
 				</div>
