@@ -160,4 +160,18 @@ public class BeanMisViajes {
 		}
 	}
 	
+	/**
+* 
+*/
+	public String editar(MisViajesConEstado trip) {
+
+		BeanViaje viaje = (BeanViaje) FacesContext.getCurrentInstance()
+				.getExternalContext().getSessionMap().get(new String("viaje"));
+		if(viaje == null)
+			viaje = new BeanViaje();
+		viaje.cargarViaje(trip.getViaje());
+
+		return "editar";
+	}
+	
 }

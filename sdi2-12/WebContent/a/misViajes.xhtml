@@ -58,6 +58,9 @@
 								rendered="#{viajev.isCancelable() != null}" type="submit"
 								inmediate="true" update="tabla"
 								actionListener="#{misViajes.cancelar(viajev)}" />
+							<p:commandLink id="editarViaje" value="Editar"
+								rendered="#{viajev.isCancelable() != null}" type="submit"
+								inmediate="true" action="#{misViajes.editar(viajev)}" />
 						</p:column>
 
 					</p:dataTable>

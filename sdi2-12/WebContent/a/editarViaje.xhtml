@@ -1,0 +1,224 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/templates/template.xhtml">
+
+	<ui:define name="content">
+	
+		<div class="ui-grid ui-grid-responsive">
+			
+			<div class="ui-grid-row" >
+			
+				<div class="ui-grid-col-4">
+					
+					#{msgs.tripDepartureData}
+					<p:panelGrid id="Grid" columns="2" cellpadding="5" >
+ 						#{msgs.tripAddress}
+					  	<h:panelGroup>
+							<p:inputText value="#{viaje.departureAddress}" required="true"
+								requiredMessage="#{msgs.signInEmpty}"
+								id="departureAddress">
+							</p:inputText>
+							<p:message for="departureAddress" />
+						</h:panelGroup>  
+  						
+  						#{msgs.tripCity} 
+  						<h:panelGroup>
+							<p:autoComplete value="#{viaje.departureCity}" required="true"
+								completeMethod="#{viaje.completarProvincias}"
+								requiredMessage="#{msgs.signInEmpty}"
+								id="departureCity">
+								
+							</p:autoComplete>
+							<p:message for="departureCity" />
+						</h:panelGroup>
+  
+  						#{msgs.tripState} 
+  						<h:panelGroup>
+							<p:inputText value="#{viaje.departureState}" required="true"
+								requiredMessage="#{msgs.signInEmpty}"
+								id="departureState">
+							</p:inputText>
+							<p:message for="departureState" />
+						</h:panelGroup>
+  
+  						#{msgs.tripCountry}
+  						<h:panelGroup>
+							<p:inputText value="#{viaje.departureCountry}" required="true"
+								requiredMessage="#{msgs.signInEmpty}"
+								id="departureCountry">
+							</p:inputText>
+							<p:message for="departureCountry" />
+						</h:panelGroup>
+			
+						#{msgs.tripZip}
+  						<h:panelGroup>
+							<p:inputText value="#{viaje.departureZipCode}" required="true" 
+							requiredMessage="#{msgs.signInEmpty}"
+							validatorMessage="#{msgs.singInZipCodeValidator}"
+							id="departureZipCode">
+							<f:validateRegex pattern="\d*" />
+							</p:inputText>
+							<p:message for="departureZipCode"/>
+						</h:panelGroup>
+			
+						#{msgs.tripGPS}
+  						<h:panelGroup>
+							<p:inputText value="#{viaje.departureWaypointStr}"
+							id="departureWaypointStr">
+							</p:inputText>
+							<p:message for="departureWaypointStr" />
+						</h:panelGroup>
+						
+						#{msgs.tripDepartureMoment}
+  						<h:panelGroup>
+							<p:calendar value="#{viaje.departureDate}" required="true" pattern="MM/dd/yyyy HH:mm:ss"
+							requiredMessage="#{msgs.signInEmpty}"
+							id="departureDate">
+							</p:calendar>
+							<p:message for="departureDate" />
+						</h:panelGroup>
+					</p:panelGrid>
+					
+					
+					
+				</div>
+					
+					
+				<div class="ui-grid-col-4">
+				
+					#{msgs.tripArrivalData}
+					<p:panelGrid id="Grid2" columns="2" cellpadding="5" >
+ 						#{msgs.tripAddress}
+					  	<h:panelGroup>
+							<p:inputText value="#{viaje.arrivalAddress}" required="true"
+								requiredMessage="#{msgs.signInEmpty}"
+								id="arrivalAddress">
+							</p:inputText>
+							<p:message for="arrivalAddress" />
+						</h:panelGroup>  
+  						#{msgs.tripCity} 
+  						<h:panelGroup>
+							<p:autoComplete value="#{viaje.arrivalCity}" required="true"
+								completeMethod="#{viaje.completarProvincias}"
+								requiredMessage="#{msgs.signInEmpty}"
+								id="arrivalCity">
+							</p:autoComplete>
+							<p:message for="arrivalCity" />
+						</h:panelGroup>
+  
+  						#{msgs.tripState} 
+  						<h:panelGroup>
+							<p:inputText value="#{viaje.arrivalState}" required="true"
+								requiredMessage="#{msgs.signInEmpty}"
+								id="arrivalState">
+							</p:inputText>
+							<p:message for="arrivalState" />
+						</h:panelGroup>
+  
+   						#{msgs.tripCountry}
+  						<h:panelGroup>
+							<p:inputText value="#{viaje.arrivalCountry}" required="true"
+								completeMethod="#{viaje.completarProvincias}"
+								requiredMessage="#{msgs.signInEmpty}"
+								id="arrivalCountry">
+							</p:inputText>
+							<p:message for="arrivalCountry" />
+						</h:panelGroup>
+			
+						#{msgs.tripZip}
+  						<h:panelGroup>
+							<p:inputText value="#{viaje.arrivalZipCode}" required="true" 
+							requiredMessage="#{msgs.signInEmpty}"
+							validatorMessage="#{msgs.singInZipCodeValidator}"
+							id="arrivalZipCode">
+							<f:validateRegex pattern="\d*" />
+							</p:inputText>
+							<p:message for="arrivalZipCode"/>
+						</h:panelGroup>
+			
+						#{msgs.tripGPS}
+  						<h:panelGroup>
+							<p:inputText value="#{viaje.arrivalWaypointStr}"
+							id="arrivalWaypointStr">
+							</p:inputText>
+							<p:message for="arrivalWaypointStr" />
+						</h:panelGroup>
+					
+						#{msgs.tripArrivalMoment}
+  						<h:panelGroup>
+							<p:calendar value="#{viaje.arrivalDate}" required="true" pattern="MM/dd/yyyy HH:mm:ss"
+							requiredMessage="#{msgs.signInEmpty}"
+							id="arrivalDate">
+							</p:calendar>
+							<p:message for="arrivalDate"/>
+						</h:panelGroup>
+					</p:panelGrid>
+					</div>
+					
+					
+					
+					
+					
+					<div class="ui-grid-col-4">
+					#{msgs.tripArrivalData}
+					<p:panelGrid id="Grid3" columns="2" cellpadding="5" >
+ 						#{msgs.tripMaxPax}
+					  	<h:panelGroup>
+							<p:inputText value="#{viaje.maxPax}" required="true"
+								requiredMessage="#{msgs.signInEmpty}"
+								id="maxPax">
+							</p:inputText>
+							<p:message for="maxPax" />
+						</h:panelGroup>  
+  						#{msgs.tripAvailablePax} 
+  						<h:panelGroup>
+							<p:inputText value="#{viaje.availablePax}" required="true"
+								requiredMessage="#{msgs.signInEmpty}"
+								id="availablePax">
+							</p:inputText>
+							<p:message for="availablePax" />
+						</h:panelGroup>
+  
+  						#{msgs.tripCost} 
+  						<h:panelGroup>
+							<p:inputText value="#{viaje.estimatedCost}" required="true"
+								requiredMessage="#{msgs.signInEmpty}"
+								id="estimatedCost">
+							</p:inputText>
+							<p:message for="estimatedCost" />
+						</h:panelGroup>
+ 					
+ 						#{msgs.tripComent}
+  						<h:panelGroup>
+							<p:inputText value="#{viaje.comments}" required="true"
+								requiredMessage="#{msgs.signInEmpty}"
+								id="comments">
+							</p:inputText>
+							<p:message for="comments" />
+						</h:panelGroup>
+			
+						#{msgs.tripDeadLine}
+  						<h:panelGroup>
+							<p:calendar value="#{viaje.closingDate}" required="true" 
+							requiredMessage="#{msgs.signInEmpty}"
+							id="closingDate">
+							</p:calendar>
+							<p:message for="closingDate"/>
+						</h:panelGroup>
+					</p:panelGrid>
+					</div>
+					
+				</div>
+				
+				<p:commandButton id="boton" value="#{msgs.navUpdate}" action="#{viaje.actualizarViaje}" 
+					update="Grid Grid2 Grid3" process="@form"/>
+						
+			</div>
+		
+
+	</ui:define>
+
+</ui:composition>
+
