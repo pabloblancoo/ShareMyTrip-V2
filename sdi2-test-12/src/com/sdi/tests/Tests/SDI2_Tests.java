@@ -1,8 +1,6 @@
 package com.sdi.tests.Tests;
 import java.util.List;
 
-import junit.framework.Assert;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -301,14 +299,21 @@ public class SDI2_Tests {
 	@Test
 	public void t20_OpOrden() throws InterruptedException {
 		driver.get("http://localhost:8280/sdi2-12/");
-		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "class", "sortable-column-icon", 2); 
 		
-		Thread.sleep(500); 
-		elementos.get(1).click();			
-		Thread.sleep(500); 
-		elementos.get(3).click();
-		Thread.sleep(500); 
-		elementos.get(3).click();
+		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "class", "sortable-column-icon", 2); 
+		elementos.get(0).click();			
+		Thread.sleep(1500); 
+		
+		//Obtengo las filas
+		List<WebElement> filas = driver.findElements(By.cssSelector("tbody > tr"));
+		String primero = filas.get(0).findElements(By.tagName("td")).get(0).getText();
+		
+		//Compruebo que estan correctamente ordenadas
+		for(WebElement fila: filas){
+			WebElement actual = fila.findElements(By.tagName("td")).get(0);
+			org.junit.Assert.assertTrue(actual.getText().compareTo(primero) >= 0);
+		}
+		
 
 	}
 	//	21.	[OpPag] Prueba para la paginación opcional.
