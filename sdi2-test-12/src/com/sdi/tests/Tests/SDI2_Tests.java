@@ -146,7 +146,36 @@ public class SDI2_Tests {
 	}
 	//	8.	[EditViajeVal] Edición de viaje existente con datos válidos.
 	@Test
-	public void t08_EditViajeVal() {
+	public void t08_EditViajeVal() throws InterruptedException {
+		
+		t03_IdVal();
+
+		// Sesion iniciada
+		
+		WebElement element = driver.findElement(By.id("form-nav-bar:misViajes"));
+		element.click();
+
+		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "editarViaje", 2);
+		elementos.get(elementos.size() - 1).click();
+
+		SeleniumUtils.EsperaCargaPagina(driver, "id", "botonActualizar", 10);
+		
+		element = driver.findElement(By.id("form-content:maxPax"));
+		element.click();
+		element.clear();
+		element.sendKeys("3");
+		
+		element = driver.findElement(By.id("form-content:availablePax"));
+		element.click();
+		element.clear();
+		element.sendKeys("2");
+		
+		SeleniumUtils.EsperaCargaPagina(driver, "id", "form-content:botonActualizar", 10);
+		element = driver.findElement(By.id("form-content:botonActualizar"));
+		element.click();
+		
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "Info", 10); 
+		
 
 	}
 	//	9.	[EditViajeInVal] Edición de viaje existente con datos inválidos.
