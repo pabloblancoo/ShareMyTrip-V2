@@ -26,14 +26,18 @@ public class BeanMisViajes {
 	private ResourceBundle msgs = FacesContext.getCurrentInstance()
 			.getApplication().getResourceBundle(FacesContext.getCurrentInstance(), "msgs");
 
-	public List<MisViajesConEstado> getViajes() {
-		viajes = new ArrayList<>();
+	public List<MisViajesConEstado> getViajes() {		
+		List<MisViajesConEstado> viajesDB = new ArrayList<>();
 		BeanUsuario usuario = ((BeanSettings) FacesContext.getCurrentInstance()
 				.getExternalContext().getSessionMap().get("settings")).getUsuario();
 
 		if(usuario != null){
-			cargarViajesPromotor(viajes, usuario.getId());
-			cargarViajes(viajes, usuario.getId());
+			cargarViajesPromotor(viajesDB, usuario.getId());
+			cargarViajes(viajesDB, usuario.getId());
+		}
+		
+		if(viajes == null || viajesDB.size() != viajes.size()){
+			viajes = viajesDB;
 		}
 
 		return viajes;
