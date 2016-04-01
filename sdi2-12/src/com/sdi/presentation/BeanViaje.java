@@ -529,6 +529,7 @@ public class BeanViaje implements Serializable{
 		status = viaje.getStatus();
 		
 		promoterId = viaje.getPromoterId();
+		System.out.println("Paso por aqui, y soy mas chulo que un ocho. PD. Easter egg");
 		
 	}
 
@@ -559,6 +560,7 @@ public class BeanViaje implements Serializable{
 			if (closingDate.compareTo(departureDate) <= 0) {		//Fecha de cierre antes de la salida
 				if (departureDate.compareTo(arrivalDate) <= 0) {	//Fecha de llegada, despues de salida
 					if(maxPax >= availablePax){
+						trip.setId(id);
 						trip.setDeparture(departure);
 						trip.setDestination(destination);
 						trip.setArrivalDate(arrivalDate);
@@ -568,7 +570,7 @@ public class BeanViaje implements Serializable{
 						trip.setMaxPax(maxPax);
 						trip.setEstimatedCost(estimatedCost);
 						trip.setComments(comments);
-						trip.setStatus(TripStatus.OPEN);
+						trip.setStatus(status);
 
 						trip.setPromoterId(usuario.getId());
 
