@@ -116,7 +116,7 @@ public class BeanViaje implements Serializable{
 
 	@PreDestroy
 	public void avisame(){
-		System.out.println("Se meure el bean");
+		System.out.println("Se muere el bean");
 	}
 
 	public Long getId() {
@@ -495,5 +495,132 @@ public class BeanViaje implements Serializable{
 		maxPax = 0;
 		estimatedCost = 0.0;
 		comments = "";
+	}
+
+	/**
+	 * Recibe un viaje e inicializa todos los datos con los parametros del viaje recibido
+	 * @param viaje
+	 */
+	public void cargarViaje(Trip viaje) {
+		id = viaje.getId();
+		
+		departureAddress = viaje.getDeparture().getAddress();
+		departureCity = viaje.getDeparture().getCity();
+		departureState = viaje.getDeparture().getState();
+		departureCountry = viaje.getDeparture().getCountry();
+		departureZipCode = viaje.getDeparture().getZipCode();	
+		departureWaypointStr = (viaje.getDeparture().getWaypoint().getLat() + " ; " + viaje.getDeparture().getWaypoint().getLon());
+		departureDate = viaje.getDepartureDate();
+
+		arrivalAddress = viaje.getDestination().getAddress();
+		arrivalCity = viaje.getDestination().getCity();
+		arrivalState = viaje.getDestination().getState();
+		arrivalCountry = viaje.getDestination().getCountry();
+		arrivalZipCode = viaje.getDestination().getZipCode();
+		arrivalWaypointStr = (viaje.getDestination().getWaypoint().getLat() + " ; " + viaje.getDestination().getWaypoint().getLon());
+		arrivalDate = viaje.getArrivalDate();
+
+		closingDate = viaje.getClosingDate();
+		availablePax = viaje.getAvailablePax(); 
+		maxPax = viaje.getMaxPax();
+		estimatedCost = viaje.getEstimatedCost();
+		comments = viaje.getComments();
+		
+		status = viaje.getStatus();
+		
+		promoterId = viaje.getPromoterId();
+		System.out.println("Paso por aqui, y soy mas chulo que un ocho. PD. Easter egg");
+		
+	}
+
+	/**
+	 * Actualiza el viaje con los datos del Bean
+	 * @return
+	 */
+	public String actualizarViaje(){
+		ResourceBundle msgs = FacesContext.getCurrentInstance()
+				.getApplication().getResourceBundle(FacesContext.getCurrentInstance(), "msgs");
+		
+		Trip trip = new Trip();
+		AddressPoint departure;
+		AddressPoint destination;
+		Waypoint salida = Comprobante.comprobarPunto(departureWaypointStr);
+		Waypoint llegada = Comprobante.comprobarPunto(arrivalWaypointStr);
+		BeanUsuario usuario = ((BeanSettings) FacesContext.getCurrentInstance()
+				.getExternalContext()
+				.getSessionMap().get(new String("settings"))).getUsuario();
+
+		if (usuario != null) {
+
+			if (salida == null)
+				salida = new Waypoint(0.0, 0.0);
+			if (llegada == null)
+				llegada = new Waypoint(0.0, 0.0);
+			departure = new AddressPoint(departureAddress, departureCity,
+					departureState, departureCountry, departureZipCode, salida);
+			destination = new AddressPoint(arrivalAddress, arrivalCity,
+					arrivalState, arrivalCountry, arrivalZipCode, llegada);
+
+			if (closingDate.compareTo(departureDate) <= 0) {		//Fecha de cierre antes de la salida
+				if (departureDate.compareTo(arrivalDate) <= 0) {	//Fecha de llegada, despues de salida
+					if(maxPax >= availablePax){
+						trip.setId(id);
+						trip.setDeparture(departure);
+						trip.setDestination(destination);
+						trip.setArrivalDate(arrivalDate);
+						trip.setDepartureDate(departureDate);
+						trip.setClosingDate(closingDate);
+						trip.setAvailablePax(availablePax);
+						trip.setMaxPax(maxPax);
+						trip.setEstimatedCost(estimatedCost);
+						trip.setComments(comments);
+						trip.setStatus(status);
+
+						trip.setPromoterId(usuario.getId());
+
+						try{
+							Factories.persistence.newTripDao().update(trip);
+						}catch(PersistenceException e){
+							FacesContext.getCurrentInstance().addMessage(
+									null,
+									new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
+											msgs.getString("errorSaveTrip")));
+							return null;
+						}
+						
+						FacesContext.getCurrentInstance().addMessage(
+								null,
+								new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+										msgs.getString("infoupdateTrip")));
+						
+						borrarDatos();
+						System.out.println("Viaje creado con exito");
+						return "exito";
+					}
+					else{
+						FacesContext.getCurrentInstance().addMessage(
+								null,
+								new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
+										msgs.getString("errorMaxPax")));
+						return null;
+					}
+				}
+				else{
+					FacesContext.getCurrentInstance().addMessage(
+							null,
+							new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
+									msgs.getString("errorArrivalDate")));
+					return null;
+				}
+			} else {
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
+								msgs.getString("errorClosingDate")));
+				return null;
+			}
+		} 
+
+		return null;		
 	}
 }
