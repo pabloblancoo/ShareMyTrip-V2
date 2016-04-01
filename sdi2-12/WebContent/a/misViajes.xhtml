@@ -12,39 +12,52 @@
 					<p:messages id="messages" showDetail="true" autoUpdate="true"
 						closable="true" />
 
-						<p:dataTable id="tabla" var="viajev" value="#{misViajes.viajes}"
-							rowIndexVar="index">
+					<p:dataTable id="tabla" var="viajev" value="#{misViajes.viajes}"
+						rowIndexVar="index"
+						rows="5"
+                         paginator="true"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="2,5,10">
 
-							<p:column>
-								<p:selectBooleanCheckbox id="check" rendered="#{viajev.isCancelable() != null}" value="#{viajev.seleccionado}" />
-							</p:column>
-							<p:column headerText="#{msgs.listTripDeparture}">
-								<h:outputText value="#{viajev.viaje.departure.city}" />
-							</p:column>
-							<p:column headerText="#{msgs.listTripDestination}">
-								<h:outputText value="#{viajev.viaje.destination.city}" />
-							</p:column>
-							<p:column headerText="#{msgs.ownTripClosingDate}">
-								<h:outputText value="#{viajev.viaje.closingDate}">
-									<f:convertDateTime locale="#{settings.locale}" type="date"
-										dateStyle="full" />
-								</h:outputText>
-							</p:column>
-							<p:column headerText="#{msgs.ownTripState}">
-								<h:outputText value="#{viajev.relacion}" />
-							</p:column>
-							<p:column headerText="#{msgs.ownTripOptions}">
-								<p:commandLink id="cancelarViaje" value="#{viajev.isCancelable()}"
-									rendered="#{viajev.isCancelable() != null}" type="submit"
-									inmediate="true" update="tabla"
-									actionListener="#{misViajes.cancelar(viajev)}" />
-							</p:column>
+						<p:column>
+							<p:selectBooleanCheckbox id="check"
+								rendered="#{viajev.isCancelable() != null}"
+								value="#{viajev.seleccionado}" />
+						</p:column>
+						<p:column headerText="#{msgs.listTripDeparture}">
+							<h:outputText value="#{viajev.viaje.departure.city}" />
+						</p:column>
+						<p:column headerText="#{msgs.listTripDestination}">
+							<h:outputText value="#{viajev.viaje.destination.city}" />
+						</p:column>
+						<p:column headerText="#{msgs.listDeparture}">
+							<h:outputText value="#{viajev.viaje.departureDate}">
+								<f:convertDateTime locale="#{settings.locale}" type="date"
+									dateStyle="medium" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="#{msgs.ownTripClosingDate}">
+							<h:outputText value="#{viajev.viaje.closingDate}">
+								<f:convertDateTime locale="#{settings.locale}" type="date"
+									dateStyle="medium" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="#{msgs.ownTripState}">
+							<h:outputText value="#{viajev.relacion}" />
+						</p:column>
+						<p:column headerText="#{msgs.ownTripOptions}">
+							<p:commandLink id="cancelarViaje"
+								value="#{viajev.isCancelable()}"
+								rendered="#{viajev.isCancelable() != null}" type="submit"
+								inmediate="true" update="tabla"
+								actionListener="#{misViajes.cancelar(viajev)}" />
+						</p:column>
 
-						</p:dataTable>
+					</p:dataTable>
 
-					<p:commandButton id="botonCancelar"
-						value="Cancelar seleccionados" type="submit"
-						update="tabla" actionListener="#{misViajes.cancelacionMultiple()}" />
+					<p:commandButton id="botonCancelar" value="Cancelar seleccionados"
+						type="submit" update="tabla"
+						actionListener="#{misViajes.cancelacionMultiple()}" />
 				</div>
 			</div>
 		</div>
