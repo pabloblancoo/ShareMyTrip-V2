@@ -58,8 +58,9 @@
 								rendered="#{viajev.isCancelable() != null}" type="submit"
 								inmediate="true" update="tabla"
 								actionListener="#{misViajes.cancelar(viajev)}" />
-							<p:commandLink id="editarViaje" value="Editar"
-								rendered="#{viajev.isCancelable() != null}" type="submit"
+								<br/>
+							<p:commandLink id="editarViaje" value="#{msgs.ownTripEditTrip}"
+								rendered="#{viajev.isCancelable() != null and viajev.relacion == msgs.tripPromoter}" type="submit"
 								action="#{misViajes.editar(viajev)}" />
 						</p:column>
 

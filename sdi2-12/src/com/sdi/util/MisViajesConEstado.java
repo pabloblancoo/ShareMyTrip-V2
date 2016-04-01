@@ -7,6 +7,8 @@ import javax.faces.context.FacesContext;
 
 import com.sdi.model.Trip;
 import com.sdi.model.TripStatus;
+import com.sdi.presentation.BeanSettings;
+import com.sdi.presentation.BeanUsuario;
 
 public class MisViajesConEstado {
 	
@@ -63,5 +65,6 @@ public class MisViajesConEstado {
 	public void setSeleccionado(boolean seleccionado) {
 		this.seleccionado = seleccionado;
 	}
+
 
 }
