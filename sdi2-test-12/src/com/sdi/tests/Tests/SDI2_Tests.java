@@ -39,18 +39,19 @@ public class SDI2_Tests {
 	public void end()
 	{
 		//Cerramos el navegador
-		//driver.quit();
+		driver.quit();
 	}
 
 	//PRUEBAS
 
 	//	1.	[RegVal] Registro de Usuario con datos válidos.
 	@Test	
-	public void t01_RegVal() {
+	public void t01_RegVal() throws InterruptedException {
 		driver.get("http://localhost:8280/sdi2-12/registrarse.xhtml");
 		new PORegistro().rellenaFormulario(driver, "test",  "test",  "test",  "test@test.com",  "test", "test");
 
-		SeleniumUtils.EsperaCargaPagina(driver, "id", "login", 10); 
+		Thread.sleep(1000);
+ 
 		SeleniumUtils.textoNoPresentePagina(driver, "Error");
 
 	}

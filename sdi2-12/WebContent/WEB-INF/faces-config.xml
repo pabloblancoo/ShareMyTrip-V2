@@ -101,7 +101,7 @@
 	<navigation-rule>
 		<from-view-id>/a/misViaje.xhtml</from-view-id>
 		<navigation-case>
-			<from-action>#{misViajes.cancelarPlaza(viaje)}</from-action>
+			<from-action>#{misViajes.cancelarPlaza(viajev)}</from-action>
 			<to-view-id>/a/misViajes.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>

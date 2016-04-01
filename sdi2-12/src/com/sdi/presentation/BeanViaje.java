@@ -415,7 +415,7 @@ public class BeanViaje implements Serializable{
 						FacesContext.getCurrentInstance().addMessage(
 								null,
 								new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
-										msgs.getString("errorSaveTrip")));
+										msgs.getString("errorMaxPax")));
 						return null;
 					}
 				}

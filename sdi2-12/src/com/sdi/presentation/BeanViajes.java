@@ -1,5 +1,6 @@
 package com.sdi.presentation;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -37,8 +38,12 @@ public class BeanViajes {
 		promotor = null;
 		viajeros = new ArrayList<>();
 		
-		viajes = Factories.persistence.newTripDao().findAllOpenAndPaxAvailables();
-		System.out.println("Viajes cargados: " + viajes.size());
+		List<Trip> viajesDB = Factories.persistence.newTripDao().findAllOpenAndPaxAvailables();
+		
+		if(viajes == null || (viajesDB != null && viajes.size() != viajesDB.size())){
+			viajes = viajesDB;
+			System.out.println("Viajes cargados: " + viajes.size());
+		}
 
 		return viajes;
 	}
@@ -47,7 +52,7 @@ public class BeanViajes {
 		this.viajes = viajes;
 	}
 
-	public Trip getViaje() {
+	public Trip getViaje() throws IOException {
 		return viaje;
 	}
 
@@ -61,7 +66,7 @@ public class BeanViajes {
 	 * (promotor, otros viajeros)
 	 */
 	public void loadMoreInfo(){
-		 ResourceBundle msgs = FacesContext.getCurrentInstance()
+		ResourceBundle msgs = FacesContext.getCurrentInstance()
 					.getApplication().getResourceBundle(FacesContext.getCurrentInstance(), "msgs");
 		
 		UserDao ud = Factories.persistence.newUserDao();
