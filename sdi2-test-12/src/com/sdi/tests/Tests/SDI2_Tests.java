@@ -51,7 +51,7 @@ public class SDI2_Tests {
 		new PORegistro().rellenaFormulario(driver, "test",  "test",  "test",  "test@test.com",  "test", "test");
 
 		Thread.sleep(1000);
- 
+
 		SeleniumUtils.textoNoPresentePagina(driver, "Error");
 
 	}
@@ -276,8 +276,17 @@ public class SDI2_Tests {
 	}
 	//	19.	[OpFiltrado] Prueba para el filtrado opcional.
 	@Test
-	public void t19_OpFiltrado() {
+	public void t19_OpFiltrado() throws InterruptedException {
+		driver.get("http://localhost:8280/sdi2-12/");
+		
+		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "class", "ui-column-filter", 2); 
 
+		elementos.get(1).click();
+
+		Actions builder = new Actions(driver);	    
+		builder.sendKeys("Madrid").perform(); 
+
+		Thread.sleep(1000);
 	}
 	//	20.	[OpOrden] Prueba para la ordenación opcional.
 	@Test
