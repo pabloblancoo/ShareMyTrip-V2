@@ -11,7 +11,11 @@
 				<div class="ui-grid-col-10">
 				<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 					<h1>#{msgs.navListTrips}</h1>
-					<p:dataTable var="viajev" value="#{viajes.viajes}">
+					<p:dataTable var="viajev" value="#{viajes.viajes}"
+						rows="10"
+                         paginator="true"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="2,10,15">
 						<p:column headerText="#{msgs.listTripDeparture}"
 							filterBy="#{viajev.departure.city}" filterMatchMode="contains">
 							<h:outputText value="#{viajev.departure.city}" />
