@@ -1,6 +1,8 @@
 package com.sdi.tests.Tests;
 import java.util.List;
 
+import junit.framework.Assert;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -280,17 +282,33 @@ public class SDI2_Tests {
 		driver.get("http://localhost:8280/sdi2-12/");
 		
 		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "class", "ui-column-filter", 2); 
+		
+		//Obtengo los datos que hay antes de filtrado
+		List<WebElement> datos = SeleniumUtils.EsperaCargaPagina(driver, "class", "ui-widget-content", 2); 
 
 		elementos.get(1).click();
 
-		Actions builder = new Actions(driver);	    
-		builder.sendKeys("Madrid").perform(); 
-
-		Thread.sleep(1000);
+		Actions builder = new Actions(driver);	
+		//Filtro por algo que hara desaparecer todas las opciones
+		builder.sendKeys("+").perform();
+		Thread.sleep(5000);
+		
+		//Una vez filtrado tiene que haber menos datos
+		List<WebElement> datosFiltrados = SeleniumUtils.EsperaCargaPagina(driver, "class", "ui-widget-content", 2);
+		org.junit.Assert.assertTrue(datos.size() > datosFiltrados.size());
 	}
 	//	20.	[OpOrden] Prueba para la ordenación opcional.
 	@Test
-	public void t20_OpOrden() {
+	public void t20_OpOrden() throws InterruptedException {
+		driver.get("http://localhost:8280/sdi2-12/");
+		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "class", "sortable-column-icon", 2); 
+		
+		Thread.sleep(500); 
+		elementos.get(1).click();			
+		Thread.sleep(500); 
+		elementos.get(3).click();
+		Thread.sleep(500); 
+		elementos.get(3).click();
 
 	}
 	//	21.	[OpPag] Prueba para la paginación opcional.
@@ -307,6 +325,7 @@ public class SDI2_Tests {
 		element.click();
 		Thread.sleep(1500);
 		t06_RegViajeVal();
+		//
 		
 		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "class", "ui-paginator-next", 2); 
 				
@@ -316,15 +335,10 @@ public class SDI2_Tests {
         builder.moveToElement(elementos.get(0)).perform();   
         elementos.get(0).click();
 		
-		//Esperamos de nuevo
       	elementos = SeleniumUtils.EsperaCargaPagina(driver, "class", "ui-paginator-next", 2); 
-      	
-        //movemos el raton sobre el botón "siguiente pagina" (el de abajo)		
         builder.moveToElement(elementos.get(1)).perform();   
-		//Pinchamos el botón
         elementos.get(1).click();
 
-		//Ahora comprobamos que se ha cargado la pagina 3 de 20.
       	elementos = SeleniumUtils.EsperaCargaPagina(driver, "text", "(2", 2); 
 
 	}
