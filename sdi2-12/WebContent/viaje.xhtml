@@ -120,7 +120,7 @@
 					</p:panelGrid>
 					<p:panelGrid columns="1"
 						rendered="#{viajes.mostrarSolicitarPlaza()}">
-						<p:commandButton value="#{msgs.tripApply}" action="solicitarPlaza"
+						<p:commandButton id="solicitarPlaza" value="#{msgs.tripApply}" action="solicitarPlaza"
 							type="submit" actionListener="#{viajes.solicitarPlaza}"
 							inmediate="true" />
 					</p:panelGrid>

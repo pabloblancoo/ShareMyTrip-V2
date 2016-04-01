@@ -39,7 +39,7 @@
 							<h:outputText value="#{viajev.availablePax}" />
 						</p:column>
 						<p:column>
-							<p:commandLink action="moreInfo" type="submit" 
+							<p:commandLink id="moreInfo" action="moreInfo" type="submit" 
 								value="#{msgs.listTripMoreInfo}"
 								actionListener="#{viajes.setViaje(viajev)}"
 								inmediate="true"
