@@ -28,7 +28,6 @@ import com.sdi.util.Viajero;
 public class BeanViajes {
 	
 	List<Trip> viajes;
-	List<Trip> viajesFiltrados;
 	Trip viaje;
 	User promotor;
 	List<Viajero> viajeros;
@@ -57,15 +56,6 @@ public class BeanViajes {
 		this.viaje = viaje;
 		loadMoreInfo();
 	}
-	
-	public List<Trip> getViajesFiltrados() {
-		return viajesFiltrados;
-	}
-
-	public void setViajesFiltrados(List<Trip> viajesFiltrados) {
-		this.viajesFiltrados = viajesFiltrados;
-	}
-
 	
 	/**
 	 * Metodo que se encarga de cargar el resto de informacion sobre un viaje

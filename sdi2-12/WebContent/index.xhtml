@@ -12,9 +12,6 @@
 				<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 					<h1>#{msgs.navListTrips}</h1>
 					<p:dataTable var="viajev" value="#{viajes.viajes}">
-						<p:column headerText="Id">
-							<h:outputText value="#{viajev.id}" />
-						</p:column>
 						<p:column headerText="#{msgs.listTripDeparture}"
 							filterBy="#{viajev.departure.city}" filterMatchMode="contains">
 							<h:outputText value="#{viajev.departure.city}" />
@@ -22,6 +19,12 @@
 						<p:column headerText="#{msgs.listTripDestination}"
 							filterBy="#{viajev.destination.city}" filterMatchMode="contains">
 							<h:outputText value="#{viajev.destination.city}" />
+						</p:column>
+						<p:column headerText="#{msgs.listDeparture}">
+							<h:outputText value="#{viajev.departureDate}">
+									<f:convertDateTime locale="#{settings.locale}" type="date"
+										dateStyle="short" />
+								</h:outputText>
 						</p:column>
 						<p:column headerText="#{msgs.listTripAvailablePax}">
 							<h:outputText value="#{viajev.availablePax}" />
