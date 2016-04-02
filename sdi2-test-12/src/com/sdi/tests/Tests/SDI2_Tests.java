@@ -365,17 +365,11 @@ public class SDI2_Tests {
 		
 		WebElement element = driver.findElement(By.id("form-nav-bar:listado"));
 		element.click();
-
-//		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "form-content:tabla:buscaCiudadSalida:filter", 2);
-//		elementos.get(0).click();		//Ordenar por nombre para coger el nuevo
-//		Actions builder = new Actions(driver);	    
-//		builder.sendKeys("CiudadTest").perform();
-//		Thread.sleep(3000);
 		
 		//Esperamos que aparezcan los botones de ordenacion
 		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "class", "sortable-column-icon", 2); 
 						
-		//Pinchamos el segundo criterio de ordenacion
+		//Pinchamos el primer criterio de ordenacion
 		Thread.sleep(500); //Esta espera es para poder el efecto de ordenación
 		elementos.get(0).click();		
 		Thread.sleep(2000);
@@ -392,18 +386,13 @@ public class SDI2_Tests {
 		Thread.sleep(1000);
 		new POInicioSesion().rellenaFormulario(driver, "test7", "test");		//Inicia sesion el Test7
 		
-//		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "form-content:tabla:buscaCiudadSalida:filter", 2);
-//		elementos.get(0).click();		//Ordenar por nombre para coger el nuevo
-//		builder = new Actions(driver);	    
-//		builder.sendKeys("CiudadTest").perform();
-//		Thread.sleep(3000);
 		
 		element = driver.findElement(By.id("form-nav-bar:listado"));
 		element.click();
 		//Esperamos que aparezcan los botones de ordenacion
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "class", "sortable-column-icon", 2); 
 								
-		//Pinchamos el segundo criterio de ordenacion
+		//Pinchamos el primer criterio de ordenacion
 		Thread.sleep(500); //Esta espera es para poder el efecto de ordenación
 		elementos.get(0).click();		
 		Thread.sleep(2000);

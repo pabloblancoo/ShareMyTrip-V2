@@ -36,6 +36,7 @@ public class BeanSettings implements Serializable {
 		locale = SPANISH;
 		try {
 			FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
+			System.out.println("Idioma cambiado a espanol");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -45,6 +46,7 @@ public class BeanSettings implements Serializable {
 		locale = ENGLISH;
 		try {
 			FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
+			System.out.println("Idioma cambiado a ingles");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

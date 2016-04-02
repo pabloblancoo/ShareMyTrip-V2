@@ -104,6 +104,7 @@ public class BeanUsuario implements Serializable {
 							FacesMessage.SEVERITY_ERROR, 
 							"Error", 
 							msgs.getString("sigInRepassworWrong")));
+			System.out.println("Las contraseñas no coinciden");
 
 			return null;
 		}
@@ -123,7 +124,7 @@ public class BeanUsuario implements Serializable {
 							FacesMessage.SEVERITY_ERROR, 
 							"Error", 
 							msgs.getString("sigInLoginYetRegister")));
-
+			System.out.println("Ya existe ese login");
 			return null;
 		}
 

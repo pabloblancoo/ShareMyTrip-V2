@@ -117,7 +117,7 @@ public class BeanViaje implements Serializable{
 
 	@PreDestroy
 	public void avisame(){
-		System.out.println("Se muere el bean");
+		System.out.println("Se muere el beanViaje");
 	}
 
 	public Long getId() {
@@ -400,6 +400,7 @@ public class BeanViaje implements Serializable{
 									null,
 									new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
 											msgs.getString("errorSaveTrip")));
+							System.out.println("Error al guardar en la BD");
 							return null;
 						}
 						
@@ -409,7 +410,7 @@ public class BeanViaje implements Serializable{
 										msgs.getString("infoCreateTrip")));
 						
 						borrarDatos();
-						System.out.println("Viaje creado con exito");
+						System.out.println("Viaje desde " + departureCity + " hasta " + arrivalCity + "creado correctmente");
 						return "exito";
 					}
 					else{
@@ -417,6 +418,7 @@ public class BeanViaje implements Serializable{
 								null,
 								new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
 										msgs.getString("errorMaxPax")));
+						System.out.println("Error, hay mas plazas libres (" + availablePax + ") que el maximo (" + maxPax+")");
 						return null;
 					}
 				}
@@ -425,6 +427,7 @@ public class BeanViaje implements Serializable{
 							null,
 							new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
 									msgs.getString("errorArrivalDate")));
+					System.out.println("La fecha de llegada es anterior a la de salida");
 					return null;
 				}
 			} else {
@@ -432,6 +435,8 @@ public class BeanViaje implements Serializable{
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
 								msgs.getString("errorClosingDate")));
+
+				System.out.println("La fecha de salida es anterior a la de cierre");
 				return null;
 			}
 		} 
@@ -469,6 +474,8 @@ public class BeanViaje implements Serializable{
 		maxPax = 5;
 		estimatedCost = 10.0;
 		comments = "Viaje barato a madrid";
+
+		System.out.println("Datos precargados correctamente");
 	}
 
 	/**
@@ -496,6 +503,8 @@ public class BeanViaje implements Serializable{
 		maxPax = 0;
 		estimatedCost = 0.0;
 		comments = "";
+		
+		System.out.println("Datos borrados correctamente");
 	}
 
 	/**
@@ -530,7 +539,8 @@ public class BeanViaje implements Serializable{
 		status = viaje.getStatus();
 		
 		promoterId = viaje.getPromoterId();
-		System.out.println("Paso por aqui, y soy mas chulo que un ocho. PD. Easter egg");
+		
+		System.out.println("Datos del viaje actualizados en el Bean correctamente");
 		
 	}
 
@@ -603,6 +613,8 @@ public class BeanViaje implements Serializable{
 								null,
 								new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
 										msgs.getString("errorMaxPax")));
+
+						System.out.println("Error, hay mas plazas libres (" + availablePax + ") que el maximo (" + maxPax+")");
 						return null;
 					}
 				}
@@ -611,6 +623,8 @@ public class BeanViaje implements Serializable{
 							null,
 							new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
 									msgs.getString("errorArrivalDate")));
+
+					System.out.println("La fecha de llegada es anterior a la de salida");
 					return null;
 				}
 			} else {
@@ -618,6 +632,8 @@ public class BeanViaje implements Serializable{
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
 								msgs.getString("errorClosingDate")));
+
+				System.out.println("La fecha de salida es anterior a la de cierre");
 				return null;
 			}
 		} 
