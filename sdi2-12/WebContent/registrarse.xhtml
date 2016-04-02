@@ -16,6 +16,7 @@
 								requiredMessage="#{msgs.signInEmpty}"
 								id="login">
 								<f:validator validatorId="validator.noVacio" />
+								<f:validator validatorId="validator.loginRepetido" />
 							</p:inputText>
 							<p:message for="login" />
 						</h:panelGroup>  
