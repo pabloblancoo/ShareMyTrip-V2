@@ -33,10 +33,9 @@ public class SDI2_Tests {
 	public void run()
 	{
 		//Creamos el driver para Firefox. Recomendable usar Firefox.
-		driver = new FirefoxDriver();
-		//Vamos a la página principal de mi aplicación
-		//driver.get("http://localhost:8280/sdi2-12");			
+		driver = new FirefoxDriver();			
 	}
+	
 	@After
 	public void end()
 	{
@@ -46,7 +45,10 @@ public class SDI2_Tests {
 
 	//PRUEBAS
 
-	//	1.	[RegVal] Registro de Usuario con datos válidos.
+	/**
+	 * Registro de Usuario con datos válidos.
+	 * @throws InterruptedException
+	 */
 	@Test	
 	public void t01_RegVal() throws InterruptedException {
 		driver.get("http://localhost:8280/sdi2-12/registrarse.xhtml");
@@ -57,7 +59,10 @@ public class SDI2_Tests {
 		SeleniumUtils.textoNoPresentePagina(driver, "login");
 
 	}
-	//	2.	[RegInval] Registro de Usuario con datos inválidos (contraseñas diferentes).
+	
+	/**
+	 * Registro de Usuario con datos inválidos (contraseñas diferentes).
+	 */
 	@Test
 	public void t02_RegInval() {
 
@@ -68,7 +73,10 @@ public class SDI2_Tests {
 		SeleniumUtils.textoPresentePagina(driver, "Error");
 
 	}
-	//	3.	[IdVal] Identificación de Usuario registrado con datos válidos.
+
+	/**
+	 * Identificación de Usuario registrado con datos válidos.
+	 */
 	@Test
 	public void t03_IdVal() {
 
@@ -79,7 +87,10 @@ public class SDI2_Tests {
 		SeleniumUtils.textoPresentePagina(driver, "test@test.com"); 
 
 	}
-	//	4.	[IdInval] Identificación de usuario registrado con datos inválidos.
+	
+	/**
+	 * Identificación de usuario registrado con datos inválidos.
+	 */
 	@Test
 	public void t04_IdInval() {
 
@@ -90,14 +101,22 @@ public class SDI2_Tests {
 		SeleniumUtils.textoPresentePagina(driver, "Error");
 
 	}
-	//	5.	[AccInval] Intento de acceso con URL desde un usuario no público (no identificado). Intento de acceso a vistas de acceso privado. 
+	
+	/**
+	 * Intento de acceso con URL desde un usuario no público (no identificado). 
+	 * Intento de acceso a vistas de acceso privado.
+	 */
 	@Test
 	public void t05_AccInval() {
 		driver.get("http://localhost:8280/sdi2-12/a/misDatos.xhtml");
 		SeleniumUtils.EsperaCargaPagina(driver, "text", "List", 10); 
 
 	}
-	//	6.	[RegViajeVal] Registro de un viaje nuevo con datos válidos.
+	
+	/**
+	 * Registro de un viaje nuevo con datos válidos.
+	 * @throws InterruptedException
+	 */
 	@Test
 	public void t06_RegViajeVal() throws InterruptedException {
 
@@ -119,7 +138,11 @@ public class SDI2_Tests {
 		SeleniumUtils.EsperaCargaPagina(driver, "text", "Info", 10); 
 
 	}
-	//	7.	[RegViajeInVal] Registro de un viaje nuevo con datos inválidos. 
+	
+	/**
+	 * Registro de un viaje nuevo con datos inválidos.
+	 * @throws InterruptedException
+	 */
 	@Test
 	public void t07_RegViajeInVal() throws InterruptedException {
 
@@ -146,7 +169,11 @@ public class SDI2_Tests {
 		SeleniumUtils.EsperaCargaPagina(driver, "text", "Error", 10); 
 
 	}
-	//	8.	[EditViajeVal] Edición de viaje existente con datos válidos.
+	
+	/**
+	 * Edición de viaje existente con datos válidos.
+	 * @throws InterruptedException
+	 */
 	@Test
 	public void t08_EditViajeVal() throws InterruptedException {
 		
@@ -180,7 +207,10 @@ public class SDI2_Tests {
 		
 
 	}
-	//	9.	[EditViajeInVal] Edición de viaje existente con datos inválidos.
+	
+	/**
+	 * Edición de viaje existente con datos inválidos.
+	 */
 	@Test
 	public void t09_EditViajeInVal() {
 		
@@ -213,7 +243,10 @@ public class SDI2_Tests {
 		SeleniumUtils.EsperaCargaPagina(driver, "text", "Error", 10); 
 
 	}
-	//	10.	[CancelViajeVal] Cancelación de un viaje existente por un promotor.
+	
+	/**
+	 * Cancelación de un viaje existente por un promotor.
+	 */
 	@Test
 	public void t10_CancelViajeVal() {
 
@@ -229,7 +262,11 @@ public class SDI2_Tests {
 		SeleniumUtils.textoPresentePagina(driver, "Info");
 
 	}
-	//	11.	[CancelMulViajeVal] Cancelación de múltiples viajes existentes por un promotor.
+	
+	/**
+	 * Cancelación de múltiples viajes existentes por un promotor.
+	 * @throws InterruptedException
+	 */
 	@Test
 	public void t11_CancelMulViajeVal() throws InterruptedException {
 
@@ -257,7 +294,11 @@ public class SDI2_Tests {
 		SeleniumUtils.textoPresentePagina(driver, "Info");
 
 	}
-	//	12.	[Ins1ViajeAceptVal] Inscribir en un viaje un solo usuario y ser admitido por el promotor.
+	
+	/**
+	 * Inscribir en un viaje un solo usuario y ser admitido por el promotor.
+	 * @throws InterruptedException
+	 */
 	@Test
 	public void t12_Ins1ViajeAceptVal() throws InterruptedException {
 		
@@ -297,7 +338,10 @@ public class SDI2_Tests {
 		
 	}
 	
-	//	13.	[Ins2ViajeAceptVal] Inscribir en un viaje dos usuarios y ser admitidos los dos por el promotor.
+	/**
+	 * Inscribir en un viaje dos usuarios y ser admitidos los dos por el promotor.
+	 * @throws InterruptedException
+	 */
 	@Test
 	public void t13_Ins2ViajeAceptVal() throws InterruptedException {
 				
@@ -351,7 +395,10 @@ public class SDI2_Tests {
 
 	}
 	
-	//	14.	[Ins3ViajeAceptInval] Inscribir en un viaje (2 plazas máximo) dos usuarios y ser admitidos los dos y que un tercero intente inscribirse en ese mismo viaje pero ya no pueda por falta de plazas.
+	/**
+	 * Inscribir en un viaje (2 plazas máximo) dos usuarios y ser admitidos los dos y que un tercero intente inscribirse en ese mismo viaje pero ya no pueda por falta de plazas.
+	 * @throws InterruptedException
+	 */
 	@Test
 	public void t14_Ins3ViajeAceptInval() throws InterruptedException {
 		
@@ -454,8 +501,10 @@ public class SDI2_Tests {
 		
 	}
 	
-	
-	//	15.	[CancelNoPromotorVal] Un usuario no promotor Cancela plaza.
+	/**
+	 * Un usuario no promotor Cancela plaza.
+	 * @throws InterruptedException
+	 */
 	@Test
 	public void t15_CancelNoPromotorVal() throws InterruptedException {
 		
@@ -490,7 +539,11 @@ public class SDI2_Tests {
 		SeleniumUtils.textoPresentePagina(driver, "Info");
 
 	}
-	//	16.	[Rech1ViajeVal] Inscribir en un viaje un usuario que será admitido y después rechazarlo por el promotor.
+	
+	/**
+	 * Inscribir en un viaje un usuario que será admitido y después rechazarlo por el promotor.
+	 * @throws InterruptedException
+	 */
 	@Test
 	public void t16_Rech1ViajeVal() throws InterruptedException {
 
@@ -516,8 +569,9 @@ public class SDI2_Tests {
 		
 	}
 	
-	
-	//	17.	[i18N1] Cambio del idioma por defecto a un segundo idioma. (Probar algunas vistas)
+	/**
+	 * Cambio del idioma por defecto a un segundo idioma. (Probar algunas vistas)
+	 */
 	@Test
 	public void t17_i18N1() {
 
@@ -544,7 +598,10 @@ public class SDI2_Tests {
 		SeleniumUtils.EsperaCargaPagina(driver, "text", "Contraseña", 10);
 
 	}
-	//	18.	[i18N2] Cambio del idioma por defecto a un segundo idioma y vuelta al idioma por defecto. (Probar algunas vistas)
+	
+	/**
+	 * Cambio del idioma por defecto a un segundo idioma y vuelta al idioma por defecto. (Probar algunas vistas)
+	 */
 	@Test
 	public void t18_i18N2() {
 
@@ -569,7 +626,11 @@ public class SDI2_Tests {
 		SeleniumUtils.EsperaCargaPagina(driver, "text", "List trips", 10);
 
 	}
-	//	19.	[OpFiltrado] Prueba para el filtrado opcional.
+	
+	/**
+	 * Prueba para el filtrado opcional.
+	 * @throws InterruptedException
+	 */
 	@Test
 	public void t19_OpFiltrado() throws InterruptedException {
 		driver.get("http://localhost:8280/sdi2-12/");
@@ -590,7 +651,11 @@ public class SDI2_Tests {
 		List<WebElement> datosFiltrados = SeleniumUtils.EsperaCargaPagina(driver, "class", "ui-widget-content", 2);
 		org.junit.Assert.assertTrue(datos.size() > datosFiltrados.size());
 	}
-	//	20.	[OpOrden] Prueba para la ordenación opcional.
+	
+	/**
+	 * Prueba para la ordenación opcional.
+	 * @throws InterruptedException
+	 */
 	@Test
 	public void t20_OpOrden() throws InterruptedException {
 		driver.get("http://localhost:8280/sdi2-12/");
@@ -611,7 +676,12 @@ public class SDI2_Tests {
 		
 
 	}
-	//	21.	[OpPag] Prueba para la paginación opcional.
+
+	
+	/**
+	 * Prueba para la paginación opcional.
+	 * @throws InterruptedException
+	 */
 	@Test
 	public void t21_OpPag() throws InterruptedException {
 		
@@ -625,7 +695,7 @@ public class SDI2_Tests {
 		element.click();
 		Thread.sleep(1500);
 		t06_RegViajeVal();
-		//
+		
 		
 		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "class", "ui-paginator-next", 2); 
 				
@@ -642,14 +712,9 @@ public class SDI2_Tests {
       	elementos = SeleniumUtils.EsperaCargaPagina(driver, "text", "(2", 2); 
 
 	}
-	//	22.	[OpMante] Prueba del mantenimiento programado opcional.
-
-	@Test
-	public void t22_OpMante() {
-
-	}
 	
 
+	//METODOS AUXILIARES PARA TEST COMPLEJOS
 	/**
 	 * Cierra sesion
 	 * @throws InterruptedException 
