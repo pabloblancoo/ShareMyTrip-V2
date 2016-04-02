@@ -11,18 +11,18 @@
 				<div class="ui-grid-col-10">
 				<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 					<h1>#{msgs.navListTrips}</h1>
-					<p:dataTable var="viajev" value="#{viajes.viajes}"
+					<p:dataTable id= "tabla" var="viajev" value="#{viajes.viajes}"
 						rows="5"
                          paginator="true"
                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                          rowsPerPageTemplate="2,5,10"
                          sortMode="multiple">
-						<p:column headerText="#{msgs.listTripDeparture}"
+						<p:column id= "buscaCiudadSalida" headerText="#{msgs.listTripDeparture}"
 							filterBy="#{viajev.departure.city}" filterMatchMode="contains"
 							sortBy="#{viajev.departure.city}">
 							<h:outputText value="#{viajev.departure.city}" />
 						</p:column>
-						<p:column headerText="#{msgs.listTripDestination}"
+						<p:column id= "buscaCiudadLlegada" headerText="#{msgs.listTripDestination}"
 							filterBy="#{viajev.destination.city}" filterMatchMode="contains"
 							sortBy="#{viajev.destination.city}">
 							<h:outputText value="#{viajev.destination.city}" />

@@ -61,7 +61,7 @@ public class SDI2_Tests {
 	public void t02_RegInval() {
 
 		driver.get("http://localhost:8280/sdi2-12/registrarse.xhtml");
-		new PORegistro().rellenaFormulario(driver, "test2",  "test2",  "test2",  "test2@test.com",  "test", "test2");
+		new PORegistro().rellenaFormulario(driver, "test2",  "test2",  "test2",  "test2@test.com",  "test2", "test2");
 
 		SeleniumUtils.EsperaCargaPagina(driver, "class", "ui-messages-error", 10);
 		SeleniumUtils.textoPresentePagina(driver, "Error");
@@ -83,7 +83,7 @@ public class SDI2_Tests {
 	public void t04_IdInval() {
 
 		driver.get("http://localhost:8280/sdi2-12/iniciarSesion.xhtml");
-		new POInicioSesion().rellenaFormulario(driver, "test2", "test");
+		new POInicioSesion().rellenaFormulario(driver, "test2", "test2");
 
 		SeleniumUtils.EsperaCargaPagina(driver, "class", "ui-messages-error", 10); 
 		SeleniumUtils.textoPresentePagina(driver, "Error");
@@ -104,10 +104,10 @@ public class SDI2_Tests {
 
 		// Sesion iniciada
 
-		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "form-nav-bar:registrarViaje", 2); 
+		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "form-nav-bar:registrarViaje", 10);
 		elementos.get(0).click();
 		SeleniumUtils.EsperaCargaPagina(driver, "text", "cod", 10);
-
+		Thread.sleep(500);
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "form-content:botonRecargaSalida", 2);
 		elementos.get(0).click();
 
@@ -238,6 +238,7 @@ public class SDI2_Tests {
 		Thread.sleep(1500);
 		t06_RegViajeVal();
 
+		Thread.sleep(1000);
 		element = driver.findElement(By.id("form-nav-bar:misViajes"));
 		element.click();
 
@@ -259,14 +260,17 @@ public class SDI2_Tests {
 	@Test
 	public void t12_Ins1ViajeAceptVal() throws InterruptedException {
 		
-		t03_IdVal();
-		registrarViaje("calleA",5);		//Usuario Test registra un viaje con 5 plazas disponibles
-		
+		t06_RegViajeVal();
+		cerrarSesion();
+
+		Thread.sleep(1000);
+		t06_RegViajeVal();
 		cerrarSesion();
 		
 		driver.get("http://localhost:8280/sdi2-12/iniciarSesion.xhtml");
+		Thread.sleep(1000);
 		new POInicioSesion().rellenaFormulario(driver, "test2", "test");		//Inicia sesion el Test2
-		
+		Thread.sleep(1000);
 		WebElement element = driver.findElement(By.id("form-nav-bar:listado"));
 		element.click();
 
@@ -293,65 +297,19 @@ public class SDI2_Tests {
 		
 	}
 	
-	/**
-	 * Cierra sesion
-	 * @throws InterruptedException 
-	 */
-	private void cerrarSesion() throws InterruptedException{
-		Thread.sleep(1000);
-		WebElement element = driver.findElement(By.id("form-nav-bar:cerrarSesion"));
-		element.click();
-	}
-	
-	/**
-	 * Registra un viaje desde una calle de salida, con determinado numero de plazas.
-	 * @param calleSalida
-	 * @param plazas
-	 * @throws InterruptedException
-	 */
-	private void registrarViaje(String calleSalida, int plazas) throws InterruptedException{
-		// Sesion iniciada
-
-		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "form-nav-bar:registrarViaje", 2); 
-		elementos.get(0).click();
-		SeleniumUtils.EsperaCargaPagina(driver, "text", "cod", 10);
-
-		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "form-content:botonRecargaSalida", 2);
-		elementos.get(0).click();
-
-		WebElement element = driver.findElement(By.id("form-content:departureAddress"));
-		element.click();
-		element.clear();
-		element.sendKeys(calleSalida);
-		
-		element = driver.findElement(By.id("form-content:maxPax"));
-		element.click();
-		element.clear();
-		element.sendKeys(String.valueOf(plazas));
-		
-		element = driver.findElement(By.id("form-content:availablePax"));
-		element.click();
-		element.clear();
-		element.sendKeys(String.valueOf(plazas));
-
-		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "form-content:boton", 2);
-		elementos.get(2).click();
-		SeleniumUtils.EsperaCargaPagina(driver, "text", "Info", 10); 
-		
-	}
 	//	13.	[Ins2ViajeAceptVal] Inscribir en un viaje dos usuarios y ser admitidos los dos por el promotor.
 	@Test
 	public void t13_Ins2ViajeAceptVal() throws InterruptedException {
 				
 		driver.get("http://localhost:8280/sdi2-12/iniciarSesion.xhtml");
-		Thread.sleep(2000);
+		Thread.sleep(1000);
 		new POInicioSesion().rellenaFormulario(driver, "test2", "test");		//Inicia sesion el Test2
 		
 		WebElement element = driver.findElement(By.id("form-nav-bar:listado"));
 		element.click();
 
 		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "moreInfo", 2);
-		elementos.get(2).click();		//Solicitar plaza en el tercer viaje, ya que el primero ya esta solicitada y confirmada por otro viaje
+		elementos.get(1).click();		//Solicitar plaza en el segundo viaje, ya que el primero ya esta solicitada y confirmada por otro viaje
 		
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "solicitarPlaza", 2);		//Solicita plaza en el viaje
 		elementos.get(0).click();
@@ -359,14 +317,14 @@ public class SDI2_Tests {
 		cerrarSesion();		//Cierra sesion
 		
 		driver.get("http://localhost:8280/sdi2-12/iniciarSesion.xhtml");
-		Thread.sleep(2000);
+		Thread.sleep(1000);
 		new POInicioSesion().rellenaFormulario(driver, "test3", "test");		//Inicia sesion el Test3
 		
 		element = driver.findElement(By.id("form-nav-bar:listado"));
 		element.click();
 
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "moreInfo", 2);
-		elementos.get(2).click();		//Solicitar plaza en el tercer viaje
+		elementos.get(1).click();		//Solicitar plaza en el segundo viaje
 		
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "solicitarPlaza", 2);		//Solicita plaza en el viaje
 		elementos.get(0).click();
@@ -380,7 +338,7 @@ public class SDI2_Tests {
 		element.click();
 
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "moreInfo", 2);	//Entrar en la informacion del viaje
-		elementos.get(2).click();
+		elementos.get(1).click();
 		
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "aceptar", 2);	//Aceptar al usuario Test2
 		elementos.get(0).click();
@@ -393,9 +351,102 @@ public class SDI2_Tests {
 	
 	//	14.	[Ins3ViajeAceptInval] Inscribir en un viaje (2 plazas máximo) dos usuarios y ser admitidos los dos y que un tercero intente inscribirse en ese mismo viaje pero ya no pueda por falta de plazas.
 	@Test
-	public void t14_Ins3ViajeAceptInval() {
+	public void t14_Ins3ViajeAceptInval() throws InterruptedException {
+		
+		t03_IdVal();
+		registrarViaje("CiudadTest", 2);
+		cerrarSesion();
+		
+		driver.get("http://localhost:8280/sdi2-12/iniciarSesion.xhtml");
+		Thread.sleep(1000);
+		new POInicioSesion().rellenaFormulario(driver, "test2", "test");		//Inicia sesion el Test2
+		
+		WebElement element = driver.findElement(By.id("form-nav-bar:listado"));
+		element.click();
 
+//		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "form-content:tabla:buscaCiudadSalida:filter", 2);
+//		elementos.get(0).click();		//Ordenar por nombre para coger el nuevo
+//		Actions builder = new Actions(driver);	    
+//		builder.sendKeys("CiudadTest").perform();
+//		Thread.sleep(3000);
+		
+		//Esperamos que aparezcan los botones de ordenacion
+		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "class", "sortable-column-icon", 2); 
+						
+		//Pinchamos el segundo criterio de ordenacion
+		Thread.sleep(500); //Esta espera es para poder el efecto de ordenación
+		elementos.get(0).click();		
+		Thread.sleep(2000);
+		
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "moreInfo", 2);
+		elementos.get(0).click();		//Solicitar plaza en el viaje
+		
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "solicitarPlaza", 2);		//Solicita plaza en el viaje
+		elementos.get(0).click();
+		
+		cerrarSesion();		//Cierra sesion
+		
+		driver.get("http://localhost:8280/sdi2-12/iniciarSesion.xhtml");
+		Thread.sleep(1000);
+		new POInicioSesion().rellenaFormulario(driver, "test3", "test");		//Inicia sesion el Test3
+		
+//		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "form-content:tabla:buscaCiudadSalida:filter", 2);
+//		elementos.get(0).click();		//Ordenar por nombre para coger el nuevo
+//		builder = new Actions(driver);	    
+//		builder.sendKeys("CiudadTest").perform();
+//		Thread.sleep(3000);
+		
+		element = driver.findElement(By.id("form-nav-bar:listado"));
+		element.click();
+		//Esperamos que aparezcan los botones de ordenacion
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "class", "sortable-column-icon", 2); 
+								
+		//Pinchamos el segundo criterio de ordenacion
+		Thread.sleep(500); //Esta espera es para poder el efecto de ordenación
+		elementos.get(0).click();		
+		Thread.sleep(2000);
+		
+		
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "moreInfo", 2);
+		elementos.get(0).click();		//Solicitar plaza en el viaje
+		
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "solicitarPlaza", 2);		//Solicita plaza en el viaje
+		elementos.get(0).click();
+		
+		cerrarSesion();		//Cierra sesion
+		
+		
+		t03_IdVal();		//Inicia sesion Test
+		
+		
+
+		element = driver.findElement(By.id("form-nav-bar:listado"));
+		element.click();
+		
+		//Esperamos que aparezcan los botones de ordenacion
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "class",
+				"sortable-column-icon", 2);
+
+		// Pinchamos el segundo criterio de ordenacion
+		Thread.sleep(500); // Esta espera es para poder el efecto de ordenación
+		elementos.get(0).click();
+		Thread.sleep(2000);
+
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "moreInfo", 2);	//Entrar en la informacion del viaje
+		elementos.get(0).click();
+		
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "aceptar", 2);	//Aceptar al usuario Test2
+		elementos.get(0).click();
+		
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "aceptar", 2);	//Aceptar al usuario Test3
+		elementos.get(0).click();
+		
+		//Ya esta el viaje completo, y nadie mas puede incluirse
+		
+		
 	}
+	
+	
 	//	15.	[CancelNoPromotorVal] Un usuario no promotor Cancela plaza.
 	@Test
 	public void t15_CancelNoPromotorVal() throws InterruptedException {
@@ -564,5 +615,53 @@ public class SDI2_Tests {
 	@Test
 	public void t22_OpMante() {
 
+	}
+	
+
+	/**
+	 * Cierra sesion
+	 * @throws InterruptedException 
+	 */
+	private void cerrarSesion() throws InterruptedException{
+		Thread.sleep(1000);
+		WebElement element = driver.findElement(By.id("form-nav-bar:cerrarSesion"));
+		element.click();
+	}
+	
+	/**
+	 * Registra un viaje desde una calle de salida, con determinado numero de plazas.
+	 * @param calleSalida
+	 * @param plazas
+	 * @throws InterruptedException
+	 */
+	private void registrarViaje(String ciudadSalida, int plazas) throws InterruptedException{
+		// Sesion iniciada
+
+		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "form-nav-bar:registrarViaje", 2); 
+		elementos.get(0).click();
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "cod", 10);
+
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "form-content:botonRecargaSalida", 2);
+		elementos.get(0).click();
+
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "form-content:departureCity_input", 2);
+		elementos.get(0).click();
+		elementos.get(0).clear();
+		elementos.get(0).sendKeys(ciudadSalida);
+		
+		WebElement element = driver.findElement(By.id("form-content:maxPax"));
+		element.click();
+		element.clear();
+		element.sendKeys(String.valueOf(plazas));
+		
+		element = driver.findElement(By.id("form-content:availablePax"));
+		element.click();
+		element.clear();
+		element.sendKeys(String.valueOf(plazas));
+
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "form-content:boton", 2);
+		elementos.get(2).click();
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "Info", 10); 
+		
 	}
 }
