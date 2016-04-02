@@ -25,7 +25,9 @@
 					value="#{msgs.navLogin}" url="/iniciarSesion.xhtml" />
 				<p:menuitem id="registrarse" rendered="#{settings.usuario == null}"
 					value="#{msgs.navSignIn}" url="/registrarse.xhtml" />
-
+				<p:menuitem id="misDatos" rendered="#{settings.usuario != null}"
+					value="#{msgs.navMisDatos}" url="/a/misdatos.xhtml" 
+					/>
 				<p:menuitem id="cerrarSesion" rendered="#{settings.usuario != null}"
 					value="#{msgs.navLogout}" update="@all"
 					action="cerrarSesion"
