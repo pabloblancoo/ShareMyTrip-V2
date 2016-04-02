@@ -53,7 +53,7 @@ public class SDI2_Tests {
 
 		Thread.sleep(1000);
 
-		SeleniumUtils.textoNoPresentePagina(driver, "Error");
+		SeleniumUtils.textoNoPresentePagina(driver, "login");
 
 	}
 	//	2.	[RegInval] Registro de Usuario con datos inválidos (contraseñas diferentes).
