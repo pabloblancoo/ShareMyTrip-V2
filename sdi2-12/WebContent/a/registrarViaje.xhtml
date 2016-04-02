@@ -7,7 +7,7 @@
 	<ui:define name="content">
 	
 		<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
-				<p:commandButton id="botonRecargaSalida" value="#{msgs.preloadedTrip}"
+		<p:commandButton id="botonRecargaSalida" value="#{msgs.preloadedTrip}"
 				action="#{viaje.cargarDatos}" immediate="true" >
 				<f:ajax render ="Grid Grid2 Grid3"/>
 			</p:commandButton>

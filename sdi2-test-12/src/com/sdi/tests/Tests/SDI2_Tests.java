@@ -181,6 +181,34 @@ public class SDI2_Tests {
 	//	9.	[EditViajeInVal] Edición de viaje existente con datos inválidos.
 	@Test
 	public void t09_EditViajeInVal() {
+		
+		t03_IdVal();
+
+		// Sesion iniciada
+		
+		WebElement element = driver.findElement(By.id("form-nav-bar:misViajes"));
+		element.click();
+
+		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "editarViaje", 2);
+		elementos.get(elementos.size() - 1).click();
+
+		SeleniumUtils.EsperaCargaPagina(driver, "id", "botonActualizar", 10);
+		
+		element = driver.findElement(By.id("form-content:maxPax"));
+		element.click();
+		element.clear();
+		element.sendKeys("1");
+		
+		element = driver.findElement(By.id("form-content:availablePax"));
+		element.click();
+		element.clear();
+		element.sendKeys("1234");
+		
+		SeleniumUtils.EsperaCargaPagina(driver, "id", "form-content:botonActualizar", 10);
+		element = driver.findElement(By.id("form-content:botonActualizar"));
+		element.click();
+		
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "Error", 10); 
 
 	}
 	//	10.	[CancelViajeVal] Cancelación de un viaje existente por un promotor.
