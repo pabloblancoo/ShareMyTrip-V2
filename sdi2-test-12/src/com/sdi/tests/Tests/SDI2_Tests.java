@@ -503,9 +503,31 @@ public class SDI2_Tests {
 	}
 	//	16.	[Rech1ViajeVal] Inscribir en un viaje un usuario que será admitido y después rechazarlo por el promotor.
 	@Test
-	public void t16_Rech1ViajeVal() {
+	public void t16_Rech1ViajeVal() throws InterruptedException {
 
+		t03_IdVal();		//Inicia sesion Test
+
+		WebElement element = driver.findElement(By.id("form-nav-bar:listado"));
+		element.click();
+		
+		//Esperamos que aparezcan los botones de ordenacion
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "class",
+				"sortable-column-icon", 2);
+
+		// Pinchamos el segundo criterio de ordenacion
+		Thread.sleep(500); // Esta espera es para poder el efecto de ordenación
+		elementos.get(0).click();
+		Thread.sleep(2000);
+
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "moreInfo", 2);	//En este viaje ya hay usuarios incluidos
+		elementos.get(0).click();
+		
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "excluir", 2);	//Excluir
+		elementos.get(0).click();
+		
 	}
+	
+	
 	//	17.	[i18N1] Cambio del idioma por defecto a un segundo idioma. (Probar algunas vistas)
 	@Test
 	public void t17_i18N1() {
