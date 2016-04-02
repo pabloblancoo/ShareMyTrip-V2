@@ -26,7 +26,8 @@ public class SDI2_Tests {
 	public SDI2_Tests()
 	{
 	}
-
+	
+	
 	@Before
 	public void run()
 	{
@@ -256,14 +257,140 @@ public class SDI2_Tests {
 	}
 	//	12.	[Ins1ViajeAceptVal] Inscribir en un viaje un solo usuario y ser admitido por el promotor.
 	@Test
-	public void t12_Ins1ViajeAceptVal() {
+	public void t12_Ins1ViajeAceptVal() throws InterruptedException {
+		
+		t03_IdVal();
+		registrarViaje("calleA",5);		//Usuario Test registra un viaje con 5 plazas disponibles
+		
+		cerrarSesion();
+		
+		driver.get("http://localhost:8280/sdi2-12/iniciarSesion.xhtml");
+		new POInicioSesion().rellenaFormulario(driver, "test2", "test");		//Inicia sesion el Test2
+		
+		WebElement element = driver.findElement(By.id("form-nav-bar:listado"));
+		element.click();
 
+		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "moreInfo", 2);
+		elementos.get(0).click();
+		
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "solicitarPlaza", 2);		//Solicita plaza en el viaje
+		elementos.get(0).click();
+		
+		cerrarSesion();		//Cierra sesion
+		t03_IdVal();		//Inicia sesion Test
+
+		element = driver.findElement(By.id("form-nav-bar:listado"));
+		element.click();
+
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "moreInfo", 2);	//Entrar en la informacion del viaje
+		elementos.get(0).click();
+		
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "aceptar", 2);	//Aceptar al usuario Test2
+		elementos.get(0).click();
+		
+		
+		
+		
+	}
+	
+	/**
+	 * Cierra sesion
+	 * @throws InterruptedException 
+	 */
+	private void cerrarSesion() throws InterruptedException{
+		Thread.sleep(1000);
+		WebElement element = driver.findElement(By.id("form-nav-bar:cerrarSesion"));
+		element.click();
+	}
+	
+	/**
+	 * Registra un viaje desde una calle de salida, con determinado numero de plazas.
+	 * @param calleSalida
+	 * @param plazas
+	 * @throws InterruptedException
+	 */
+	private void registrarViaje(String calleSalida, int plazas) throws InterruptedException{
+		// Sesion iniciada
+
+		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "form-nav-bar:registrarViaje", 2); 
+		elementos.get(0).click();
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "cod", 10);
+
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "form-content:botonRecargaSalida", 2);
+		elementos.get(0).click();
+
+		WebElement element = driver.findElement(By.id("form-content:departureAddress"));
+		element.click();
+		element.clear();
+		element.sendKeys(calleSalida);
+		
+		element = driver.findElement(By.id("form-content:maxPax"));
+		element.click();
+		element.clear();
+		element.sendKeys(String.valueOf(plazas));
+		
+		element = driver.findElement(By.id("form-content:availablePax"));
+		element.click();
+		element.clear();
+		element.sendKeys(String.valueOf(plazas));
+
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "form-content:boton", 2);
+		elementos.get(2).click();
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "Info", 10); 
+		
 	}
 	//	13.	[Ins2ViajeAceptVal] Inscribir en un viaje dos usuarios y ser admitidos los dos por el promotor.
 	@Test
-	public void t13_Ins2ViajeAceptVal() {
+	public void t13_Ins2ViajeAceptVal() throws InterruptedException {
+				
+		driver.get("http://localhost:8280/sdi2-12/iniciarSesion.xhtml");
+		Thread.sleep(2000);
+		new POInicioSesion().rellenaFormulario(driver, "test2", "test");		//Inicia sesion el Test2
+		
+		WebElement element = driver.findElement(By.id("form-nav-bar:listado"));
+		element.click();
+
+		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "moreInfo", 2);
+		elementos.get(2).click();		//Solicitar plaza en el tercer viaje, ya que el primero ya esta solicitada y confirmada por otro viaje
+		
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "solicitarPlaza", 2);		//Solicita plaza en el viaje
+		elementos.get(0).click();
+		
+		cerrarSesion();		//Cierra sesion
+		
+		driver.get("http://localhost:8280/sdi2-12/iniciarSesion.xhtml");
+		Thread.sleep(2000);
+		new POInicioSesion().rellenaFormulario(driver, "test3", "test");		//Inicia sesion el Test3
+		
+		element = driver.findElement(By.id("form-nav-bar:listado"));
+		element.click();
+
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "moreInfo", 2);
+		elementos.get(2).click();		//Solicitar plaza en el tercer viaje
+		
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "solicitarPlaza", 2);		//Solicita plaza en el viaje
+		elementos.get(0).click();
+		
+		cerrarSesion();		//Cierra sesion
+		
+		
+		t03_IdVal();		//Inicia sesion Test
+
+		element = driver.findElement(By.id("form-nav-bar:listado"));
+		element.click();
+
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "moreInfo", 2);	//Entrar en la informacion del viaje
+		elementos.get(2).click();
+		
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "aceptar", 2);	//Aceptar al usuario Test2
+		elementos.get(0).click();
+		
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "aceptar", 2);	//Aceptar al usuario Test3
+		elementos.get(0).click();
+		
 
 	}
+	
 	//	14.	[Ins3ViajeAceptInval] Inscribir en un viaje (2 plazas máximo) dos usuarios y ser admitidos los dos y que un tercero intente inscribirse en ese mismo viaje pero ya no pueda por falta de plazas.
 	@Test
 	public void t14_Ins3ViajeAceptInval() {

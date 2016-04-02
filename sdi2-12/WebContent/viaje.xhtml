@@ -108,11 +108,11 @@
 							<h:outputText value="#{pendiente.status}" />
 						</p:column>
 						<p:column headerText="#{msgs.ownTripOptions}">
-							<p:commandLink rendered="#{pendiente.excludable}" value="Excluir"
+							<p:commandLink id = "excluir" rendered="#{pendiente.excludable}" value="#{msgs.exclude}"
 								actionListener="#{viajes.exclude(pendiente)}"
 								update="form-content" />
 							<br />
-							<p:commandLink rendered="#{pendiente.acceptable}" value="Admitir"
+							<p:commandLink id = "aceptar" rendered="#{pendiente.acceptable}" value="#{msgs.accept}"
 								actionListener="#{viajes.accept(pendiente)}"
 								update="form-content" />
 						</p:column>
