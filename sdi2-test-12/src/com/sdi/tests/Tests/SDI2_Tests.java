@@ -2,6 +2,7 @@ package com.sdi.tests.Tests;
 import java.util.List;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -437,11 +438,30 @@ public class SDI2_Tests {
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "aceptar", 2);	//Aceptar al usuario Test2
 		elementos.get(0).click();
 		
+		
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "aceptar", 2);	//Aceptar al usuario Test3
 		elementos.get(0).click();
 		
 		//Ya esta el viaje completo, y nadie mas puede incluirse
 		
+		cerrarSesion();
+		
+		driver.get("http://localhost:8280/sdi2-12/iniciarSesion.xhtml");
+		Thread.sleep(1000);
+		new POInicioSesion().rellenaFormulario(driver, "test8", "test");		//Inicia sesion el Test8
+		
+		element = driver.findElement(By.id("form-nav-bar:listado"));
+		element.click();
+		
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "class", "sortable-column-icon", 2); 
+		
+		//Pinchamos el segundo criterio de ordenacion
+		Thread.sleep(500); //Esta espera es para poder el efecto de ordenación
+		elementos.get(0).click();		
+		Thread.sleep(2000);
+		
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "moreInfo", 2);
+		Assert.assertEquals(2, elementos.size());		//Ya que el otro no aparece
 		
 	}
 	
