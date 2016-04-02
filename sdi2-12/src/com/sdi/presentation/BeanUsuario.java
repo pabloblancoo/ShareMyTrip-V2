@@ -17,9 +17,9 @@ import com.sdi.util.Comprobante;
 @ManagedBean(name="usuario")
 @RequestScoped
 public class BeanUsuario implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private String login;
 	private String name;
 	private String surname;
@@ -28,10 +28,10 @@ public class BeanUsuario implements Serializable {
 	private String repassword;
 	private Long id;
 	private UserStatus status;
-	
+
 	private FacesContext context = FacesContext.getCurrentInstance();
 	private ResourceBundle msgs = context.getApplication().getResourceBundle(context, "msgs");
-	
+
 	public String getLogin() {
 		return login;
 	}
@@ -40,92 +40,41 @@ public class BeanUsuario implements Serializable {
 			this.login = login;
 		}
 		else{
-			
+
 		}
 	}
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
-		if(Comprobante.comprobarDato(name)){
-			this.name = name;
-		}
-		else{
-			context.addMessage(null, 
-					new FacesMessage(
-							FacesMessage.SEVERITY_ERROR, 
-							"Error", 
-							msgs.getString("signInEmptyField")
-								.replace("{0}", msgs.getString("name"))));
-		}
+		this.name = name;
 	}
 	public String getSurname() {
 		return surname;
 	}
 	public void setSurname(String surname) {
-		if(Comprobante.comprobarDato(surname)){
-			this.surname = surname;
-		}
-		else{
-			context.addMessage(null, 
-					new FacesMessage(
-							FacesMessage.SEVERITY_ERROR, 
-							"Error", 
-							msgs.getString("signInEmptyField")
-								.replace("{0}", msgs.getString("surname"))));
-
-		}
+		this.surname = surname;
 	}
 	public String getEmail() {
 		return email;
 	}
 	public void setEmail(String email) {
-		if(Comprobante.comprobarDato(email)){
-			this.email = email;
-		}
-		else{
-			context.addMessage(null, 
-					new FacesMessage(
-							FacesMessage.SEVERITY_ERROR, 
-							"Error", 
-							msgs.getString("signInEmptyField")
-								.replace("{0}", msgs.getString("email"))));
-		}
+		this.email = email;
 	}
 	public String getPassword() {
 		return password;
 	}
 	public void setPassword(String password) {
-		if(Comprobante.comprobarDato(password)){
-			this.password = password;
-		}
-		else{
-			context.addMessage(null, 
-					new FacesMessage(
-							FacesMessage.SEVERITY_ERROR, 
-							"Error", 
-							msgs.getString("signInEmptyField")
-								.replace("{0}", msgs.getString("password"))));
-		}
+		this.password = password;
+
 	}
 	public String getRepassword() {
 		return repassword;
 	}
 	public void setRepassword(String repasword) {
-		if(Comprobante.comprobarDato(repasword)){
-			this.repassword = repasword;
-		}
-		else{
-			context.addMessage(null, 
-					new FacesMessage(
-							FacesMessage.SEVERITY_ERROR, 
-							"Error", 
-							msgs.getString("signInEmptyField")
-								.replace("{0}", msgs.getString("repassword"))));
-		}
-		
+		this.repassword = repasword;
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -138,24 +87,24 @@ public class BeanUsuario implements Serializable {
 	public void setStatus(UserStatus status) {
 		this.status = status;
 	}
-	
+
 	/**
 	 * Metodo que registra al usuario en la base de datos
 	 * @return devuelve el string que indica la vista a carga
 	 */
 	public String registrar(){
-		
+
 		if(context.getMessageList().size() > 0){
 			return null;
 		}
 		if(!repassword.equals(password)){
-			
+
 			context.addMessage(null, 
 					new FacesMessage(
 							FacesMessage.SEVERITY_ERROR, 
 							"Error", 
 							msgs.getString("sigInRepassworWrong")));
-						
+
 			return null;
 		}
 		User user = new User();
@@ -167,14 +116,14 @@ public class BeanUsuario implements Serializable {
 		user.setSurname(surname);
 		user.setPassword(password);
 		user.setStatus(UserStatus.ACTIVE);
-		
+
 		if(ud.findByLogin(login) != null){
 			context.addMessage(null, 
 					new FacesMessage(
 							FacesMessage.SEVERITY_ERROR, 
 							"Error", 
 							msgs.getString("sigInLoginYetRegister")));
-						
+
 			return null;
 		}
 
@@ -184,7 +133,7 @@ public class BeanUsuario implements Serializable {
 		return "exito";
 
 	}
-	
+
 	/**
 	 * Metodo para iniciar sesion
 	 * 
@@ -196,7 +145,7 @@ public class BeanUsuario implements Serializable {
 				password);
 
 		if (user != null) {
-			
+
 			this.email = user.getEmail();
 			this.login = user.getLogin();
 			this.name = user.getName();
@@ -204,7 +153,7 @@ public class BeanUsuario implements Serializable {
 			this.email = user.getEmail();
 			this.id = user.getId();
 			this.status = user.getStatus();
-			
+
 			BeanSettings settings = (BeanSettings) FacesContext.getCurrentInstance()
 					.getExternalContext().getSessionMap().get(new String("settings"));
 			settings.setUsuario(this);
@@ -213,11 +162,11 @@ public class BeanUsuario implements Serializable {
 			return "exito";
 		} else {
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Usuario o contraseña incorrecta"));
-			
+
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Cierra la sesion activa del usuario
 	 * @return

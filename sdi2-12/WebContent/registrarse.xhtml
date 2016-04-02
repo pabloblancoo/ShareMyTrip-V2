@@ -9,13 +9,14 @@
 			<div class="ui-grid-row">
 				<div class="ui-grid-col-4"></div>
 				<div class="ui-grid-col-4">
-					<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 					<p:panelGrid id="Grid" columns="2" cellpadding="5">
  #{msgs.login}
   <h:panelGroup>
 							<p:inputText value="#{usuario.login}" required="true"
 								requiredMessage="#{msgs.signInEmpty}"
 								id="login">
+								<f:validator validatorId="validator.noVacio" />
+								<f:validator validatorId="validator.loginRepetido" />
 							</p:inputText>
 							<p:message for="login" />
 						</h:panelGroup>  
@@ -24,6 +25,7 @@
 							<p:inputText value="#{usuario.name}" required="true"
 								requiredMessage="#{msgs.signInEmpty}"
 								id="name">
+								<f:validator validatorId="validator.noVacio" />
 							</p:inputText>
 							<p:message for="name" />
 						</h:panelGroup>
@@ -33,6 +35,7 @@
 							<p:inputText value="#{usuario.surname}" required="true"
 								requiredMessage="#{msgs.signInEmpty}"
 								id="surname">
+								<f:validator validatorId="validator.noVacio" />
 							</p:inputText>
 							<p:message for="surname" />
 						</h:panelGroup>
@@ -45,6 +48,7 @@
 								validatorMessage="#{msgs.singInEmailValidator}"
 								requiredMessage="#{msgs.signInEmpty}"
 								id="email">
+								<f:validator validatorId="validator.noVacio" />
 								<f:validateRegex pattern=".+@.+\.[a-z]+" />
 							</p:inputText>
 							<p:message for="email" />
@@ -58,8 +62,9 @@
 		                    promptLabel="#{msgs.signInPromptPassword}" weakLabel="#{msgs.signInWeakPassword}"
 		                    goodLabel="#{msgs.signInGoodPassword}" strongLabel="#{msgs.signInStrongPassword}"
 							id="password">
+							<f:validator validatorId="validator.noVacio" />
 							</p:password>
-							<p:message for="password" showDetail="true" autoUpdate="true" closable="true"/>
+							<p:message for="password"/>
 						</h:panelGroup>
 			
 #{msgs.repassword}
@@ -70,8 +75,9 @@
 		                    promptLabel="#{msgs.signInPromptPassword}" weakLabel="#{msgs.signInWeakPassword}"
 		                    goodLabel="#{msgs.signInGoodPassword}" strongLabel="#{msgs.signInStrongPassword}"
 							id="repassword">
+							<f:validator validatorId="validator.noVacio" />
 							</p:password>
-							<p:message for="repassword" showDetail="true" autoUpdate="true" closable="true"/>
+							<p:message for="repassword" />
 						</h:panelGroup>
 					</p:panelGrid>
 					<p:commandButton id="boton" value="#{msgs.navSignIn}" action="#{usuario.registrar}"

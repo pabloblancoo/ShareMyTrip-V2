@@ -7,19 +7,17 @@ import javax.faces.context.FacesContext;
 
 import com.sdi.model.Trip;
 import com.sdi.model.TripStatus;
-import com.sdi.presentation.BeanSettings;
-import com.sdi.presentation.BeanUsuario;
 
 public class MisViajesConEstado {
 	
 	private Trip viaje;
 	private String relacion;
 	private boolean seleccionado;
-	
-	private ResourceBundle msgs = FacesContext.getCurrentInstance()
-			.getApplication().getResourceBundle(FacesContext.getCurrentInstance(), "msgs");
-	
+		
 	public MisViajesConEstado(Trip viaje, String relacion) {
+		ResourceBundle msgs = FacesContext.getCurrentInstance()
+				.getApplication().getResourceBundle(FacesContext.getCurrentInstance(), "msgs");
+		
 		this.viaje = viaje;
 		if(!viaje.getStatus().equals(TripStatus.CANCELLED)){
 			this.relacion = relacion;
@@ -38,6 +36,9 @@ public class MisViajesConEstado {
 	}
 	
 	public String isCancelable(){
+		ResourceBundle msgs = FacesContext.getCurrentInstance()
+				.getApplication().getResourceBundle(FacesContext.getCurrentInstance(), "msgs");
+		
 		if(!viaje.getClosingDate().after(new Date())){
 			return null;
 		}
