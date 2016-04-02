@@ -252,7 +252,7 @@ public class SDI2_Tests {
 		element = driver.findElement(By.id("form-content:botonCancelar"));
 		element.click();
 
-		SeleniumUtils.EsperaCargaPagina(driver, "class", "ui-messages-info", 10);
+		SeleniumUtils.EsperaCargaPagina(driver, "class", "ui-messages-info", 20);
 		SeleniumUtils.textoPresentePagina(driver, "Info");
 
 	}
@@ -360,7 +360,7 @@ public class SDI2_Tests {
 		
 		driver.get("http://localhost:8280/sdi2-12/iniciarSesion.xhtml");
 		Thread.sleep(1000);
-		new POInicioSesion().rellenaFormulario(driver, "test6", "test");		//Inicia sesion el Test2
+		new POInicioSesion().rellenaFormulario(driver, "test6", "test");		//Inicia sesion el Test6
 		
 		WebElement element = driver.findElement(By.id("form-nav-bar:listado"));
 		element.click();
@@ -389,7 +389,7 @@ public class SDI2_Tests {
 		
 		driver.get("http://localhost:8280/sdi2-12/iniciarSesion.xhtml");
 		Thread.sleep(1000);
-		new POInicioSesion().rellenaFormulario(driver, "test7", "test");		//Inicia sesion el Test3
+		new POInicioSesion().rellenaFormulario(driver, "test7", "test");		//Inicia sesion el Test7
 		
 //		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "form-content:tabla:buscaCiudadSalida:filter", 2);
 //		elementos.get(0).click();		//Ordenar por nombre para coger el nuevo
@@ -418,8 +418,6 @@ public class SDI2_Tests {
 		
 		
 		t03_IdVal();		//Inicia sesion Test
-		
-		
 
 		element = driver.findElement(By.id("form-nav-bar:listado"));
 		element.click();
