@@ -61,7 +61,7 @@ public class SDI2_Tests {
 	public void t02_RegInval() {
 
 		driver.get("http://localhost:8280/sdi2-12/registrarse.xhtml");
-		new PORegistro().rellenaFormulario(driver, "test2",  "test2",  "test2",  "test2@test.com",  "test2", "test2");
+		new PORegistro().rellenaFormulario(driver, "test2",  "test2",  "test2",  "test2@test.com",  "test2", "test");
 
 		SeleniumUtils.EsperaCargaPagina(driver, "class", "ui-messages-error", 10);
 		SeleniumUtils.textoPresentePagina(driver, "Error");
@@ -266,12 +266,14 @@ public class SDI2_Tests {
 		Thread.sleep(1000);
 		t06_RegViajeVal();
 		cerrarSesion();
-		
-		driver.get("http://localhost:8280/sdi2-12/iniciarSesion.xhtml");
 		Thread.sleep(1000);
-		new POInicioSesion().rellenaFormulario(driver, "test2", "test");		//Inicia sesion el Test2
+
+		WebElement element = driver.findElement(By.id("form-nav-bar:iniciarSesion"));
+		element.click();
 		Thread.sleep(1000);
-		WebElement element = driver.findElement(By.id("form-nav-bar:listado"));
+		new POInicioSesion().rellenaFormulario(driver, "test3", "test");		//Inicia sesion el Test3
+		Thread.sleep(1000);
+		element = driver.findElement(By.id("form-nav-bar:listado"));
 		element.click();
 
 		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "moreInfo", 2);
@@ -292,9 +294,6 @@ public class SDI2_Tests {
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "aceptar", 2);	//Aceptar al usuario Test2
 		elementos.get(0).click();
 		
-		
-		
-		
 	}
 	
 	//	13.	[Ins2ViajeAceptVal] Inscribir en un viaje dos usuarios y ser admitidos los dos por el promotor.
@@ -303,7 +302,7 @@ public class SDI2_Tests {
 				
 		driver.get("http://localhost:8280/sdi2-12/iniciarSesion.xhtml");
 		Thread.sleep(1000);
-		new POInicioSesion().rellenaFormulario(driver, "test2", "test");		//Inicia sesion el Test2
+		new POInicioSesion().rellenaFormulario(driver, "test4", "test");		//Inicia sesion el Test2
 		
 		WebElement element = driver.findElement(By.id("form-nav-bar:listado"));
 		element.click();
@@ -318,7 +317,7 @@ public class SDI2_Tests {
 		
 		driver.get("http://localhost:8280/sdi2-12/iniciarSesion.xhtml");
 		Thread.sleep(1000);
-		new POInicioSesion().rellenaFormulario(driver, "test3", "test");		//Inicia sesion el Test3
+		new POInicioSesion().rellenaFormulario(driver, "test5", "test");		//Inicia sesion el Test3
 		
 		element = driver.findElement(By.id("form-nav-bar:listado"));
 		element.click();
@@ -343,6 +342,8 @@ public class SDI2_Tests {
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "aceptar", 2);	//Aceptar al usuario Test2
 		elementos.get(0).click();
 		
+		Thread.sleep(1000);
+		
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "aceptar", 2);	//Aceptar al usuario Test3
 		elementos.get(0).click();
 		
@@ -359,7 +360,7 @@ public class SDI2_Tests {
 		
 		driver.get("http://localhost:8280/sdi2-12/iniciarSesion.xhtml");
 		Thread.sleep(1000);
-		new POInicioSesion().rellenaFormulario(driver, "test2", "test");		//Inicia sesion el Test2
+		new POInicioSesion().rellenaFormulario(driver, "test6", "test");		//Inicia sesion el Test2
 		
 		WebElement element = driver.findElement(By.id("form-nav-bar:listado"));
 		element.click();
@@ -388,7 +389,7 @@ public class SDI2_Tests {
 		
 		driver.get("http://localhost:8280/sdi2-12/iniciarSesion.xhtml");
 		Thread.sleep(1000);
-		new POInicioSesion().rellenaFormulario(driver, "test3", "test");		//Inicia sesion el Test3
+		new POInicioSesion().rellenaFormulario(driver, "test7", "test");		//Inicia sesion el Test3
 		
 //		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "form-content:tabla:buscaCiudadSalida:filter", 2);
 //		elementos.get(0).click();		//Ordenar por nombre para coger el nuevo
@@ -455,17 +456,19 @@ public class SDI2_Tests {
 		WebElement element = driver.findElement(By.id("form-nav-bar:cerrarSesion"));
 		element.click();
 		
-		driver.get("http://localhost:8280/sdi2-12/registrarse.xhtml");
-		new PORegistro().rellenaFormulario(driver, "test2",  "test2",  "test2",  "test2@test.com",  "test", "test");
 		Thread.sleep(1000);
-		new POInicioSesion().rellenaFormulario(driver, "test2", "test");
+
+		element = driver.findElement(By.id("form-nav-bar:iniciarSesion"));
+		element.click();
+		Thread.sleep(1000);
+		new POInicioSesion().rellenaFormulario(driver, "test8", "test");
 		element = driver.findElement(By.id("form-nav-bar:listado"));
 		element.click();
 		
 		List<WebElement> elements = SeleniumUtils.EsperaCargaPagina(driver, "id", "moreInfo", 10); 
 		elements.get(elements.size() - 1).click();
 		
-		SeleniumUtils.EsperaCargaPagina(driver, "text", "->", 10); 
+		SeleniumUtils.EsperaCargaPagina(driver, "text", ":", 10); 
 		element = driver.findElement(By.id("form-content:solicitarPlaza"));
 		element.click();
 		
