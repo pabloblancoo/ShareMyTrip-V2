@@ -39,6 +39,10 @@
 		<validator-id>validator.noVacio</validator-id>
 		<validator-class>com.sdi.presentation.validator.NoVacioValidator</validator-class>
 	</validator>
+	<validator>
+		<validator-id>validator.loginRepetido</validator-id>
+		<validator-class>com.sdi.presentation.validator.LoginRepetidoValidator</validator-class>
+	</validator>
 
 	<navigation-rule>
 		<from-view-id>*</from-view-id>
