@@ -26,6 +26,10 @@ public class BeanMisViajes {
 	private ResourceBundle msgs = FacesContext.getCurrentInstance()
 			.getApplication().getResourceBundle(FacesContext.getCurrentInstance(), "msgs");
 
+	/**
+	 * Carga los viajes del usuario con sesion iniciada si hay cambios
+	 * @return List<MisViajesConEstado>
+	 */
 	public List<MisViajesConEstado> getViajes() {		
 		List<MisViajesConEstado> viajesDB = new ArrayList<>();
 		BeanUsuario usuario = ((BeanSettings) FacesContext.getCurrentInstance()
@@ -38,6 +42,7 @@ public class BeanMisViajes {
 		
 		if(viajes == null || viajesDB.size() != viajes.size()){
 			viajes = viajesDB;
+			System.out.println("Viajes [" + viajes.size() + "] del usuario " + usuario.getLogin());
 		}
 
 		return viajes;
@@ -118,6 +123,10 @@ public class BeanMisViajes {
 		return null;
 	}
 	
+	/**
+	 * Metodo privado que cancela el viaje que recibe como parametro
+	 * @param trip
+	 */
 	private void cancelarPrivado(MisViajesConEstado trip){
 		Long idUsuario = ((BeanSettings) FacesContext.getCurrentInstance()
 				.getExternalContext().getSessionMap().get("settings")).getUsuario().getId();
@@ -161,8 +170,10 @@ public class BeanMisViajes {
 	}
 	
 	/**
-* 
-*/
+	 * Metodo que se encarga de enviar los datos del viaje a editar al beanViaje
+	 * @param trip
+	 * @return
+	 */
 	public String editar(MisViajesConEstado trip) {
 
 		BeanViaje viaje = (BeanViaje) FacesContext.getCurrentInstance()
@@ -173,8 +184,6 @@ public class BeanMisViajes {
 			.getExternalContext().getSessionMap().put(new String("viaje"), viaje);
 		}
 		viaje.cargarViaje(trip.getViaje());
-		
-		
 
 		return "editar";
 	}

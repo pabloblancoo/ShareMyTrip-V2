@@ -180,6 +180,7 @@ public class BeanUsuario implements Serializable {
 
 		ud.save(user);
 
+		System.out.println("Usuario registrado correctamente");
 		return "exito";
 
 	}
@@ -207,6 +208,8 @@ public class BeanUsuario implements Serializable {
 			BeanSettings settings = (BeanSettings) FacesContext.getCurrentInstance()
 					.getExternalContext().getSessionMap().get(new String("settings"));
 			settings.setUsuario(this);
+			System.out.println("Sesion iniciada correctamente");
+
 			return "exito";
 		} else {
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Usuario o contraseña incorrecta"));
@@ -223,6 +226,8 @@ public class BeanUsuario implements Serializable {
 		BeanSettings settings = (BeanSettings) FacesContext.getCurrentInstance()
 				.getExternalContext().getSessionMap().get(new String("settings"));
 		settings.setUsuario(null);
+		System.out.println("Sesion cerrada correctamente");
+
 		return "exito";
 	}
 

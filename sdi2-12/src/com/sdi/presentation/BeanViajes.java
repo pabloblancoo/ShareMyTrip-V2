@@ -72,7 +72,7 @@ public class BeanViajes {
 		UserDao ud = Factories.persistence.newUserDao();
 		SeatDao sd = Factories.persistence.newSeatDao();
 		
-		System.out.println("Loading cosas...");
+		System.out.println("Cargando datos del viaje...");
 		
 		promotor = ud.findById(viaje.getPromoterId());
 		System.out.println("Promotor: " + promotor.getName());
@@ -191,7 +191,10 @@ public class BeanViajes {
 		return u.getId().equals(viaje.getPromoterId());
 	}
 	
-	
+	/**
+	 * Metodo que acepta a un viajero en el viaje
+	 * @param viajero
+	 */
 	public void accept(Viajero viajero){
 		PersistenceFactory p = Factories.persistence;
 		Transaction t = p.newTransaction();
@@ -226,6 +229,10 @@ public class BeanViajes {
 		t.commit();
 	}
 	
+	/**
+	 * Metodo que excluye a un viajero en el viaje
+	 * @param viajero
+	 */
 	public void exclude(Viajero viajero){
 		PersistenceFactory p = Factories.persistence;
 		Transaction t = p.newTransaction();
