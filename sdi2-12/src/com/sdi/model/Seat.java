@@ -8,7 +8,7 @@ import javax.xml.crypto.Data;
  * 
  * @see Data Transfer Object pattern
  * @author alb
- *
+ * 
  */
 public class Seat {
 
@@ -18,9 +18,8 @@ public class Seat {
 	private String comment;
 	private SeatStatus status;
 
-
 	public Long[] makeKey() {
-		return new Long[]{ userId, tripId };
+		return new Long[] { userId, tripId };
 	}
 
 	public Long getUserId() {
@@ -57,9 +56,8 @@ public class Seat {
 
 	@Override
 	public String toString() {
-		return "Seat [userId=" + userId + ", tripId=" 
-				+ tripId + ", comment=" + comment 
-				+ ", status=" + status + "]";
+		return "Seat [userId=" + userId + ", tripId=" + tripId + ", comment="
+				+ comment + ", status=" + status + "]";
 	}
 
 }

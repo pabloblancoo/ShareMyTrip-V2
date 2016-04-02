@@ -7,30 +7,26 @@ package com.sdi.persistence;
  * object of type transaction must be acquired and the transaction controlled
  * with the usual begin-commit-rollback semantics.
  * 
- * XxxDao xDao = PersistenceFactory.newXxxDao();
- * YyyDao yDao = PersistenceFactory.newXxxDao();
- * Transaction t = PersistenceFactory.newTransaction();
+ * XxxDao xDao = PersistenceFactory.newXxxDao(); YyyDao yDao =
+ * PersistenceFactory.newXxxDao(); Transaction t =
+ * PersistenceFactory.newTransaction();
  * 
- * t.begin(); 
- * try {
+ * t.begin(); try {
  * 
- * 		xDao.save( ... ); 
- * 		yDao.delete( ... );
+ * xDao.save( ... ); yDao.delete( ... );
  * 
- * 		t.commit(); 
- * } catch (PersistenceException e) { 
- * 		t.rollback();
- * 		throw e; 
- * }
+ * t.commit(); } catch (PersistenceException e) { t.rollback(); throw e; }
  * 
  * 
  * @author alb
- *
+ * 
  */
 public interface Transaction {
 
 	void begin();
+
 	void commit();
+
 	void rollback();
 
 }

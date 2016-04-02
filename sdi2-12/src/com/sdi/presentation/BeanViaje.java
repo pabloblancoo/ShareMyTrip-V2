@@ -21,12 +21,12 @@ import com.sdi.model.Waypoint;
 import com.sdi.persistence.PersistenceException;
 import com.sdi.util.Comprobante;
 
-@ManagedBean(name="viaje")
+@ManagedBean(name = "viaje")
 @SessionScoped
-public class BeanViaje implements Serializable{
+public class BeanViaje implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	boolean salidaDefecto, llegadaDefecto, informacionDefecto;
 	private Long id;
 
@@ -34,7 +34,7 @@ public class BeanViaje implements Serializable{
 	private String departureCity;
 	private String departureState;
 	private String departureCountry;
-	private String departureZipCode;	
+	private String departureZipCode;
 	private String departureWaypointStr;
 	private Date departureDate;
 
@@ -47,7 +47,7 @@ public class BeanViaje implements Serializable{
 	private Date arrivalDate;
 
 	private Date closingDate;
-	private int availablePax; 
+	private int availablePax;
 	private int maxPax;
 	private Double estimatedCost;
 	private String comments;
@@ -58,7 +58,7 @@ public class BeanViaje implements Serializable{
 	List<String> provincias = new ArrayList<>();
 
 	@PostConstruct
-	private void init(){
+	private void init() {
 		provincias.add("Alava");
 		provincias.add("Albacete");
 		provincias.add("Alicante");
@@ -116,7 +116,7 @@ public class BeanViaje implements Serializable{
 	}
 
 	@PreDestroy
-	public void avisame(){
+	public void avisame() {
 		System.out.println("Se muere el beanViaje");
 	}
 
@@ -224,7 +224,6 @@ public class BeanViaje implements Serializable{
 		this.departureZipCode = departureZipCode;
 	}
 
-
 	public String getArrivalAddress() {
 		return arrivalAddress;
 	}
@@ -265,7 +264,6 @@ public class BeanViaje implements Serializable{
 		this.arrivalZipCode = arrivalZipCode;
 	}
 
-
 	public String getDepartureWaypointStr() {
 		return departureWaypointStr;
 	}
@@ -273,7 +271,6 @@ public class BeanViaje implements Serializable{
 	public void setDepartureWaypointStr(String departureWaypointStr) {
 		this.departureWaypointStr = departureWaypointStr;
 	}
-
 
 	public String getArrivalWaypointStr() {
 		return arrivalWaypointStr;
@@ -307,7 +304,6 @@ public class BeanViaje implements Serializable{
 		this.provincias = provincias;
 	}
 
-
 	public boolean isSalidaDefecto() {
 		return salidaDefecto;
 	}
@@ -336,13 +332,15 @@ public class BeanViaje implements Serializable{
 	 * Metodo para completar el input de las provincias
 	 * 
 	 * Filtra el array de provincias si contienen el String como parametro
-	 * @param str Texto para filtrar provincias
+	 * 
+	 * @param str
+	 *            Texto para filtrar provincias
 	 * @return Lista de provincias que contienen el valor
 	 */
-	public List<String> completarProvincias(String str){
+	public List<String> completarProvincias(String str) {
 		List<String> retorno = new ArrayList<>();
 		for (String string : provincias) {
-			if(string.toLowerCase().contains(str.toLowerCase()))
+			if (string.toLowerCase().contains(str.toLowerCase()))
 				retorno.add(string);
 		}
 		return retorno;
@@ -350,21 +348,23 @@ public class BeanViaje implements Serializable{
 
 	/**
 	 * Registra un viaje nuevo en la Base de Datos
+	 * 
 	 * @return
 	 */
 	public String registrarViaje() {
-		
+
 		ResourceBundle msgs = FacesContext.getCurrentInstance()
-				.getApplication().getResourceBundle(FacesContext.getCurrentInstance(), "msgs");
-		
+				.getApplication()
+				.getResourceBundle(FacesContext.getCurrentInstance(), "msgs");
+
 		Trip trip = new Trip();
 		AddressPoint departure;
 		AddressPoint destination;
 		Waypoint salida = Comprobante.comprobarPunto(departureWaypointStr);
 		Waypoint llegada = Comprobante.comprobarPunto(arrivalWaypointStr);
 		BeanUsuario usuario = ((BeanSettings) FacesContext.getCurrentInstance()
-				.getExternalContext()
-				.getSessionMap().get(new String("settings"))).getUsuario();
+				.getExternalContext().getSessionMap()
+				.get(new String("settings"))).getUsuario();
 
 		if (usuario != null) {
 
@@ -377,9 +377,14 @@ public class BeanViaje implements Serializable{
 			destination = new AddressPoint(arrivalAddress, arrivalCity,
 					arrivalState, arrivalCountry, arrivalZipCode, llegada);
 
-			if (closingDate.compareTo(departureDate) <= 0) {		//Fecha de cierre antes de la salida
-				if (departureDate.compareTo(arrivalDate) <= 0) {	//Fecha de llegada, despues de salida
-					if(maxPax >= availablePax){
+			if (closingDate.compareTo(departureDate) <= 0) { // Fecha de cierre
+																// antes de la
+																// salida
+				if (departureDate.compareTo(arrivalDate) <= 0) { // Fecha de
+																	// llegada,
+																	// despues
+																	// de salida
+					if (maxPax >= availablePax) {
 						trip.setDeparture(departure);
 						trip.setDestination(destination);
 						trip.setArrivalDate(arrivalDate);
@@ -393,41 +398,56 @@ public class BeanViaje implements Serializable{
 
 						trip.setPromoterId(usuario.getId());
 
-						try{
+						try {
 							Factories.persistence.newTripDao().save(trip);
-						}catch(PersistenceException e){
-							FacesContext.getCurrentInstance().addMessage(
-									null,
-									new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
-											msgs.getString("errorSaveTrip")));
+						} catch (PersistenceException e) {
+							FacesContext
+									.getCurrentInstance()
+									.addMessage(
+											null,
+											new FacesMessage(
+													FacesMessage.SEVERITY_ERROR,
+													"Error",
+													msgs.getString("errorSaveTrip")));
 							System.out.println("Error al guardar en la BD");
 							return null;
 						}
-						
+
 						FacesContext.getCurrentInstance().addMessage(
 								null,
-								new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-										msgs.getString("infoCreateTrip")));
-						
+								new FacesMessage(FacesMessage.SEVERITY_INFO,
+										"Info", msgs
+												.getString("infoCreateTrip")));
+
 						borrarDatos();
-						System.out.println("Viaje desde " + departureCity + " hasta " + arrivalCity + "creado correctmente");
+						System.out.println("Viaje desde " + departureCity
+								+ " hasta " + arrivalCity
+								+ "creado correctmente");
 						return "exito";
-					}
-					else{
-						FacesContext.getCurrentInstance().addMessage(
-								null,
-								new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
-										msgs.getString("errorMaxPax")));
-						System.out.println("Error, hay mas plazas libres (" + availablePax + ") que el maximo (" + maxPax+")");
+					} else {
+						FacesContext.getCurrentInstance()
+								.addMessage(
+										null,
+										new FacesMessage(
+												FacesMessage.SEVERITY_ERROR,
+												"Error",
+												msgs.getString("errorMaxPax")));
+						System.out.println("Error, hay mas plazas libres ("
+								+ availablePax + ") que el maximo (" + maxPax
+								+ ")");
 						return null;
 					}
-				}
-				else{
-					FacesContext.getCurrentInstance().addMessage(
-							null,
-							new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
-									msgs.getString("errorArrivalDate")));
-					System.out.println("La fecha de llegada es anterior a la de salida");
+				} else {
+					FacesContext
+							.getCurrentInstance()
+							.addMessage(
+									null,
+									new FacesMessage(
+											FacesMessage.SEVERITY_ERROR,
+											"Error",
+											msgs.getString("errorArrivalDate")));
+					System.out
+							.println("La fecha de llegada es anterior a la de salida");
 					return null;
 				}
 			} else {
@@ -436,10 +456,11 @@ public class BeanViaje implements Serializable{
 						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
 								msgs.getString("errorClosingDate")));
 
-				System.out.println("La fecha de salida es anterior a la de cierre");
+				System.out
+						.println("La fecha de salida es anterior a la de cierre");
 				return null;
 			}
-		} 
+		}
 
 		return null;
 	}
@@ -448,16 +469,16 @@ public class BeanViaje implements Serializable{
 	 * Pone unos datos validos precargados en los campos de registrar viaje
 	 */
 	@SuppressWarnings("deprecation")
-	public void cargarDatos(){
-		
+	public void cargarDatos() {
+
 		Date fecha = new Date();
 		fecha.setDate(fecha.getDate() + 2);
-		
+
 		departureAddress = "Uria";
 		departureCity = "Oviedo";
 		departureState = "Asturias";
 		departureCountry = "España";
-		departureZipCode = "33070";	
+		departureZipCode = "33070";
 		departureWaypointStr = "0.0 ; 0,0";
 		departureDate = fecha;
 
@@ -470,7 +491,7 @@ public class BeanViaje implements Serializable{
 		arrivalDate = fecha;
 
 		closingDate = fecha;
-		availablePax = 5; 
+		availablePax = 5;
 		maxPax = 5;
 		estimatedCost = 10.0;
 		comments = "Viaje barato a madrid";
@@ -481,12 +502,12 @@ public class BeanViaje implements Serializable{
 	/**
 	 * 
 	 */
-	public void borrarDatos(){
+	public void borrarDatos() {
 		departureAddress = "";
 		departureCity = "";
 		departureState = "";
 		departureCountry = "";
-		departureZipCode = "";	
+		departureZipCode = "";
 		departureWaypointStr = "";
 		departureDate = null;
 
@@ -499,27 +520,30 @@ public class BeanViaje implements Serializable{
 		arrivalDate = null;
 
 		closingDate = null;
-		availablePax = 0; 
+		availablePax = 0;
 		maxPax = 0;
 		estimatedCost = 0.0;
 		comments = "";
-		
+
 		System.out.println("Datos borrados correctamente");
 	}
 
 	/**
-	 * Recibe un viaje e inicializa todos los datos con los parametros del viaje recibido
+	 * Recibe un viaje e inicializa todos los datos con los parametros del viaje
+	 * recibido
+	 * 
 	 * @param viaje
 	 */
 	public void cargarViaje(Trip viaje) {
 		id = viaje.getId();
-		
+
 		departureAddress = viaje.getDeparture().getAddress();
 		departureCity = viaje.getDeparture().getCity();
 		departureState = viaje.getDeparture().getState();
 		departureCountry = viaje.getDeparture().getCountry();
-		departureZipCode = viaje.getDeparture().getZipCode();	
-		departureWaypointStr = (viaje.getDeparture().getWaypoint().getLat() + " ; " + viaje.getDeparture().getWaypoint().getLon());
+		departureZipCode = viaje.getDeparture().getZipCode();
+		departureWaypointStr = (viaje.getDeparture().getWaypoint().getLat()
+				+ " ; " + viaje.getDeparture().getWaypoint().getLon());
 		departureDate = viaje.getDepartureDate();
 
 		arrivalAddress = viaje.getDestination().getAddress();
@@ -527,39 +551,43 @@ public class BeanViaje implements Serializable{
 		arrivalState = viaje.getDestination().getState();
 		arrivalCountry = viaje.getDestination().getCountry();
 		arrivalZipCode = viaje.getDestination().getZipCode();
-		arrivalWaypointStr = (viaje.getDestination().getWaypoint().getLat() + " ; " + viaje.getDestination().getWaypoint().getLon());
+		arrivalWaypointStr = (viaje.getDestination().getWaypoint().getLat()
+				+ " ; " + viaje.getDestination().getWaypoint().getLon());
 		arrivalDate = viaje.getArrivalDate();
 
 		closingDate = viaje.getClosingDate();
-		availablePax = viaje.getAvailablePax(); 
+		availablePax = viaje.getAvailablePax();
 		maxPax = viaje.getMaxPax();
 		estimatedCost = viaje.getEstimatedCost();
 		comments = viaje.getComments();
-		
+
 		status = viaje.getStatus();
-		
+
 		promoterId = viaje.getPromoterId();
-		
-		System.out.println("Datos del viaje actualizados en el Bean correctamente");
-		
+
+		System.out
+				.println("Datos del viaje actualizados en el Bean correctamente");
+
 	}
 
 	/**
 	 * Actualiza el viaje con los datos del Bean
+	 * 
 	 * @return
 	 */
-	public String actualizarViaje(){
+	public String actualizarViaje() {
 		ResourceBundle msgs = FacesContext.getCurrentInstance()
-				.getApplication().getResourceBundle(FacesContext.getCurrentInstance(), "msgs");
-		
+				.getApplication()
+				.getResourceBundle(FacesContext.getCurrentInstance(), "msgs");
+
 		Trip trip = new Trip();
 		AddressPoint departure;
 		AddressPoint destination;
 		Waypoint salida = Comprobante.comprobarPunto(departureWaypointStr);
 		Waypoint llegada = Comprobante.comprobarPunto(arrivalWaypointStr);
 		BeanUsuario usuario = ((BeanSettings) FacesContext.getCurrentInstance()
-				.getExternalContext()
-				.getSessionMap().get(new String("settings"))).getUsuario();
+				.getExternalContext().getSessionMap()
+				.get(new String("settings"))).getUsuario();
 
 		if (usuario != null) {
 
@@ -572,9 +600,14 @@ public class BeanViaje implements Serializable{
 			destination = new AddressPoint(arrivalAddress, arrivalCity,
 					arrivalState, arrivalCountry, arrivalZipCode, llegada);
 
-			if (closingDate.compareTo(departureDate) <= 0) {		//Fecha de cierre antes de la salida
-				if (departureDate.compareTo(arrivalDate) <= 0) {	//Fecha de llegada, despues de salida
-					if(maxPax >= availablePax){
+			if (closingDate.compareTo(departureDate) <= 0) { // Fecha de cierre
+																// antes de la
+																// salida
+				if (departureDate.compareTo(arrivalDate) <= 0) { // Fecha de
+																	// llegada,
+																	// despues
+																	// de salida
+					if (maxPax >= availablePax) {
 						trip.setId(id);
 						trip.setDeparture(departure);
 						trip.setDestination(destination);
@@ -589,42 +622,55 @@ public class BeanViaje implements Serializable{
 
 						trip.setPromoterId(usuario.getId());
 
-						try{
+						try {
 							Factories.persistence.newTripDao().update(trip);
-						}catch(PersistenceException e){
-							FacesContext.getCurrentInstance().addMessage(
-									null,
-									new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
-											msgs.getString("errorSaveTrip")));
+						} catch (PersistenceException e) {
+							FacesContext
+									.getCurrentInstance()
+									.addMessage(
+											null,
+											new FacesMessage(
+													FacesMessage.SEVERITY_ERROR,
+													"Error",
+													msgs.getString("errorSaveTrip")));
 							return null;
 						}
-						
+
 						FacesContext.getCurrentInstance().addMessage(
 								null,
-								new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-										msgs.getString("infoupdateTrip")));
-						
+								new FacesMessage(FacesMessage.SEVERITY_INFO,
+										"Info", msgs
+												.getString("infoupdateTrip")));
+
 						borrarDatos();
 						System.out.println("Viaje actualizado con exito");
 						return "exito";
-					}
-					else{
-						FacesContext.getCurrentInstance().addMessage(
-								null,
-								new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
-										msgs.getString("errorMaxPax")));
+					} else {
+						FacesContext.getCurrentInstance()
+								.addMessage(
+										null,
+										new FacesMessage(
+												FacesMessage.SEVERITY_ERROR,
+												"Error",
+												msgs.getString("errorMaxPax")));
 
-						System.out.println("Error, hay mas plazas libres (" + availablePax + ") que el maximo (" + maxPax+")");
+						System.out.println("Error, hay mas plazas libres ("
+								+ availablePax + ") que el maximo (" + maxPax
+								+ ")");
 						return null;
 					}
-				}
-				else{
-					FacesContext.getCurrentInstance().addMessage(
-							null,
-							new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
-									msgs.getString("errorArrivalDate")));
+				} else {
+					FacesContext
+							.getCurrentInstance()
+							.addMessage(
+									null,
+									new FacesMessage(
+											FacesMessage.SEVERITY_ERROR,
+											"Error",
+											msgs.getString("errorArrivalDate")));
 
-					System.out.println("La fecha de llegada es anterior a la de salida");
+					System.out
+							.println("La fecha de llegada es anterior a la de salida");
 					return null;
 				}
 			} else {
@@ -633,11 +679,12 @@ public class BeanViaje implements Serializable{
 						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
 								msgs.getString("errorClosingDate")));
 
-				System.out.println("La fecha de salida es anterior a la de cierre");
+				System.out
+						.println("La fecha de salida es anterior a la de cierre");
 				return null;
 			}
-		} 
+		}
 
-		return null;		
+		return null;
 	}
 }

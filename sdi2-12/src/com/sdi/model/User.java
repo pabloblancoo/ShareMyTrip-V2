@@ -6,7 +6,7 @@ package com.sdi.model;
  * 
  * @see Data Transfer Object pattern
  * @author alb
- *
+ * 
  */
 public class User {
 
@@ -16,7 +16,7 @@ public class User {
 	private String name;
 	private String surname;
 	private String email;
-	
+
 	private UserStatus status;
 
 	public String getEmail() {
@@ -77,14 +77,9 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id 
-				+ ", login=" + login 
-				+ ", password=" + password 
-				+ ", name=" + name 
-				+ ", surname=" + surname 
-				+ ", status=" + status 
-				+ ", email=" + email
-			+ "]";
+		return "User [id=" + id + ", login=" + login + ", password=" + password
+				+ ", name=" + name + ", surname=" + surname + ", status="
+				+ status + ", email=" + email + "]";
 	}
 
 }

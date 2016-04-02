@@ -10,14 +10,14 @@ import com.sdi.persistence.util.JdbcTemplate;
 import com.sdi.persistence.util.RowMapper;
 
 public class ApplicationDaoJdbcImpl implements ApplicationDao {
-	
+
 	public class ApplicationMapper implements RowMapper<Application> {
 
 		@Override
 		public Application toObject(ResultSet rs) throws SQLException {
 			Application res = new Application();
-			res.setUserId( rs.getLong("applicants_id") );
-			res.setTripId( rs.getLong("appliedtrips_id") );
+			res.setUserId(rs.getLong("applicants_id"));
+			res.setTripId(rs.getLong("appliedtrips_id"));
 			return res;
 		}
 
@@ -27,10 +27,8 @@ public class ApplicationDaoJdbcImpl implements ApplicationDao {
 
 	@Override
 	public Long[] save(Application dto) {
-		jdbcTemplate.execute("APPLICATION_INSERT", 
-				dto.getUserId(), 
-				dto.getTripId() 
-			);
+		jdbcTemplate.execute("APPLICATION_INSERT", dto.getUserId(),
+				dto.getTripId());
 		return null;
 	}
 
@@ -41,44 +39,31 @@ public class ApplicationDaoJdbcImpl implements ApplicationDao {
 
 	@Override
 	public int delete(Long[] ids) {
-		return jdbcTemplate.execute("APPLICATION_DELETE", 
-				ids[0], ids[1] 
-			);
+		return jdbcTemplate.execute("APPLICATION_DELETE", ids[0], ids[1]);
 	}
 
 	@Override
 	public Application findById(Long[] ids) {
-		return jdbcTemplate.queryForObject(
-				"APPLICATION_FIND_BY_ID", 
-				new ApplicationMapper(), 
-				ids[0], ids[1]
-			);
+		return jdbcTemplate.queryForObject("APPLICATION_FIND_BY_ID",
+				new ApplicationMapper(), ids[0], ids[1]);
 	}
 
 	@Override
 	public List<Application> findAll() {
-		return jdbcTemplate.queryForList(
-				"APPLICATION_FIND_ALL", 
-				new ApplicationMapper()
-			);
+		return jdbcTemplate.queryForList("APPLICATION_FIND_ALL",
+				new ApplicationMapper());
 	}
 
 	@Override
 	public List<Application> findByUserId(Long userId) {
-		return jdbcTemplate.queryForList(
-				"APPLICATION_FIND_BY_USER_ID", 
-				new ApplicationMapper(), 
-				userId
-			);
+		return jdbcTemplate.queryForList("APPLICATION_FIND_BY_USER_ID",
+				new ApplicationMapper(), userId);
 	}
 
 	@Override
 	public List<Application> findByTripId(Long tripId) {
-		return jdbcTemplate.queryForList(
-				"APPLICATION_FIND_BY_TRIP_ID", 
-				new ApplicationMapper(), 
-				tripId
-			);
+		return jdbcTemplate.queryForList("APPLICATION_FIND_BY_TRIP_ID",
+				new ApplicationMapper(), tripId);
 	}
 
 }

@@ -13,7 +13,7 @@ import javax.faces.validator.ValidatorException;
 import org.primefaces.validate.ClientValidator;
 
 @FacesValidator("validator.noVacio")
-public class NoVacioValidator implements Validator, ClientValidator{
+public class NoVacioValidator implements Validator, ClientValidator {
 
 	@Override
 	public Map<String, Object> getMetadata() {
@@ -28,17 +28,16 @@ public class NoVacioValidator implements Validator, ClientValidator{
 	@Override
 	public void validate(FacesContext context, UIComponent ui, Object value)
 			throws ValidatorException {
-		ResourceBundle msgs = context.getApplication().getResourceBundle(context, "msgs");
-		
-		
-		if(value.toString().trim().isEmpty()){
+		ResourceBundle msgs = context.getApplication().getResourceBundle(
+				context, "msgs");
+
+		if (value.toString().trim().isEmpty()) {
 			throw new ValidatorException(new FacesMessage(
-					FacesMessage.SEVERITY_ERROR, 
-					"Error", 
-					msgs.getString("signInEmptyField")
-						.replace("{0}", msgs.getString(ui.getId()))));
+					FacesMessage.SEVERITY_ERROR, "Error", msgs.getString(
+							"signInEmptyField").replace("{0}",
+							msgs.getString(ui.getId()))));
 		}
-		
+
 	}
 
 }

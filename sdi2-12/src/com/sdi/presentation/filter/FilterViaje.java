@@ -15,11 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.sdi.presentation.BeanViajes;
 
-@WebFilter(
-		dispatcherTypes = {DispatcherType.REQUEST},
-		urlPatterns= {"/viaje.xhtml"}
-		)
-public class FilterViaje implements Filter{
+@WebFilter(dispatcherTypes = { DispatcherType.REQUEST }, urlPatterns = { "/viaje.xhtml" })
+public class FilterViaje implements Filter {
 
 	@Override
 	public void destroy() {
@@ -30,22 +27,21 @@ public class FilterViaje implements Filter{
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse res,
 			FilterChain chain) throws IOException, ServletException {
-		
-		HttpServletRequest requ = ((HttpServletRequest)req);
-		
-		if(requ.getSession() == null
+
+		HttpServletRequest requ = ((HttpServletRequest) req);
+
+		if (requ.getSession() == null
 				|| requ.getSession().getAttribute("viajes") == null
-				|| ((BeanViajes)requ.getSession().getAttribute("viajes")).getViaje() == null){
-			
+				|| ((BeanViajes) requ.getSession().getAttribute("viajes"))
+						.getViaje() == null) {
+
 			String path = requ.getContextPath();
-			((HttpServletResponse)res).sendRedirect(path + "/index.xhtml"); 
-			
-			
-		}
-		else{
-			
+			((HttpServletResponse) res).sendRedirect(path + "/index.xhtml");
+
+		} else {
+
 			chain.doFilter(req, res);
-			
+
 		}
 
 	}

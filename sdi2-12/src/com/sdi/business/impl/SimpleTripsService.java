@@ -8,7 +8,7 @@ import com.sdi.business.exception.EntityNotFoundException;
 import com.sdi.business.impl.classes.Trip.ViajeBuscar;
 import com.sdi.model.Trip;
 
-public class SimpleTripsService implements TripService{
+public class SimpleTripsService implements TripService {
 
 	@Override
 	public List<Trip> getViajes() throws Exception {
@@ -22,19 +22,17 @@ public class SimpleTripsService implements TripService{
 
 	@Override
 	public void saveTrip(Trip trip) throws EntityAlreadyExistsException {
-		
+
 	}
 
 	@Override
 	public void updateTrip(Trip trip) throws EntityNotFoundException {
-		
+
 	}
 
 	@Override
 	public void deleteTrip(Long id) throws EntityNotFoundException {
-		
+
 	}
-	
-	
 
 }

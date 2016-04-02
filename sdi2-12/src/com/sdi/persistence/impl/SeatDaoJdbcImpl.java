@@ -17,38 +17,30 @@ public class SeatDaoJdbcImpl implements SeatDao {
 		@Override
 		public Seat toObject(ResultSet rs) throws SQLException {
 			Seat res = new Seat();
-			
-			res.setUserId( rs.getLong("user_id") );
-			res.setTripId( rs.getLong("trip_id") );
-			res.setComment( rs.getString("comment") );
-			res.setStatus( SeatStatus.values()[ rs.getInt("status") ] );
-			
+
+			res.setUserId(rs.getLong("user_id"));
+			res.setTripId(rs.getLong("trip_id"));
+			res.setComment(rs.getString("comment"));
+			res.setStatus(SeatStatus.values()[rs.getInt("status")]);
+
 			return res;
 		}
 
 	}
-	
+
 	private JdbcTemplate jdbcTemplate = new JdbcTemplate();
 
 	@Override
 	public Long[] save(Seat dto) {
-		jdbcTemplate.execute("SEAT_INSERT", 
-				dto.getUserId(), 
-				dto.getTripId(), 
-				dto.getComment(),
-				dto.getStatus().ordinal()
-			);
+		jdbcTemplate.execute("SEAT_INSERT", dto.getUserId(), dto.getTripId(),
+				dto.getComment(), dto.getStatus().ordinal());
 		return null;
 	}
 
 	@Override
 	public int update(Seat dto) {
-		return jdbcTemplate.execute("SEAT_UPDATE", 
-				dto.getComment(),
-				dto.getStatus().ordinal(),
-				dto.getUserId(), 
-				dto.getTripId()
-			);
+		return jdbcTemplate.execute("SEAT_UPDATE", dto.getComment(), dto
+				.getStatus().ordinal(), dto.getUserId(), dto.getTripId());
 	}
 
 	@Override
@@ -58,11 +50,8 @@ public class SeatDaoJdbcImpl implements SeatDao {
 
 	@Override
 	public Seat findById(Long[] ids) {
-		return jdbcTemplate.queryForObject(
-				"SEAT_FIND_BY_ID", 
-				new SeatMapper(), 
-				ids[0], ids[1]
-			);
+		return jdbcTemplate.queryForObject("SEAT_FIND_BY_ID", new SeatMapper(),
+				ids[0], ids[1]);
 	}
 
 	@Override
@@ -72,11 +61,8 @@ public class SeatDaoJdbcImpl implements SeatDao {
 
 	@Override
 	public Seat findByUserAndTrip(Long userId, Long tripId) {
-		return jdbcTemplate.queryForObject(
-				"SEAT_FIND_BY_ID", 
-				new SeatMapper(), 
-				userId, tripId
-			);
+		return jdbcTemplate.queryForObject("SEAT_FIND_BY_ID", new SeatMapper(),
+				userId, tripId);
 	}
 
 }

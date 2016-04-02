@@ -16,7 +16,7 @@ import com.sdi.infrastructure.Factories;
 import com.sdi.persistence.UserDao;
 
 @FacesValidator("validator.loginRepetido")
-public class LoginRepetidoValidator implements Validator, ClientValidator{
+public class LoginRepetidoValidator implements Validator, ClientValidator {
 
 	@Override
 	public Map<String, Object> getMetadata() {
@@ -31,16 +31,16 @@ public class LoginRepetidoValidator implements Validator, ClientValidator{
 	@Override
 	public void validate(FacesContext context, UIComponent ui, Object value)
 			throws ValidatorException {
-		ResourceBundle msgs = context.getApplication().getResourceBundle(context, "msgs");
+		ResourceBundle msgs = context.getApplication().getResourceBundle(
+				context, "msgs");
 		UserDao ud = Factories.persistence.newUserDao();
-		
-		if(ud.findByLogin(value.toString()) != null){
+
+		if (ud.findByLogin(value.toString()) != null) {
 			throw new ValidatorException(new FacesMessage(
-					FacesMessage.SEVERITY_ERROR, 
-					"Error", 
+					FacesMessage.SEVERITY_ERROR, "Error",
 					msgs.getString("sigInLoginYetRegister")));
 		}
-		
+
 	}
 
 }

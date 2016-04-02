@@ -3,28 +3,28 @@ package com.sdi.model;
 import java.util.Date;
 
 /**
- * This class is not an entity, it is a DTO with the same fields as 
- * a row in the table
+ * This class is not an entity, it is a DTO with the same fields as a row in the
+ * table
  * 
  * @see Data Transfer Object pattern
  * @author alb
- *
+ * 
  */
 public class Trip {
-	
+
 	private Long id;
-	
+
 	private AddressPoint departure;
 	private AddressPoint destination;
 	private Date arrivalDate;
 	private Date departureDate;
 	private Date closingDate;
-	private Integer availablePax = 0; 
+	private Integer availablePax = 0;
 	private Integer maxPax = 0;
 	private Double estimatedCost = 0.0;
 	private String comments;
 	private TripStatus status;
-	
+
 	private Long promoterId;
 
 	public AddressPoint getDeparture() {
@@ -125,19 +125,13 @@ public class Trip {
 
 	@Override
 	public String toString() {
-		return "Trip [id=" + id 
-				+ ", departure=" + departure 
-				+ ", destination=" + destination 
-				+ ", arrivalDate=" + arrivalDate 
-				+ ", departureDate=" + departureDate 
-				+ ", closingDate=" + closingDate 
-				+ ", availablePax=" + availablePax 
-				+ ", maxPax=" + maxPax 
-				+ ", estimatedCost=" + estimatedCost 
-				+ ", comments=" + comments 
-				+ ", status=" + status
-				+ ", promoterId=" + promoterId 
-			+ "]";
+		return "Trip [id=" + id + ", departure=" + departure + ", destination="
+				+ destination + ", arrivalDate=" + arrivalDate
+				+ ", departureDate=" + departureDate + ", closingDate="
+				+ closingDate + ", availablePax=" + availablePax + ", maxPax="
+				+ maxPax + ", estimatedCost=" + estimatedCost + ", comments="
+				+ comments + ", status=" + status + ", promoterId="
+				+ promoterId + "]";
 	}
 
 }

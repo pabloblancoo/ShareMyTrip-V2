@@ -15,11 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.sdi.presentation.BeanSettings;
 
-@WebFilter(
-		dispatcherTypes = {DispatcherType.REQUEST},
-		urlPatterns= {"/iniciarSesion.xhtml", "/registrarse.xhtml"}
-		)
-public class FilterNoLogin implements Filter{
+@WebFilter(dispatcherTypes = { DispatcherType.REQUEST }, urlPatterns = {
+		"/iniciarSesion.xhtml", "/registrarse.xhtml" })
+public class FilterNoLogin implements Filter {
 
 	@Override
 	public void destroy() {
@@ -30,23 +28,22 @@ public class FilterNoLogin implements Filter{
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse res,
 			FilterChain chain) throws IOException, ServletException {
-		
-		HttpServletRequest requ = ((HttpServletRequest)req);
-		
-		if((requ.getSession() != null
-				&& requ.getSession().getAttribute("settings") != null
-				&& ((BeanSettings)requ.getSession().getAttribute("settings")).getUsuario() == null)
+
+		HttpServletRequest requ = ((HttpServletRequest) req);
+
+		if ((requ.getSession() != null
+				&& requ.getSession().getAttribute("settings") != null && ((BeanSettings) requ
+				.getSession().getAttribute("settings")).getUsuario() == null)
 				|| requ.getSession() == null
-				|| requ.getSession().getAttribute("settings") == null){
-			
+				|| requ.getSession().getAttribute("settings") == null) {
+
 			chain.doFilter(req, res);
-			
-		}
-		else{
-			
+
+		} else {
+
 			String path = requ.getContextPath();
-			((HttpServletResponse)res).sendRedirect(path + "/index.xhtml"); 
-			
+			((HttpServletResponse) res).sendRedirect(path + "/index.xhtml");
+
 		}
 
 	}

@@ -17,46 +17,36 @@ public class UserDaoJdbcImpl implements UserDao {
 		@Override
 		public User toObject(ResultSet rs) throws SQLException {
 			User res = new User();
-			
-			res.setId(  		rs.getLong("id") );
-			res.setLogin(  		rs.getString("login") );
-			res.setPassword(  	rs.getString("password") );
-			res.setName(  		rs.getString("name") );
-			res.setSurname(  	rs.getString("surname") );
-			res.setEmail(  		rs.getString("email") );
-			res.setStatus(  	UserStatus.values()[ rs.getInt("status") ] );
-			
+
+			res.setId(rs.getLong("id"));
+			res.setLogin(rs.getString("login"));
+			res.setPassword(rs.getString("password"));
+			res.setName(rs.getString("name"));
+			res.setSurname(rs.getString("surname"));
+			res.setEmail(rs.getString("email"));
+			res.setStatus(UserStatus.values()[rs.getInt("status")]);
+
 			return res;
 		}
 
 	}
-	
-	private	JdbcTemplate jdbcTemplate = new JdbcTemplate();
+
+	private JdbcTemplate jdbcTemplate = new JdbcTemplate();
 
 	@Override
 	public Long save(User dto) {
-		jdbcTemplate.execute("USER_INSERT", 
-				dto.getLogin(), 
-				dto.getPassword(), 
-				dto.getName(),
-				dto.getSurname(),
-				dto.getEmail(),
-				dto.getStatus().ordinal()  // enum saved as integer
-			);
+		jdbcTemplate.execute("USER_INSERT", dto.getLogin(), dto.getPassword(),
+				dto.getName(), dto.getSurname(), dto.getEmail(), dto
+						.getStatus().ordinal() // enum saved as integer
+				);
 		return jdbcTemplate.getGeneratedKey();
 	}
 
 	@Override
 	public int update(User dto) {
-		return jdbcTemplate.execute("USER_UPDATE", 
-				dto.getLogin(), 
-				dto.getPassword(), 
-				dto.getName(),
-				dto.getSurname(),
-				dto.getEmail(),
-				dto.getStatus().ordinal(),
-				dto.getId()
-			);
+		return jdbcTemplate.execute("USER_UPDATE", dto.getLogin(),
+				dto.getPassword(), dto.getName(), dto.getSurname(),
+				dto.getEmail(), dto.getStatus().ordinal(), dto.getId());
 	}
 
 	@Override
@@ -66,11 +56,8 @@ public class UserDaoJdbcImpl implements UserDao {
 
 	@Override
 	public User findById(Long id) {
-		return jdbcTemplate.queryForObject(
-				"USER_FIND_BY_ID", 
-				new UserMapper(), 
-				id
-			);
+		return jdbcTemplate.queryForObject("USER_FIND_BY_ID", new UserMapper(),
+				id);
 	}
 
 	@Override
@@ -79,20 +66,15 @@ public class UserDaoJdbcImpl implements UserDao {
 	}
 
 	@Override
-	public User findByLogin(String login,String password) {
-		return jdbcTemplate.queryForObject(
-				"USER_FIND_BY_LOGIN_AND_PASSWORD", 
-				new UserMapper(), 
-				login,password
-			);
+	public User findByLogin(String login, String password) {
+		return jdbcTemplate.queryForObject("USER_FIND_BY_LOGIN_AND_PASSWORD",
+				new UserMapper(), login, password);
 	}
+
 	@Override
 	public User findByLogin(String login) {
-		return jdbcTemplate.queryForObject(
-				"USER_FIND_BY_LOGIN", 
-				new UserMapper(), 
-				login
-			);
+		return jdbcTemplate.queryForObject("USER_FIND_BY_LOGIN",
+				new UserMapper(), login);
 	}
 
 }

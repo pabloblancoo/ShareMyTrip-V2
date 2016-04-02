@@ -1,22 +1,22 @@
 package com.sdi.model;
 
-
 /**
  * This class represents a value type
+ * 
  * @author alb
  */
 public class AddressPoint {
-	
+
 	private String address;
 	private String city;
 	private String state;
 	private String country;
 	private String zipCode;
 	private Waypoint waypoint;
-	
-	public AddressPoint(String address, String city, String state, 
+
+	public AddressPoint(String address, String city, String state,
 			String country, String zipCode, Waypoint waypoint) {
-		
+
 		super();
 		this.address = address;
 		this.city = city;
@@ -52,9 +52,9 @@ public class AddressPoint {
 
 	@Override
 	public String toString() {
-		return "Destination [address=" + address + ", city=" + city 
-				+ ", state=" + state + ", country=" + country
-				+ ", zipCode=" + zipCode + ", waypoint=" + waypoint + "]";
+		return "Destination [address=" + address + ", city=" + city
+				+ ", state=" + state + ", country=" + country + ", zipCode="
+				+ zipCode + ", waypoint=" + waypoint + "]";
 	}
 
 	@Override
@@ -65,7 +65,8 @@ public class AddressPoint {
 		result = prime * result + ((city == null) ? 0 : city.hashCode());
 		result = prime * result + ((country == null) ? 0 : country.hashCode());
 		result = prime * result + ((state == null) ? 0 : state.hashCode());
-		result = prime * result + ((waypoint == null) ? 0 : waypoint.hashCode());
+		result = prime * result
+				+ ((waypoint == null) ? 0 : waypoint.hashCode());
 		result = prime * result + ((zipCode == null) ? 0 : zipCode.hashCode());
 		return result;
 	}

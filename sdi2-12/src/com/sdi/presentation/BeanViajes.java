@@ -23,10 +23,10 @@ import com.sdi.persistence.TripDao;
 import com.sdi.persistence.UserDao;
 import com.sdi.util.Viajero;
 
-@ManagedBean(name="viajes")
+@ManagedBean(name = "viajes")
 @SessionScoped
 public class BeanViajes {
-	
+
 	List<Trip> viajes;
 	Trip viaje;
 	User promotor;
@@ -37,10 +37,12 @@ public class BeanViajes {
 	public List<Trip> getViajes() {
 		promotor = null;
 		viajeros = new ArrayList<>();
-		
-		List<Trip> viajesDB = Factories.persistence.newTripDao().findAllOpenAndPaxAvailables();
-		
-		if(viajes == null || (viajesDB != null && viajes.size() != viajesDB.size())){
+
+		List<Trip> viajesDB = Factories.persistence.newTripDao()
+				.findAllOpenAndPaxAvailables();
+
+		if (viajes == null
+				|| (viajesDB != null && viajes.size() != viajesDB.size())) {
 			viajes = viajesDB;
 			System.out.println("Viajes cargados: " + viajes.size());
 		}
@@ -60,44 +62,47 @@ public class BeanViajes {
 		this.viaje = viaje;
 		loadMoreInfo();
 	}
-	
+
 	/**
 	 * Metodo que se encarga de cargar el resto de informacion sobre un viaje
 	 * (promotor, otros viajeros)
 	 */
-	public void loadMoreInfo(){
+	public void loadMoreInfo() {
 		ResourceBundle msgs = FacesContext.getCurrentInstance()
-					.getApplication().getResourceBundle(FacesContext.getCurrentInstance(), "msgs");
-		
+				.getApplication()
+				.getResourceBundle(FacesContext.getCurrentInstance(), "msgs");
+
 		UserDao ud = Factories.persistence.newUserDao();
 		SeatDao sd = Factories.persistence.newSeatDao();
-		
+
 		System.out.println("Cargando datos del viaje...");
-		
+
 		promotor = ud.findById(viaje.getPromoterId());
 		System.out.println("Promotor: " + promotor.getName());
-		
-		//---------------------
+
+		// ---------------------
 		viajeros = new ArrayList<>();
 		pendientes = new ArrayList<>();
-		
-		peticiones = Factories.persistence.newApplicationDao().findByTripId(viaje.getId());
-		
-		for(Application peticion: peticiones){
-			Seat plaza = sd.findByUserAndTrip(peticion.getUserId(), viaje.getId());
+
+		peticiones = Factories.persistence.newApplicationDao().findByTripId(
+				viaje.getId());
+
+		for (Application peticion : peticiones) {
+			Seat plaza = sd.findByUserAndTrip(peticion.getUserId(),
+					viaje.getId());
 			User user = ud.findById(peticion.getUserId());
-			
+
 			Viajero viajero = new Viajero(user, viaje, peticion, plaza);
-			
-			if(viajero.getStatus().equals(msgs.getString("ownTripAccepted"))){
+
+			if (viajero.getStatus().equals(msgs.getString("ownTripAccepted"))) {
 				viajeros.add(viajero);
 			}
-			
+
 			pendientes.add(viajero);
 		}
-		
+
 		System.out.println("Loaded " + viajeros.size() + " viajeros");
-		
+
 	}
 
 	public List<Viajero> getPendientes() {
@@ -123,155 +128,168 @@ public class BeanViajes {
 	public void setViajeros(List<Viajero> viajeros) {
 		this.viajeros = viajeros;
 	}
-	
+
 	/**
 	 * Metodo que sirve para comprobar si se debe mostrar el boton de solicitar
 	 * plaza en un viaje
+	 * 
 	 * @return boolean true para mostrarlo, false para ocultarlo
 	 */
-	public boolean mostrarSolicitarPlaza(){
-		BeanSettings bs = (BeanSettings) FacesContext.getCurrentInstance().getExternalContext()
-									.getSessionMap().get("settings");
-		
-		if(bs.getUsuario() == null){
+	public boolean mostrarSolicitarPlaza() {
+		BeanSettings bs = (BeanSettings) FacesContext.getCurrentInstance()
+				.getExternalContext().getSessionMap().get("settings");
+
+		if (bs.getUsuario() == null) {
 			return false;
 		}
-		if(bs.getUsuario().getLogin().equals(promotor.getLogin())){
+		if (bs.getUsuario().getLogin().equals(promotor.getLogin())) {
 			return false;
 		}
-		for(Application peticion : peticiones){
-			if(bs.getUsuario().getId().equals(peticion.getUserId())){
+		for (Application peticion : peticiones) {
+			if (bs.getUsuario().getId().equals(peticion.getUserId())) {
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
-	
+
 	/**
-	 * Método que inserta una solicitud para el viaje actual y el usuario que 
-	 * ha iniciado sesión
+	 * Método que inserta una solicitud para el viaje actual y el usuario que ha
+	 * iniciado sesión
 	 */
-	public void solicitarPlaza(){
+	public void solicitarPlaza() {
 		ResourceBundle msgs = FacesContext.getCurrentInstance()
-					.getApplication().getResourceBundle(FacesContext.getCurrentInstance(), "msgs");
-		
-		BeanSettings bs = (BeanSettings) FacesContext.getCurrentInstance().getExternalContext()
-				.getSessionMap().get("settings");
+				.getApplication()
+				.getResourceBundle(FacesContext.getCurrentInstance(), "msgs");
+
+		BeanSettings bs = (BeanSettings) FacesContext.getCurrentInstance()
+				.getExternalContext().getSessionMap().get("settings");
 		FacesMessage msg = null;
-		
-		Application peticion = new Application(bs.getUsuario().getId(), viaje.getId());
-		if(mostrarSolicitarPlaza()){
+
+		Application peticion = new Application(bs.getUsuario().getId(),
+				viaje.getId());
+		if (mostrarSolicitarPlaza()) {
 			Factories.persistence.newApplicationDao().save(peticion);
 			peticiones.add(peticion);
-			
-			System.out.println("Usuario [" + bs.getUsuario().getLogin() + "] solicito plaza en el viaje [id:" + viaje.getId() +"]");
-			msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", msgs.getString("tripApplyInfo"));
+
+			System.out
+					.println("Usuario [" + bs.getUsuario().getLogin()
+							+ "] solicito plaza en el viaje [id:"
+							+ viaje.getId() + "]");
+			msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+					msgs.getString("tripApplyInfo"));
+		} else {
+			msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
+					msgs.getString("tripApplyError"));
 		}
-		else{
-			msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", msgs.getString("tripApplyError"));
-		}
-		
+
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 
 	}
-	
+
 	/**
 	 * Metodo que devuelve true si el usuario con sesion iniciada es el promotor
+	 * 
 	 * @return boolean
 	 */
-	public boolean isPromotorViaje(){
-		BeanUsuario u = ((BeanSettings) FacesContext.getCurrentInstance().getExternalContext()
-				.getSessionMap().get("settings")).getUsuario();
-		
-		if(u == null){
+	public boolean isPromotorViaje() {
+		BeanUsuario u = ((BeanSettings) FacesContext.getCurrentInstance()
+				.getExternalContext().getSessionMap().get("settings"))
+				.getUsuario();
+
+		if (u == null) {
 			return false;
 		}
-		
+
 		return u.getId().equals(viaje.getPromoterId());
 	}
-	
+
 	/**
 	 * Metodo que acepta a un viajero en el viaje
+	 * 
 	 * @param viajero
 	 */
-	public void accept(Viajero viajero){
+	public void accept(Viajero viajero) {
 		PersistenceFactory p = Factories.persistence;
 		Transaction t = p.newTransaction();
 		SeatDao sd = p.newSeatDao();
 		TripDao td = p.newTripDao();
-		
+
 		t.begin();
-		
-		if(viajero.getSeat() == null){
+
+		if (viajero.getSeat() == null) {
 			Seat seat = new Seat();
 			seat.setComment("");
 			seat.setStatus(SeatStatus.ACCEPTED);
 			seat.setTripId(viaje.getId());
 			seat.setUserId(viajero.getUser().getId());
-		
+
 			sd.save(seat);
-			
+
 			viajero.setSeat(seat);
-		}
-		else{
+		} else {
 			viajero.getSeat().setStatus(SeatStatus.ACCEPTED);
-			
+
 			sd.update(viajero.getSeat());
 		}
-		
-		viaje.setAvailablePax( viaje.getAvailablePax() - 1);
+
+		viaje.setAvailablePax(viaje.getAvailablePax() - 1);
 		td.update(viaje);
 		viajeros.add(viajero);
-		
-		System.out.println("Plaza confirmada para " + viajero.getUser().getName() + " en el viaje [id:"+ viaje.getId() +"]");
-		
+
+		System.out.println("Plaza confirmada para "
+				+ viajero.getUser().getName() + " en el viaje [id:"
+				+ viaje.getId() + "]");
+
 		t.commit();
 	}
-	
+
 	/**
 	 * Metodo que excluye a un viajero en el viaje
+	 * 
 	 * @param viajero
 	 */
-	public void exclude(Viajero viajero){
+	public void exclude(Viajero viajero) {
 		PersistenceFactory p = Factories.persistence;
 		Transaction t = p.newTransaction();
 		SeatDao sd = p.newSeatDao();
 		TripDao td = p.newTripDao();
 		boolean restorePax = false;
-		
+
 		t.begin();
-		
-		if(viajero.getSeat() == null){
+
+		if (viajero.getSeat() == null) {
 			Seat seat = new Seat();
 			seat.setComment("");
 			seat.setStatus(SeatStatus.EXCLUDED);
 			seat.setTripId(viaje.getId());
 			seat.setUserId(viajero.getUser().getId());
-		
+
 			sd.save(seat);
-			
+
 			viajero.setSeat(seat);
-		}
-		else{
+		} else {
 			viajero.getSeat().setStatus(SeatStatus.EXCLUDED);
-			
+
 			sd.update(viajero.getSeat());
 			restorePax = true;
 		}
-		
-		if(restorePax) {
-			viaje.setAvailablePax( viaje.getAvailablePax() + 1);
+
+		if (restorePax) {
+			viaje.setAvailablePax(viaje.getAvailablePax() + 1);
 		}
 		td.update(viaje);
-		for(int i = 0; i < viajeros.size(); i++){
-			if(viajeros.get(i).getUser().getId().equals(viajero.getUser().getId())){
+		for (int i = 0; i < viajeros.size(); i++) {
+			if (viajeros.get(i).getUser().getId()
+					.equals(viajero.getUser().getId())) {
 				viajeros.remove(i);
 			}
 		}
-		
-		System.out.println("Plaza excluida para " + viajero.getUser().getName() + " en el viaje [id:"+ viaje.getId() +"]");
-		
+
+		System.out.println("Plaza excluida para " + viajero.getUser().getName()
+				+ " en el viaje [id:" + viaje.getId() + "]");
+
 		t.commit();
 	}
 

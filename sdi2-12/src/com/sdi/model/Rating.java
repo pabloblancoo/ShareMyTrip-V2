@@ -3,12 +3,12 @@ package com.sdi.model;
 import javax.xml.crypto.Data;
 
 /**
- * This class is not an entity, it is a DTO with the same fields as 
- * a row in the table
+ * This class is not an entity, it is a DTO with the same fields as a row in the
+ * table
  * 
  * @see Data Transfer Object pattern
  * @author alb
- *
+ * 
  */
 public class Rating {
 
@@ -79,14 +79,10 @@ public class Rating {
 
 	@Override
 	public String toString() {
-		return "Rating [id=" + id 
-				+ ", comment=" + comment 
-				+ ", value=" + value 
-				+ ", seatFromTripId=" + seatFromTripId
-				+ ", seatFromUserId=" + seatFromUserId 
-				+ ", seatAboutTripId=" + seatAboutTripId 
-				+ ", seatAboutUserId=" + seatAboutUserId 
-			+ "]";
+		return "Rating [id=" + id + ", comment=" + comment + ", value=" + value
+				+ ", seatFromTripId=" + seatFromTripId + ", seatFromUserId="
+				+ seatFromUserId + ", seatAboutTripId=" + seatAboutTripId
+				+ ", seatAboutUserId=" + seatAboutUserId + "]";
 	}
-	
+
 }

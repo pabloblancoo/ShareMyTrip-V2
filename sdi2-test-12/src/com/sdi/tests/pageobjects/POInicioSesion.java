@@ -6,7 +6,8 @@ import org.openqa.selenium.WebElement;
 
 public class POInicioSesion {
 
-	public void rellenaFormulario(WebDriver driver, String login, String password){
+	public void rellenaFormulario(WebDriver driver, String login,
+			String password) {
 
 		WebElement element = driver.findElement(By.id("form-content:login"));
 		element.click();
@@ -18,9 +19,8 @@ public class POInicioSesion {
 		element.clear();
 		element.sendKeys(password);
 
-
 		By boton = By.id("form-content:boton");
-		driver.findElement(boton).click();	
+		driver.findElement(boton).click();
 
 	}
 }

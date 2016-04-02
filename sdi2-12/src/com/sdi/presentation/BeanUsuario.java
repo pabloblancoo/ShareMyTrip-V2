@@ -14,7 +14,7 @@ import com.sdi.model.UserStatus;
 import com.sdi.persistence.UserDao;
 import com.sdi.util.Comprobante;
 
-@ManagedBean(name="usuario")
+@ManagedBean(name = "usuario")
 @RequestScoped
 public class BeanUsuario implements Serializable {
 
@@ -30,47 +30,58 @@ public class BeanUsuario implements Serializable {
 	private UserStatus status;
 
 	private FacesContext context = FacesContext.getCurrentInstance();
-	private ResourceBundle msgs = context.getApplication().getResourceBundle(context, "msgs");
+	private ResourceBundle msgs = context.getApplication().getResourceBundle(
+			context, "msgs");
 
 	public String getLogin() {
 		return login;
 	}
+
 	public void setLogin(String login) {
-		if(Comprobante.comprobarDato(login)){
+		if (Comprobante.comprobarDato(login)) {
 			this.login = login;
-		}
-		else{
+		} else {
 
 		}
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public String getSurname() {
 		return surname;
 	}
+
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	public String getPassword() {
 		return password;
 	}
+
 	public void setPassword(String password) {
 		this.password = password;
 
 	}
+
 	public String getRepassword() {
 		return repassword;
 	}
+
 	public void setRepassword(String repasword) {
 		this.repassword = repasword;
 	}
@@ -78,32 +89,35 @@ public class BeanUsuario implements Serializable {
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public UserStatus getStatus() {
 		return status;
 	}
+
 	public void setStatus(UserStatus status) {
 		this.status = status;
 	}
 
 	/**
 	 * Metodo que registra al usuario en la base de datos
+	 * 
 	 * @return devuelve el string que indica la vista a carga
 	 */
-	public String registrar(){
+	public String registrar() {
 
-		if(context.getMessageList().size() > 0){
+		if (context.getMessageList().size() > 0) {
 			return null;
 		}
-		if(!repassword.equals(password)){
+		if (!repassword.equals(password)) {
 
-			context.addMessage(null, 
-					new FacesMessage(
-							FacesMessage.SEVERITY_ERROR, 
-							"Error", 
-							msgs.getString("sigInRepassworWrong")));
+			context.addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", msgs
+							.getString("sigInRepassworWrong")));
 			System.out.println("Las contraseñas no coinciden");
 
 			return null;
@@ -118,12 +132,11 @@ public class BeanUsuario implements Serializable {
 		user.setPassword(password);
 		user.setStatus(UserStatus.ACTIVE);
 
-		if(ud.findByLogin(login) != null){
-			context.addMessage(null, 
-					new FacesMessage(
-							FacesMessage.SEVERITY_ERROR, 
-							"Error", 
-							msgs.getString("sigInLoginYetRegister")));
+		if (ud.findByLogin(login) != null) {
+			context.addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", msgs
+							.getString("sigInLoginYetRegister")));
 			System.out.println("Ya existe ese login");
 			return null;
 		}
@@ -155,14 +168,17 @@ public class BeanUsuario implements Serializable {
 			this.id = user.getId();
 			this.status = user.getStatus();
 
-			BeanSettings settings = (BeanSettings) FacesContext.getCurrentInstance()
-					.getExternalContext().getSessionMap().get(new String("settings"));
+			BeanSettings settings = (BeanSettings) FacesContext
+					.getCurrentInstance().getExternalContext().getSessionMap()
+					.get(new String("settings"));
 			settings.setUsuario(this);
 			System.out.println("Sesion iniciada correctamente");
 
 			return "exito";
 		} else {
-			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Usuario o contraseña incorrecta"));
+			context.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_ERROR, "Error",
+					"Usuario o contraseña incorrecta"));
 
 			return null;
 		}
@@ -170,11 +186,13 @@ public class BeanUsuario implements Serializable {
 
 	/**
 	 * Cierra la sesion activa del usuario
+	 * 
 	 * @return
 	 */
-	public String cerrarSesion(){
-		BeanSettings settings = (BeanSettings) FacesContext.getCurrentInstance()
-				.getExternalContext().getSessionMap().get(new String("settings"));
+	public String cerrarSesion() {
+		BeanSettings settings = (BeanSettings) FacesContext
+				.getCurrentInstance().getExternalContext().getSessionMap()
+				.get(new String("settings"));
 		settings.setUsuario(null);
 		System.out.println("Sesion cerrada correctamente");
 

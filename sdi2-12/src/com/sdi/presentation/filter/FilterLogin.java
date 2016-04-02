@@ -15,11 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.sdi.presentation.BeanSettings;
 
-@WebFilter(
-		dispatcherTypes = {DispatcherType.REQUEST},
-		urlPatterns= {"/a/*"}
-		)
-public class FilterLogin implements Filter{
+@WebFilter(dispatcherTypes = { DispatcherType.REQUEST }, urlPatterns = { "/a/*" })
+public class FilterLogin implements Filter {
 
 	@Override
 	public void destroy() {
@@ -30,18 +27,18 @@ public class FilterLogin implements Filter{
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse res,
 			FilterChain chain) throws IOException, ServletException {
-		
-		HttpServletRequest requ = ((HttpServletRequest)req);
-		
-		if(requ.getSession() == null
+
+		HttpServletRequest requ = ((HttpServletRequest) req);
+
+		if (requ.getSession() == null
 				|| requ.getSession().getAttribute("settings") == null
-				|| ((BeanSettings)requ.getSession().getAttribute("settings")).getUsuario() == null){
-			
+				|| ((BeanSettings) requ.getSession().getAttribute("settings"))
+						.getUsuario() == null) {
+
 			String path = requ.getContextPath();
-			((HttpServletResponse)res).sendRedirect(path + "/index.xhtml"); 
-			
-		}
-		else{
+			((HttpServletResponse) res).sendRedirect(path + "/index.xhtml");
+
+		} else {
 			chain.doFilter(req, res);
 		}
 
