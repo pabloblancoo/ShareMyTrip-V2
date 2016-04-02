@@ -35,6 +35,10 @@
 			<var>msgs</var>
 		</resource-bundle>
 	</application>
+	<validator>
+		<validator-id>validator.noVacio</validator-id>
+		<validator-class>com.sdi.presentation.validator.NoVacioValidator</validator-class>
+	</validator>
 
 	<navigation-rule>
 		<from-view-id>*</from-view-id>
