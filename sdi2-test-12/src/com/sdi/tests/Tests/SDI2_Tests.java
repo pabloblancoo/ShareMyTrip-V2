@@ -24,7 +24,7 @@ public class SDI2_Tests {
 
 	WebDriver driver;
 	List<WebElement> elementos = null;
-	String port = "8280";
+	String port = "8180";
 
 	public SDI2_Tests() {
 	}
@@ -86,7 +86,6 @@ public class SDI2_Tests {
 		new POInicioSesion().rellenaFormulario(driver, "test", "test");
 
 		SeleniumUtils.EsperaCargaPagina(driver, "text", "test", 10);
-		SeleniumUtils.textoPresentePagina(driver, "test@test.com");
 
 	}
 
