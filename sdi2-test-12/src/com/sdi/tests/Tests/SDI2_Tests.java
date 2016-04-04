@@ -25,6 +25,7 @@ public class SDI2_Tests {
 	WebDriver driver;
 	List<WebElement> elementos = null;
 	String port = "8180";
+	int tiempoEspera = 20;
 
 	public SDI2_Tests() {
 	}
@@ -71,7 +72,7 @@ public class SDI2_Tests {
 				"test2@test.com", "test2", "test");
 
 		SeleniumUtils.EsperaCargaPagina(driver, "class", "ui-messages-error",
-				10);
+				tiempoEspera);
 		SeleniumUtils.textoPresentePagina(driver, "Error");
 
 	}
@@ -85,7 +86,7 @@ public class SDI2_Tests {
 		driver.get("http://localhost:" + port +"/sdi2-12/iniciarSesion.xhtml");
 		new POInicioSesion().rellenaFormulario(driver, "test", "test");
 
-		SeleniumUtils.EsperaCargaPagina(driver, "text", "test", 10);
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "test", tiempoEspera);
 
 	}
 
@@ -99,7 +100,7 @@ public class SDI2_Tests {
 		new POInicioSesion().rellenaFormulario(driver, "test2", "test2");
 
 		SeleniumUtils.EsperaCargaPagina(driver, "class", "ui-messages-error",
-				10);
+				tiempoEspera);
 		SeleniumUtils.textoPresentePagina(driver, "Error");
 
 	}
@@ -111,7 +112,7 @@ public class SDI2_Tests {
 	@Test
 	public void t05_AccInval() {
 		driver.get("http://localhost:" + port +"/sdi2-12/a/misDatos.xhtml");
-		SeleniumUtils.EsperaCargaPagina(driver, "text", "List", 10);
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "List", tiempoEspera);
 
 	}
 
@@ -128,20 +129,20 @@ public class SDI2_Tests {
 		// Sesion iniciada
 
 		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver,
-				"id", "form-nav-bar:registrarViaje", 10);
+				"id", "form-nav-bar:registrarViaje", tiempoEspera);
 		elementos.get(0).click();
-		SeleniumUtils.EsperaCargaPagina(driver, "text", "cod", 10);
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "cod", tiempoEspera);
 		Thread.sleep(500);
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id",
-				"form-content:botonRecargaSalida", 2);
+				"form-content:botonRecargaSalida", tiempoEspera);
 		elementos.get(0).click();
 
 		Thread.sleep(1000);
 
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id",
-				"form-content:boton", 2);
+				"form-content:boton", tiempoEspera);
 		elementos.get(2).click();
-		SeleniumUtils.EsperaCargaPagina(driver, "text", "Info", 10);
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "Info", tiempoEspera);
 
 	}
 
@@ -158,12 +159,12 @@ public class SDI2_Tests {
 		// Sesion iniciada
 
 		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver,
-				"id", "form-nav-bar:registrarViaje", 2);
+				"id", "form-nav-bar:registrarViaje", tiempoEspera);
 		elementos.get(0).click();
-		SeleniumUtils.EsperaCargaPagina(driver, "text", "cod", 10);
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "cod", tiempoEspera);
 
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id",
-				"form-content:botonRecargaSalida", 2);
+				"form-content:botonRecargaSalida", tiempoEspera);
 		elementos.get(0).click();
 
 		Thread.sleep(1000);
@@ -175,9 +176,9 @@ public class SDI2_Tests {
 		element.sendKeys("6");
 
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id",
-				"form-content:boton", 2);
+				"form-content:boton", tiempoEspera);
 		elementos.get(2).click();
-		SeleniumUtils.EsperaCargaPagina(driver, "text", "Error", 10);
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "Error", tiempoEspera);
 
 	}
 
@@ -198,10 +199,10 @@ public class SDI2_Tests {
 		element.click();
 
 		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver,
-				"id", "editarViaje", 2);
+				"id", "editarViaje", 10);
 		elementos.get(elementos.size() - 1).click();
 
-		SeleniumUtils.EsperaCargaPagina(driver, "id", "botonActualizar", 10);
+		SeleniumUtils.EsperaCargaPagina(driver, "id", "botonActualizar", tiempoEspera);
 
 		element = driver.findElement(By.id("form-content:maxPax"));
 		element.click();
@@ -214,11 +215,11 @@ public class SDI2_Tests {
 		element.sendKeys("2");
 
 		SeleniumUtils.EsperaCargaPagina(driver, "id",
-				"form-content:botonActualizar", 10);
+				"form-content:botonActualizar", tiempoEspera);
 		element = driver.findElement(By.id("form-content:botonActualizar"));
 		element.click();
 
-		SeleniumUtils.EsperaCargaPagina(driver, "text", "Info", 10);
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "Info", tiempoEspera);
 
 	}
 
@@ -237,10 +238,10 @@ public class SDI2_Tests {
 		element.click();
 
 		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver,
-				"id", "editarViaje", 2);
+				"id", "editarViaje", tiempoEspera);
 		elementos.get(elementos.size() - 1).click();
 
-		SeleniumUtils.EsperaCargaPagina(driver, "id", "botonActualizar", 10);
+		SeleniumUtils.EsperaCargaPagina(driver, "id", "botonActualizar", tiempoEspera);
 
 		element = driver.findElement(By.id("form-content:maxPax"));
 		element.click();
@@ -257,7 +258,7 @@ public class SDI2_Tests {
 		element = driver.findElement(By.id("form-content:botonActualizar"));
 		element.click();
 
-		SeleniumUtils.EsperaCargaPagina(driver, "text", "Error", 10);
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "Error", tiempoEspera);
 
 	}
 
@@ -274,11 +275,11 @@ public class SDI2_Tests {
 		element.click();
 
 		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver,
-				"id", "cancelarViaje", 2);
+				"id", "cancelarViaje", tiempoEspera);
 		elementos.get(elementos.size() - 1).click();
 
 		SeleniumUtils
-				.EsperaCargaPagina(driver, "class", "ui-messages-info", 10);
+				.EsperaCargaPagina(driver, "class", "ui-messages-info", tiempoEspera);
 		SeleniumUtils.textoPresentePagina(driver, "Info");
 
 	}
@@ -303,7 +304,7 @@ public class SDI2_Tests {
 		element.click();
 
 		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver,
-				"class", "ui-chkbox-box", 2);
+				"class", "ui-chkbox-box", tiempoEspera);
 		Actions builder = new Actions(driver);
 		builder.moveToElement(elementos.get(elementos.size() - 1)).perform();
 		elementos.get(elementos.size() - 1).click();
@@ -314,7 +315,7 @@ public class SDI2_Tests {
 		element.click();
 
 		SeleniumUtils
-				.EsperaCargaPagina(driver, "class", "ui-messages-info", 20);
+				.EsperaCargaPagina(driver, "class", "ui-messages-info", tiempoEspera);
 		SeleniumUtils.textoPresentePagina(driver, "Info");
 
 	}
@@ -348,11 +349,11 @@ public class SDI2_Tests {
 		element.click();
 
 		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver,
-				"id", "moreInfo", 2);
+				"id", "moreInfo", tiempoEspera);
 		elementos.get(0).click();
 
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id",
-				"solicitarPlaza", 2); // Solicita plaza en el viaje
+				"solicitarPlaza", tiempoEspera); // Solicita plaza en el viaje
 		elementos.get(0).click();
 
 		cerrarSesion(); // Cierra sesion
@@ -362,12 +363,12 @@ public class SDI2_Tests {
 		element.click();
 
 		elementos = SeleniumUtils
-				.EsperaCargaPagina(driver, "id", "moreInfo", 2); // Entrar en la
+				.EsperaCargaPagina(driver, "id", "moreInfo", tiempoEspera); // Entrar en la
 																	// informacion
 																	// del viaje
 		elementos.get(0).click();
 
-		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "aceptar", 2); // Aceptar
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "aceptar", tiempoEspera); // Aceptar
 																					// al
 																					// usuario
 																					// Test2
@@ -395,13 +396,13 @@ public class SDI2_Tests {
 		element.click();
 
 		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver,
-				"id", "moreInfo", 2);
+				"id", "moreInfo", tiempoEspera);
 		elementos.get(1).click(); // Solicitar plaza en el segundo viaje, ya que
 									// el primero ya esta solicitada y
 									// confirmada por otro viaje
 
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id",
-				"solicitarPlaza", 2); // Solicita plaza en el viaje
+				"solicitarPlaza", tiempoEspera); // Solicita plaza en el viaje
 		elementos.get(0).click();
 
 		cerrarSesion(); // Cierra sesion
@@ -417,11 +418,11 @@ public class SDI2_Tests {
 		element.click();
 
 		elementos = SeleniumUtils
-				.EsperaCargaPagina(driver, "id", "moreInfo", 2);
+				.EsperaCargaPagina(driver, "id", "moreInfo", tiempoEspera);
 		elementos.get(1).click(); // Solicitar plaza en el segundo viaje
 
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id",
-				"solicitarPlaza", 2); // Solicita plaza en el viaje
+				"solicitarPlaza", tiempoEspera); // Solicita plaza en el viaje
 		elementos.get(0).click();
 
 		cerrarSesion(); // Cierra sesion
@@ -432,12 +433,12 @@ public class SDI2_Tests {
 		element.click();
 
 		elementos = SeleniumUtils
-				.EsperaCargaPagina(driver, "id", "moreInfo", 2); // Entrar en la
+				.EsperaCargaPagina(driver, "id", "moreInfo", tiempoEspera); // Entrar en la
 																	// informacion
 																	// del viaje
 		elementos.get(1).click();
 
-		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "aceptar", 2); // Aceptar
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "aceptar", tiempoEspera); // Aceptar
 																					// al
 																					// usuario
 																					// Test2
@@ -445,7 +446,7 @@ public class SDI2_Tests {
 
 		Thread.sleep(1000);
 
-		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "aceptar", 2); // Aceptar
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "aceptar", tiempoEspera); // Aceptar
 																					// al
 																					// usuario
 																					// Test3
@@ -479,7 +480,7 @@ public class SDI2_Tests {
 
 		// Esperamos que aparezcan los botones de ordenacion
 		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver,
-				"class", "sortable-column-icon", 2);
+				"class", "sortable-column-icon", tiempoEspera);
 
 		// Pinchamos el primer criterio de ordenacion
 		Thread.sleep(500); // Esta espera es para poder el efecto de ordenación
@@ -487,11 +488,11 @@ public class SDI2_Tests {
 		Thread.sleep(2000);
 
 		elementos = SeleniumUtils
-				.EsperaCargaPagina(driver, "id", "moreInfo", 2);
+				.EsperaCargaPagina(driver, "id", "moreInfo", tiempoEspera);
 		elementos.get(0).click(); // Solicitar plaza en el viaje
 
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id",
-				"solicitarPlaza", 2); // Solicita plaza en el viaje
+				"solicitarPlaza", tiempoEspera); // Solicita plaza en el viaje
 		elementos.get(0).click();
 
 		cerrarSesion(); // Cierra sesion
@@ -507,7 +508,7 @@ public class SDI2_Tests {
 		element.click();
 		// Esperamos que aparezcan los botones de ordenacion
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "class",
-				"sortable-column-icon", 2);
+				"sortable-column-icon", tiempoEspera);
 
 		// Pinchamos el primer criterio de ordenacion
 		Thread.sleep(500); // Esta espera es para poder el efecto de ordenación
@@ -515,11 +516,11 @@ public class SDI2_Tests {
 		Thread.sleep(2000);
 
 		elementos = SeleniumUtils
-				.EsperaCargaPagina(driver, "id", "moreInfo", 2);
+				.EsperaCargaPagina(driver, "id", "moreInfo", tiempoEspera);
 		elementos.get(0).click(); // Solicitar plaza en el viaje
 
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id",
-				"solicitarPlaza", 2); // Solicita plaza en el viaje
+				"solicitarPlaza", tiempoEspera); // Solicita plaza en el viaje
 		elementos.get(0).click();
 
 		cerrarSesion(); // Cierra sesion
@@ -531,7 +532,7 @@ public class SDI2_Tests {
 
 		// Esperamos que aparezcan los botones de ordenacion
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "class",
-				"sortable-column-icon", 2);
+				"sortable-column-icon", tiempoEspera);
 
 		// Pinchamos el segundo criterio de ordenacion
 		Thread.sleep(500); // Esta espera es para poder el efecto de ordenación
@@ -539,18 +540,18 @@ public class SDI2_Tests {
 		Thread.sleep(2000);
 
 		elementos = SeleniumUtils
-				.EsperaCargaPagina(driver, "id", "moreInfo", 2); // Entrar en la
+				.EsperaCargaPagina(driver, "id", "moreInfo", tiempoEspera); // Entrar en la
 																	// informacion
 																	// del viaje
 		elementos.get(0).click();
 
-		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "aceptar", 2); // Aceptar
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "aceptar", tiempoEspera); // Aceptar
 																					// al
 																					// usuario
 																					// Test2
 		elementos.get(0).click();
 
-		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "aceptar", 2); // Aceptar
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "aceptar", tiempoEspera); // Aceptar
 																					// al
 																					// usuario
 																					// Test3
@@ -571,7 +572,7 @@ public class SDI2_Tests {
 		element.click();
 
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "class",
-				"sortable-column-icon", 2);
+				"sortable-column-icon", tiempoEspera);
 
 		// Pinchamos el segundo criterio de ordenacion
 		Thread.sleep(500); // Esta espera es para poder el efecto de ordenación
@@ -579,7 +580,7 @@ public class SDI2_Tests {
 		Thread.sleep(2000);
 
 		elementos = SeleniumUtils
-				.EsperaCargaPagina(driver, "id", "moreInfo", 2);
+				.EsperaCargaPagina(driver, "id", "moreInfo", tiempoEspera);
 		Assert.assertEquals(2, elementos.size()); // Ya que el otro no aparece
 
 	}
@@ -607,23 +608,23 @@ public class SDI2_Tests {
 		element.click();
 
 		List<WebElement> elements = SeleniumUtils.EsperaCargaPagina(driver,
-				"id", "moreInfo", 10);
+				"id", "moreInfo", tiempoEspera);
 		elements.get(elements.size() - 1).click();
 
-		SeleniumUtils.EsperaCargaPagina(driver, "text", ":", 10);
+		SeleniumUtils.EsperaCargaPagina(driver, "text", ":", tiempoEspera);
 		element = driver.findElement(By.id("form-content:solicitarPlaza"));
 		element.click();
 
-		SeleniumUtils.EsperaCargaPagina(driver, "text", "Info", 10);
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "Info", tiempoEspera);
 		element = driver.findElement(By.id("form-nav-bar:misViajes"));
 		element.click();
 
 		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver,
-				"id", "cancelarViaje", 10);
+				"id", "cancelarViaje", tiempoEspera);
 		elementos.get(elementos.size() - 1).click();
 
 		SeleniumUtils
-				.EsperaCargaPagina(driver, "class", "ui-messages-info", 10);
+				.EsperaCargaPagina(driver, "class", "ui-messages-info", tiempoEspera);
 		SeleniumUtils.textoPresentePagina(driver, "Info");
 
 	}
@@ -644,7 +645,7 @@ public class SDI2_Tests {
 
 		// Esperamos que aparezcan los botones de ordenacion
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "class",
-				"sortable-column-icon", 2);
+				"sortable-column-icon", tiempoEspera);
 
 		// Pinchamos el segundo criterio de ordenacion
 		Thread.sleep(500); // Esta espera es para poder el efecto de ordenación
@@ -652,14 +653,14 @@ public class SDI2_Tests {
 		Thread.sleep(2000);
 
 		elementos = SeleniumUtils
-				.EsperaCargaPagina(driver, "id", "moreInfo", 2); // En este
+				.EsperaCargaPagina(driver, "id", "moreInfo", tiempoEspera); // En este
 																	// viaje ya
 																	// hay
 																	// usuarios
 																	// incluidos
 		elementos.get(0).click();
 
-		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "excluir", 2); // Excluir
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "excluir", tiempoEspera); // Excluir
 		elementos.get(0).click();
 
 	}
@@ -673,28 +674,28 @@ public class SDI2_Tests {
 
 		driver.get("http://localhost:" + port +"/sdi2-12/");
 
-		SeleniumUtils.EsperaCargaPagina(driver, "text", "List trips", 10);
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "List trips", tiempoEspera);
 
 		WebElement element = driver
 				.findElement(By.id("form-footer:languajeES"));
 		element.click();
 
 		SeleniumUtils
-				.EsperaCargaPagina(driver, "text", "Listado de viajes", 10);
+				.EsperaCargaPagina(driver, "text", "Listado de viajes", tiempoEspera);
 
 		element = driver.findElement(By.id("form-nav-bar:iniciarSesion"));
 		element.click();
 
-		SeleniumUtils.EsperaCargaPagina(driver, "text", "Contraseña", 10);
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "Contraseña", tiempoEspera);
 
 		element = driver.findElement(By.id("form-nav-bar:registrarse"));
 		element.click();
 
-		SeleniumUtils.EsperaCargaPagina(driver, "text", "Nombre", 10);
-		SeleniumUtils.EsperaCargaPagina(driver, "text", "Apellidos", 10);
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "Nombre", tiempoEspera);
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "Apellidos", tiempoEspera);
 		SeleniumUtils.EsperaCargaPagina(driver, "text", "Correo electronico",
-				10);
-		SeleniumUtils.EsperaCargaPagina(driver, "text", "Contraseña", 10);
+				tiempoEspera);
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "Contraseña", tiempoEspera);
 
 	}
 
@@ -711,20 +712,20 @@ public class SDI2_Tests {
 				.findElement(By.id("form-footer:languajeEN"));
 		element.click();
 
-		SeleniumUtils.EsperaCargaPagina(driver, "text", "Name", 10);
-		SeleniumUtils.EsperaCargaPagina(driver, "text", "Surname", 10);
-		SeleniumUtils.EsperaCargaPagina(driver, "text", "Email", 10);
-		SeleniumUtils.EsperaCargaPagina(driver, "text", "Password", 10);
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "Name", tiempoEspera);
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "Surname", tiempoEspera);
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "Email", tiempoEspera);
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "Password", tiempoEspera);
 
 		element = driver.findElement(By.id("form-nav-bar:iniciarSesion"));
 		element.click();
 
-		SeleniumUtils.EsperaCargaPagina(driver, "text", "Password", 10);
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "Password", tiempoEspera);
 
 		element = driver.findElement(By.id("form-nav-bar:listado"));
 		element.click();
 
-		SeleniumUtils.EsperaCargaPagina(driver, "text", "List trips", 10);
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "List trips", tiempoEspera);
 
 	}
 
@@ -738,11 +739,11 @@ public class SDI2_Tests {
 		driver.get("http://localhost:" + port +"/sdi2-12/");
 
 		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver,
-				"class", "ui-column-filter", 2);
+				"class", "ui-column-filter", tiempoEspera);
 
 		// Obtengo los datos que hay antes de filtrado
 		List<WebElement> datos = SeleniumUtils.EsperaCargaPagina(driver,
-				"class", "ui-widget-content", 2);
+				"class", "ui-widget-content", tiempoEspera);
 
 		elementos.get(1).click();
 
@@ -753,7 +754,7 @@ public class SDI2_Tests {
 
 		// Una vez filtrado tiene que haber menos datos
 		List<WebElement> datosFiltrados = SeleniumUtils.EsperaCargaPagina(
-				driver, "class", "ui-widget-content", 2);
+				driver, "class", "ui-widget-content", tiempoEspera);
 		org.junit.Assert.assertTrue(datos.size() > datosFiltrados.size());
 	}
 
@@ -767,7 +768,7 @@ public class SDI2_Tests {
 		driver.get("http://localhost:" + port +"/sdi2-12/");
 
 		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver,
-				"class", "sortable-column-icon", 2);
+				"class", "sortable-column-icon", tiempoEspera);
 		elementos.get(0).click();
 		Thread.sleep(1500);
 
@@ -808,20 +809,20 @@ public class SDI2_Tests {
 		t06_RegViajeVal();
 
 		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver,
-				"class", "ui-paginator-next", 2);
+				"class", "ui-paginator-next", tiempoEspera);
 
-		elementos = SeleniumUtils.EsperaCargaPagina(driver, "text", "(1", 2);
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "text", "(1", tiempoEspera);
 
 		Actions builder = new Actions(driver);
 		builder.moveToElement(elementos.get(0)).perform();
 		elementos.get(0).click();
 
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "class",
-				"ui-paginator-next", 2);
+				"ui-paginator-next", tiempoEspera);
 		builder.moveToElement(elementos.get(1)).perform();
 		elementos.get(1).click();
 
-		elementos = SeleniumUtils.EsperaCargaPagina(driver, "text", "(2", 2);
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "text", "(2", tiempoEspera);
 
 	}
 
@@ -851,16 +852,16 @@ public class SDI2_Tests {
 		// Sesion iniciada
 
 		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver,
-				"id", "form-nav-bar:registrarViaje", 2);
+				"id", "form-nav-bar:registrarViaje", tiempoEspera);
 		elementos.get(0).click();
-		SeleniumUtils.EsperaCargaPagina(driver, "text", "cod", 10);
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "cod", tiempoEspera);
 
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id",
-				"form-content:botonRecargaSalida", 2);
+				"form-content:botonRecargaSalida", tiempoEspera);
 		elementos.get(0).click();
 
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id",
-				"form-content:departureCity_input", 2);
+				"form-content:departureCity_input", tiempoEspera);
 		elementos.get(0).click();
 		elementos.get(0).clear();
 		elementos.get(0).sendKeys(ciudadSalida);
@@ -876,9 +877,9 @@ public class SDI2_Tests {
 		element.sendKeys(String.valueOf(plazas));
 
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id",
-				"form-content:boton", 2);
+				"form-content:boton", tiempoEspera);
 		elementos.get(2).click();
-		SeleniumUtils.EsperaCargaPagina(driver, "text", "Info", 10);
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "Info", tiempoEspera);
 
 	}
 }
