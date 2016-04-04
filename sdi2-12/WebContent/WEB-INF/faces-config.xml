@@ -46,10 +46,6 @@
 
 	<navigation-rule>
 		<from-view-id>*</from-view-id>
-		<navigation-case>
-			<from-outcome>error</from-outcome>
-			<to-view-id>/error.xhtml</to-view-id>
-		</navigation-case>
 		<!-- Cerrar sesion -->
 		<navigation-case>
 			<from-outcome>cerrarSesion</from-outcome>
