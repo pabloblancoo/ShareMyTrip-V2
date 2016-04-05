@@ -142,6 +142,7 @@ public class SDI2_Tests {
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id",
 				"form-content:boton", tiempoEspera);
 		elementos.get(2).click();
+		Thread.sleep(300);
 		SeleniumUtils.EsperaCargaPagina(driver, "text", "Info", tiempoEspera);
 
 	}
@@ -452,6 +453,7 @@ public class SDI2_Tests {
 																					// Test3
 		elementos.get(0).click();
 
+		Thread.sleep(500);
 	}
 
 	/**
@@ -495,6 +497,7 @@ public class SDI2_Tests {
 				"solicitarPlaza", tiempoEspera); // Solicita plaza en el viaje
 		elementos.get(0).click();
 
+		Thread.sleep(500);
 		cerrarSesion(); // Cierra sesion
 
 		driver.get("http://localhost:" + port +"/sdi2-12/iniciarSesion.xhtml");
@@ -545,18 +548,21 @@ public class SDI2_Tests {
 																	// del viaje
 		elementos.get(0).click();
 
+		Thread.sleep(500);
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "aceptar", tiempoEspera); // Aceptar
 																					// al
 																					// usuario
 																					// Test2
 		elementos.get(0).click();
 
+		Thread.sleep(1000);
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "aceptar", tiempoEspera); // Aceptar
 																					// al
 																					// usuario
 																					// Test3
 		elementos.get(0).click();
 
+		Thread.sleep(1000);
 		// Ya esta el viaje completo, y nadie mas puede incluirse
 
 		cerrarSesion();
@@ -571,6 +577,7 @@ public class SDI2_Tests {
 		element = driver.findElement(By.id("form-nav-bar:listado"));
 		element.click();
 
+		Thread.sleep(500);
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "class",
 				"sortable-column-icon", tiempoEspera);
 
@@ -854,12 +861,14 @@ public class SDI2_Tests {
 		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver,
 				"id", "form-nav-bar:registrarViaje", tiempoEspera);
 		elementos.get(0).click();
+		Thread.sleep(500);
 		SeleniumUtils.EsperaCargaPagina(driver, "text", "cod", tiempoEspera);
 
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id",
 				"form-content:botonRecargaSalida", tiempoEspera);
 		elementos.get(0).click();
 
+		Thread.sleep(500);
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id",
 				"form-content:departureCity_input", tiempoEspera);
 		elementos.get(0).click();
