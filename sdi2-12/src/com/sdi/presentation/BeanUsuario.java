@@ -13,6 +13,7 @@ import com.sdi.model.User;
 import com.sdi.model.UserStatus;
 import com.sdi.persistence.UserDao;
 import com.sdi.util.Comprobante;
+import com.sdi.util.Encriptador;
 
 @ManagedBean(name = "usuario")
 @RequestScoped
@@ -129,7 +130,7 @@ public class BeanUsuario implements Serializable {
 		user.setName(name);
 		user.setEmail(email);
 		user.setSurname(surname);
-		user.setPassword(password);
+		user.setPassword(Encriptador.encriptar(password));
 		user.setStatus(UserStatus.ACTIVE);
 
 		if (ud.findByLogin(login) != null) {
@@ -156,7 +157,7 @@ public class BeanUsuario implements Serializable {
 	public String iniciarSesion() {
 
 		User user = Factories.persistence.newUserDao().findByLogin(login,
-				password);
+				Encriptador.encriptar(password));
 
 		if (user != null) {
 
