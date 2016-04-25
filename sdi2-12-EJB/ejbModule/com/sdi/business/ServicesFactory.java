@@ -4,6 +4,6 @@ public interface ServicesFactory {
 
 	TripService createTripService();
 	ApplicationService createApplicationService();
-	UserService createUserService();
+	UserService getUserService();
 
 }

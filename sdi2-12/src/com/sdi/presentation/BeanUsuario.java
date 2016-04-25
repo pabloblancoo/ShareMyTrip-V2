@@ -134,7 +134,7 @@ public class BeanUsuario implements Serializable {
 		user.setStatus(UserStatus.ACTIVE);
 
 		try {
-			Factories.services.createUserService().registrarse(user);
+			Factories.services.getUserService().registrarse(user);
 		} catch (EntityAlreadyExistsException e) {
 			context.addMessage(
 					null,
@@ -158,7 +158,7 @@ public class BeanUsuario implements Serializable {
 
 		User user = null;
 		try{
-			user = Factories.services.createUserService().iniciarSesion(login, password);
+			user = Factories.services.getUserService().iniciarSesion(login, password);
 		} catch(BusinessException e){
 			context.addMessage(null, new FacesMessage(
 					FacesMessage.SEVERITY_ERROR, "Error",
@@ -200,4 +200,19 @@ public class BeanUsuario implements Serializable {
 		return "exito";
 	}
 
+	/**
+	 * Devuelve el usuario base del bean
+	 * @return
+	 */
+	public User getUsuarioBase(){
+		User user = new User();
+		user.setEmail(email);
+		user.setLogin(login);
+		user.setName(name);
+		user.setSurname(surname);
+		user.setEmail(email);
+		user.setId(id);
+		user.setStatus(status);
+		return user;
+	}
 }
