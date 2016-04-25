@@ -35,7 +35,7 @@ public class BeanMisViajes {
 				.getUsuario();
 
 		if (usuario != null) {
-			TripService ts = Factories.services.createTripService();
+			TripService ts = Factories.services.getTripService();
 			ts.buscarViajesPromotor(viajesDB, usuario.getId(), msgs);
 			ts.buscarViajesConRelacion(viajesDB, usuario.getId(), msgs);
 		}
@@ -95,7 +95,7 @@ public class BeanMisViajes {
 
 		if (!trip.getViaje().getPromoterId().equals(idUsuario)) {
 
-			Trip viaje = Factories.services.createApplicationService().cancelarParticipacion(trip, idUsuario).getViaje();
+			Trip viaje = Factories.services.getApplicationService().cancelarParticipacion(trip, idUsuario).getViaje();
 			trip.setViaje(viaje);
 			
 			FacesContext.getCurrentInstance().addMessage(
@@ -110,7 +110,7 @@ public class BeanMisViajes {
 			Trip viaje = trip.getViaje();
 			viaje.setStatus(TripStatus.CANCELLED);
 			
-			Factories.services.createTripService().cancelarViaje(viaje);
+			Factories.services.getTripService().cancelarViaje(viaje);
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", msgs

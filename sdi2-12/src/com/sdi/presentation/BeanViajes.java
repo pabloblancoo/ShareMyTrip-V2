@@ -34,7 +34,7 @@ public class BeanViajes {
 
 		List<Trip> viajesDB = null;
 		try {
-			viajesDB = Factories.services.createTripService().getViajesConPlazasYSinCerrar();
+			viajesDB = Factories.services.getTripService().getViajesConPlazasYSinCerrar();
 		} catch (Exception e) {
 			System.out.println("Error al cargar los viajes");
 		}
@@ -73,13 +73,13 @@ public class BeanViajes {
 
 		System.out.println("Cargando datos del viaje...");
 
-		promotor = Factories.services.createTripService().findPromotor(viaje.getPromoterId());
+		promotor = Factories.services.getTripService().findPromotor(viaje.getPromoterId());
 		System.out.println("Promotor: " + promotor.getName());
 
 		// ---------------------
 
-		peticiones = Factories.services.createApplicationService().buscarSolicitudes(viaje.getId());
-		Map<String, Object> mapa = Factories.services.createApplicationService().buscarPendientesYViajeros(peticiones, viaje.getId(), msgs);
+		peticiones = Factories.services.getApplicationService().buscarSolicitudes(viaje.getId());
+		Map<String, Object> mapa = Factories.services.getApplicationService().buscarPendientesYViajeros(peticiones, viaje.getId(), msgs);
 		
 		viajeros = (List<Viajero>) mapa.get("viajeros");
 		pendientes = (List<Viajero>) mapa.get("pendientes");
@@ -152,7 +152,7 @@ public class BeanViajes {
 		
 		if (mostrarSolicitarPlaza()) {
 			Application peticion = Factories.services
-					.createApplicationService()
+					.getApplicationService()
 					.solicitarPlaza(bs.getUsuario().getId(), viaje.getId());
 			peticiones.add(peticion);
 
@@ -195,7 +195,7 @@ public class BeanViajes {
 	 */
 	public void accept(Viajero viajero) {
 		
-		Viajero viajeroU = Factories.services.createApplicationService().accept(viajero, viaje);
+		Viajero viajeroU = Factories.services.getApplicationService().accept(viajero, viaje);
 		
 		viajeros.add(viajeroU);
 
@@ -212,7 +212,7 @@ public class BeanViajes {
 	 */
 	public void exclude(Viajero viajero) {
 		
-		viaje = Factories.services.createApplicationService().exclude(viajero, viaje);
+		viaje = Factories.services.getApplicationService().exclude(viajero, viaje);
 		
 		for (int i = 0; i < viajeros.size(); i++) {
 			if (viajeros.get(i).getUser().getId()

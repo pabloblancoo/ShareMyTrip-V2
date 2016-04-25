@@ -8,12 +8,12 @@ import com.sdi.business.UserService;
 public class SimpleServicesFactory implements ServicesFactory {
 
 	@Override
-	public TripService createTripService() {
+	public TripService getTripService() {
 		return new EjbTripsService();
 	}
 
 	@Override
-	public ApplicationService createApplicationService() {
+	public ApplicationService getApplicationService() {
 		return new EjbApplicationService();
 	}
 

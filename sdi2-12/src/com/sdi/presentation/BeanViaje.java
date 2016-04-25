@@ -402,7 +402,7 @@ public class BeanViaje implements Serializable {
 
 						try {
 							try {
-								Factories.services.createTripService().saveTrip(trip);
+								Factories.services.getTripService().saveTrip(trip);
 							} catch (EntityAlreadyExistsException e) {
 								System.out.println("El viaje ya existe");
 								FacesContext
@@ -639,7 +639,7 @@ public class BeanViaje implements Serializable {
 
 						try {
 							try {
-								Factories.services.createTripService().updateTrip(trip);
+								Factories.services.getTripService().updateTrip(trip);
 							} catch (EntityNotFoundException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();

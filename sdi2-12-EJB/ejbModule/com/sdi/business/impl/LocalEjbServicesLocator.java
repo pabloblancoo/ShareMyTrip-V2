@@ -24,7 +24,7 @@ public class LocalEjbServicesLocator implements ServicesFactory {
 			+ "com.sdi.business.impl.EjbTrips.LocalTripsService";
 
 	@Override
-	public TripService createTripService() {
+	public TripService getTripService() {
 		try {
 			Context ctx = new InitialContext();
 			return (TripService) ctx.lookup(TRIP_SERVICE_JNDI_KEY);
@@ -34,7 +34,7 @@ public class LocalEjbServicesLocator implements ServicesFactory {
 	}
 
 	@Override
-	public ApplicationService createApplicationService() {
+	public ApplicationService getApplicationService() {
 		try {
 			Context ctx = new InitialContext();
 			return (ApplicationService) ctx.lookup(APPLICATION_SERVICE_JNDI_KEY);

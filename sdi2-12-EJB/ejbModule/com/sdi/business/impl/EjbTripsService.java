@@ -3,9 +3,13 @@ package com.sdi.business.impl;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.ejb.Stateless;
+
 import com.sdi.business.TripService;
 import com.sdi.business.exception.EntityAlreadyExistsException;
 import com.sdi.business.exception.EntityNotFoundException;
+import com.sdi.business.impl.EjbTrips.LocalTripsService;
+import com.sdi.business.impl.EjbTrips.RemoteTripsService;
 import com.sdi.business.impl.classes.Trip.ActualizarViaje;
 import com.sdi.business.impl.classes.Trip.BuscarPromotor;
 import com.sdi.business.impl.classes.Trip.BuscarViajeConRelacion;
@@ -18,7 +22,8 @@ import com.sdi.model.Trip;
 import com.sdi.model.User;
 import com.sdi.util.MisViajesConEstado;
 
-public class EjbTripsService implements TripService {
+@Stateless
+public class EjbTripsService implements TripService, LocalTripsService, RemoteTripsService {
 
 	@Override
 	public List<Trip> getViajes() throws Exception {
