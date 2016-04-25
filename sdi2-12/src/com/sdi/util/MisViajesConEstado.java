@@ -67,4 +67,7 @@ public class MisViajesConEstado {
 		this.seleccionado = seleccionado;
 	}
 
+	public void setViaje(Trip viaje){
+		this.viaje = viaje;
+	}
 }

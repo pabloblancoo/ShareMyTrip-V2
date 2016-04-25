@@ -3,6 +3,7 @@ package com.sdi.presentation;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
@@ -12,15 +13,8 @@ import javax.faces.context.FacesContext;
 
 import com.sdi.infrastructure.Factories;
 import com.sdi.model.Application;
-import com.sdi.model.Seat;
-import com.sdi.model.SeatStatus;
 import com.sdi.model.Trip;
 import com.sdi.model.User;
-import com.sdi.persistence.PersistenceFactory;
-import com.sdi.persistence.SeatDao;
-import com.sdi.persistence.Transaction;
-import com.sdi.persistence.TripDao;
-import com.sdi.persistence.UserDao;
 import com.sdi.util.Viajero;
 
 @ManagedBean(name = "viajes")
@@ -38,8 +32,12 @@ public class BeanViajes {
 		promotor = null;
 		viajeros = new ArrayList<>();
 
-		List<Trip> viajesDB = Factories.persistence.newTripDao()
-				.findAllOpenAndPaxAvailables();
+		List<Trip> viajesDB = null;
+		try {
+			viajesDB = Factories.services.createTripService().getViajesConPlazasYSinCerrar();
+		} catch (Exception e) {
+			System.out.println("Error al cargar los viajes");
+		}
 
 		if (viajes == null
 				|| (viajesDB != null && viajes.size() != viajesDB.size())) {
@@ -67,39 +65,24 @@ public class BeanViajes {
 	 * Metodo que se encarga de cargar el resto de informacion sobre un viaje
 	 * (promotor, otros viajeros)
 	 */
+	@SuppressWarnings("unchecked")
 	public void loadMoreInfo() {
 		ResourceBundle msgs = FacesContext.getCurrentInstance()
 				.getApplication()
 				.getResourceBundle(FacesContext.getCurrentInstance(), "msgs");
 
-		UserDao ud = Factories.persistence.newUserDao();
-		SeatDao sd = Factories.persistence.newSeatDao();
-
 		System.out.println("Cargando datos del viaje...");
 
-		promotor = ud.findById(viaje.getPromoterId());
+		promotor = Factories.services.createTripService().findPromotor(viaje.getPromoterId());
 		System.out.println("Promotor: " + promotor.getName());
 
 		// ---------------------
-		viajeros = new ArrayList<>();
-		pendientes = new ArrayList<>();
 
-		peticiones = Factories.persistence.newApplicationDao().findByTripId(
-				viaje.getId());
-
-		for (Application peticion : peticiones) {
-			Seat plaza = sd.findByUserAndTrip(peticion.getUserId(),
-					viaje.getId());
-			User user = ud.findById(peticion.getUserId());
-
-			Viajero viajero = new Viajero(user, viaje, peticion, plaza);
-
-			if (viajero.getStatus().equals(msgs.getString("ownTripAccepted"))) {
-				viajeros.add(viajero);
-			}
-
-			pendientes.add(viajero);
-		}
+		peticiones = Factories.services.createApplicationService().buscarSolicitudes(viaje.getId());
+		Map<String, Object> mapa = Factories.services.createApplicationService().buscarPendientesYViajeros(peticiones, viaje.getId(), msgs);
+		
+		viajeros = (List<Viajero>) mapa.get("viajeros");
+		pendientes = (List<Viajero>) mapa.get("pendientes");
 
 		System.out.println("Loaded " + viajeros.size() + " viajeros");
 
@@ -166,11 +149,11 @@ public class BeanViajes {
 		BeanSettings bs = (BeanSettings) FacesContext.getCurrentInstance()
 				.getExternalContext().getSessionMap().get("settings");
 		FacesMessage msg = null;
-
-		Application peticion = new Application(bs.getUsuario().getId(),
-				viaje.getId());
+		
 		if (mostrarSolicitarPlaza()) {
-			Factories.persistence.newApplicationDao().save(peticion);
+			Application peticion = Factories.services
+					.createApplicationService()
+					.solicitarPlaza(bs.getUsuario().getId(), viaje.getId());
 			peticiones.add(peticion);
 
 			System.out
@@ -211,38 +194,15 @@ public class BeanViajes {
 	 * @param viajero
 	 */
 	public void accept(Viajero viajero) {
-		PersistenceFactory p = Factories.persistence;
-		Transaction t = p.newTransaction();
-		SeatDao sd = p.newSeatDao();
-		TripDao td = p.newTripDao();
-
-		t.begin();
-
-		if (viajero.getSeat() == null) {
-			Seat seat = new Seat();
-			seat.setComment("");
-			seat.setStatus(SeatStatus.ACCEPTED);
-			seat.setTripId(viaje.getId());
-			seat.setUserId(viajero.getUser().getId());
-
-			sd.save(seat);
-
-			viajero.setSeat(seat);
-		} else {
-			viajero.getSeat().setStatus(SeatStatus.ACCEPTED);
-
-			sd.update(viajero.getSeat());
-		}
-
-		viaje.setAvailablePax(viaje.getAvailablePax() - 1);
-		td.update(viaje);
-		viajeros.add(viajero);
+		
+		Viajero viajeroU = Factories.services.createApplicationService().accept(viajero, viaje);
+		
+		viajeros.add(viajeroU);
 
 		System.out.println("Plaza confirmada para "
 				+ viajero.getUser().getName() + " en el viaje [id:"
 				+ viaje.getId() + "]");
 
-		t.commit();
 	}
 
 	/**
@@ -251,35 +211,9 @@ public class BeanViajes {
 	 * @param viajero
 	 */
 	public void exclude(Viajero viajero) {
-		PersistenceFactory p = Factories.persistence;
-		Transaction t = p.newTransaction();
-		SeatDao sd = p.newSeatDao();
-		TripDao td = p.newTripDao();
-		boolean restorePax = false;
-
-		t.begin();
-
-		if (viajero.getSeat() == null) {
-			Seat seat = new Seat();
-			seat.setComment("");
-			seat.setStatus(SeatStatus.EXCLUDED);
-			seat.setTripId(viaje.getId());
-			seat.setUserId(viajero.getUser().getId());
-
-			sd.save(seat);
-
-			viajero.setSeat(seat);
-		} else {
-			viajero.getSeat().setStatus(SeatStatus.EXCLUDED);
-
-			sd.update(viajero.getSeat());
-			restorePax = true;
-		}
-
-		if (restorePax) {
-			viaje.setAvailablePax(viaje.getAvailablePax() + 1);
-		}
-		td.update(viaje);
+		
+		viaje = Factories.services.createApplicationService().exclude(viajero, viaje);
+		
 		for (int i = 0; i < viajeros.size(); i++) {
 			if (viajeros.get(i).getUser().getId()
 					.equals(viajero.getUser().getId())) {
@@ -290,7 +224,6 @@ public class BeanViajes {
 		System.out.println("Plaza excluida para " + viajero.getUser().getName()
 				+ " en el viaje [id:" + viaje.getId() + "]");
 
-		t.commit();
 	}
 
 }

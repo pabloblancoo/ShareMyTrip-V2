@@ -1,4 +1,4 @@
-package com.sdi.tests.pageobjects;
+package com.sdi.tests.Tests;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

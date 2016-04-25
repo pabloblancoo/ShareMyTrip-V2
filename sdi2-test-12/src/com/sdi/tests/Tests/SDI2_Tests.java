@@ -14,8 +14,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 
-import com.sdi.tests.pageobjects.POInicioSesion;
-import com.sdi.tests.pageobjects.PORegistro;
 import com.sdi.tests.utils.SeleniumUtils;
 
 //Ordenamos las pruebas por el nombre del método
@@ -24,7 +22,7 @@ public class SDI2_Tests {
 
 	WebDriver driver;
 	List<WebElement> elementos = null;
-	String port = "8180";
+	String port = "8280";
 	int tiempoEspera = 20;
 
 	public SDI2_Tests() {

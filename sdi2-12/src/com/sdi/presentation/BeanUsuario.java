@@ -1,17 +1,18 @@
 package com.sdi.presentation;
 
-import java.util.ResourceBundle;
 import java.io.Serializable;
+import java.util.ResourceBundle;
 
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
+import com.sdi.business.exception.BusinessException;
+import com.sdi.business.exception.EntityAlreadyExistsException;
 import com.sdi.infrastructure.Factories;
 import com.sdi.model.User;
 import com.sdi.model.UserStatus;
-import com.sdi.persistence.UserDao;
 import com.sdi.util.Comprobante;
 import com.sdi.util.Encriptador;
 
@@ -124,7 +125,6 @@ public class BeanUsuario implements Serializable {
 			return null;
 		}
 		User user = new User();
-		UserDao ud = Factories.persistence.newUserDao();
 
 		user.setLogin(login);
 		user.setName(name);
@@ -133,7 +133,9 @@ public class BeanUsuario implements Serializable {
 		user.setPassword(Encriptador.encriptar(password));
 		user.setStatus(UserStatus.ACTIVE);
 
-		if (ud.findByLogin(login) != null) {
+		try {
+			Factories.services.createUserService().registrarse(user);
+		} catch (EntityAlreadyExistsException e) {
 			context.addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", msgs
@@ -141,8 +143,6 @@ public class BeanUsuario implements Serializable {
 			System.out.println("Ya existe ese login");
 			return null;
 		}
-
-		ud.save(user);
 
 		System.out.println("Usuario registrado correctamente");
 		return "exito";
@@ -156,33 +156,33 @@ public class BeanUsuario implements Serializable {
 	 */
 	public String iniciarSesion() {
 
-		User user = Factories.persistence.newUserDao().findByLogin(login,
-				Encriptador.encriptar(password));
-
-		if (user != null) {
-
-			this.email = user.getEmail();
-			this.login = user.getLogin();
-			this.name = user.getName();
-			this.surname = user.getSurname();
-			this.email = user.getEmail();
-			this.id = user.getId();
-			this.status = user.getStatus();
-
-			BeanSettings settings = (BeanSettings) FacesContext
-					.getCurrentInstance().getExternalContext().getSessionMap()
-					.get(new String("settings"));
-			settings.setUsuario(this);
-			System.out.println("Sesion iniciada correctamente");
-
-			return "exito";
-		} else {
+		User user = null;
+		try{
+			user = Factories.services.createUserService().iniciarSesion(login, password);
+		} catch(BusinessException e){
 			context.addMessage(null, new FacesMessage(
 					FacesMessage.SEVERITY_ERROR, "Error",
 					"Usuario o contraseña incorrecta"));
 
 			return null;
 		}
+
+		this.email = user.getEmail();
+		this.login = user.getLogin();
+		this.name = user.getName();
+		this.surname = user.getSurname();
+		this.email = user.getEmail();
+		this.id = user.getId();
+		this.status = user.getStatus();
+
+		BeanSettings settings = (BeanSettings) FacesContext
+				.getCurrentInstance().getExternalContext().getSessionMap()
+				.get(new String("settings"));
+		settings.setUsuario(this);
+		System.out.println("Sesion iniciada correctamente");
+
+		return "exito";
+
 	}
 
 	/**
