@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>sdi2-12-Completo</name>
+	<name>sdi2-12</name>
 	<comment></comment>
 	<projects>
 		<project>sdi2-12-EJB</project>
-		<project>sdi2-12</project>
+		<project>sdi2-12-WEB</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
