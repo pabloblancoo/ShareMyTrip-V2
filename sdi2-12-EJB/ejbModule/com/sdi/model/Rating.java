@@ -14,6 +14,8 @@ import javax.xml.crypto.Data;
  */
 public class Rating implements Serializable{
 
+	private static final long serialVersionUID = 1L;
+
 	private Long id;
 	private Long seatFromTripId;
 	private Long seatFromUserId;
