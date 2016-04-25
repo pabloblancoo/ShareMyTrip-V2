@@ -19,7 +19,7 @@ public class SimpleServicesFactory implements ServicesFactory {
 
 	@Override
 	public UserService createUserService() {
-		return new SimpleUserService();
+		return new EjbUserService();
 	}
 
 }
