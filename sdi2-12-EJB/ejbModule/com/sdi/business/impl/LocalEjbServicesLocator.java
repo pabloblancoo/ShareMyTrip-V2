@@ -27,7 +27,10 @@ public class LocalEjbServicesLocator implements ServicesFactory {
 	public TripService getTripService() {
 		try {
 			Context ctx = new InitialContext();
-			return (TripService) ctx.lookup(TRIP_SERVICE_JNDI_KEY);
+			//Refactorizado para comprobar
+			//Aqui da el error
+			Object o = ctx.lookup(TRIP_SERVICE_JNDI_KEY);
+			return (TripService) o;
 		} catch (NamingException e) {
 			throw new RuntimeException("JNDI problem", e);
 		}
