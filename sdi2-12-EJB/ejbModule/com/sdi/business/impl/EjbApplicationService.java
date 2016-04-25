@@ -4,7 +4,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import javax.ejb.Stateless;
+
 import com.sdi.business.ApplicationService;
+import com.sdi.business.impl.EjbApplication.LocalApplicationService;
+import com.sdi.business.impl.EjbApplication.RemoteApplicationService;
 import com.sdi.business.impl.classes.Application.AceptarSolicitud;
 import com.sdi.business.impl.classes.Application.BuscarPendientesYViajeros;
 import com.sdi.business.impl.classes.Application.BuscarSolicitudes;
@@ -16,7 +20,8 @@ import com.sdi.model.Trip;
 import com.sdi.util.MisViajesConEstado;
 import com.sdi.util.Viajero;
 
-public class EjbApplicationService implements ApplicationService {
+@Stateless
+public class EjbApplicationService implements ApplicationService , LocalApplicationService, RemoteApplicationService {
 
 	@Override
 	public Viajero accept(Viajero viajero, Trip viaje) {

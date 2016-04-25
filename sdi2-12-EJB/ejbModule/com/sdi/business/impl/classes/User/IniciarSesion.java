@@ -11,11 +11,7 @@ public class IniciarSesion {
 		
 		User user = Factories.persistence.newUserDao().findByLogin(login,
 				Encriptador.encriptar(password));
-		
-		if(user == null){
-			throw new BusinessException();
-		}
-		
+	
 		return user;
 		
 	}

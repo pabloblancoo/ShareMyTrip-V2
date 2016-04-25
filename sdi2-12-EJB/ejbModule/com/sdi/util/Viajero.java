@@ -2,8 +2,6 @@ package com.sdi.util;
 
 import java.util.ResourceBundle;
 
-import javax.faces.context.FacesContext;
-
 import com.sdi.model.Application;
 import com.sdi.model.Seat;
 import com.sdi.model.SeatStatus;
@@ -12,9 +10,7 @@ import com.sdi.model.User;
 
 public class Viajero {
 
-	private static ResourceBundle msgs = FacesContext.getCurrentInstance()
-			.getApplication()
-			.getResourceBundle(FacesContext.getCurrentInstance(), "msgs");
+	public static ResourceBundle msgs;
 
 	private User user;
 	private Trip trip;

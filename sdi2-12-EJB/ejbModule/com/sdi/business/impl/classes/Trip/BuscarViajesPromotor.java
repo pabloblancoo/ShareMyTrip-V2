@@ -23,8 +23,7 @@ public class BuscarViajesPromotor {
 		List<Trip> viajes = Factories.persistence.newTripDao()
 				.findByPromoterId(idUsuario);
 		for (Trip viaje : viajes) {
-			misViajes.add(new MisViajesConEstado(viaje, msgs
-					.getString("tripPromoter")));
+			misViajes.add(new MisViajesConEstado(viaje, msgs.getString("tripPromoter"), msgs));
 		}
 		
 	}

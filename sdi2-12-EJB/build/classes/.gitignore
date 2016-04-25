@@ -2,3 +2,4 @@
 /META-INF
 /database.properties
 /sql_queries.properties
+/persistence.properties

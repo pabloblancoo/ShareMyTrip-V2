@@ -26,6 +26,8 @@ public class BuscarPendientesYViajeros {
 		UserDao ud = Factories.persistence.newUserDao();
 		Trip viaje = Factories.persistence.newTripDao().findById(id);
 		
+		Viajero.msgs = msgs;
+		
 		for (Application peticion : peticiones) {
 			Seat plaza = sd.findByUserAndTrip(peticion.getUserId(), id);
 			User user = ud.findById(peticion.getUserId());

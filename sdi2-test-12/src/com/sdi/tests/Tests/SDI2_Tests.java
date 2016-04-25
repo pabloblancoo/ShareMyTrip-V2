@@ -23,6 +23,7 @@ public class SDI2_Tests {
 	WebDriver driver;
 	List<WebElement> elementos = null;
 	String port = "8280";
+	String baseURL = "sdi2-12-WEB";
 	int tiempoEspera = 20;
 
 	public SDI2_Tests() {
@@ -49,7 +50,7 @@ public class SDI2_Tests {
 	 */
 	@Test
 	public void t01_RegVal() throws InterruptedException {
-		driver.get("http://localhost:" + port +"/sdi2-12/registrarse.xhtml");
+		driver.get("http://localhost:" + port +"/" + baseURL + "/registrarse.xhtml");
 		new PORegistro().rellenaFormulario(driver, "test", "test", "test",
 				"test@test.com", "test", "test");
 
@@ -65,7 +66,7 @@ public class SDI2_Tests {
 	@Test
 	public void t02_RegInval() {
 
-		driver.get("http://localhost:" + port +"/sdi2-12/registrarse.xhtml");
+		driver.get("http://localhost:" + port +"/" + baseURL + "/registrarse.xhtml");
 		new PORegistro().rellenaFormulario(driver, "test2", "test2", "test2",
 				"test2@test.com", "test2", "test");
 
@@ -81,7 +82,7 @@ public class SDI2_Tests {
 	@Test
 	public void t03_IdVal() {
 
-		driver.get("http://localhost:" + port +"/sdi2-12/iniciarSesion.xhtml");
+		driver.get("http://localhost:" + port +"/" + baseURL + "/iniciarSesion.xhtml");
 		new POInicioSesion().rellenaFormulario(driver, "test", "test");
 
 		SeleniumUtils.EsperaCargaPagina(driver, "text", "test", tiempoEspera);
@@ -94,7 +95,7 @@ public class SDI2_Tests {
 	@Test
 	public void t04_IdInval() {
 
-		driver.get("http://localhost:" + port +"/sdi2-12/iniciarSesion.xhtml");
+		driver.get("http://localhost:" + port +"/" + baseURL + "/iniciarSesion.xhtml");
 		new POInicioSesion().rellenaFormulario(driver, "test2", "test2");
 
 		SeleniumUtils.EsperaCargaPagina(driver, "class", "ui-messages-error",
@@ -109,7 +110,7 @@ public class SDI2_Tests {
 	 */
 	@Test
 	public void t05_AccInval() {
-		driver.get("http://localhost:" + port +"/sdi2-12/a/misDatos.xhtml");
+		driver.get("http://localhost:" + port +"/" + baseURL + "/a/misDatos.xhtml");
 		SeleniumUtils.EsperaCargaPagina(driver, "text", "List", tiempoEspera);
 
 	}
@@ -384,7 +385,7 @@ public class SDI2_Tests {
 	@Test
 	public void t13_Ins2ViajeAceptVal() throws InterruptedException {
 
-		driver.get("http://localhost:" + port +"/sdi2-12/iniciarSesion.xhtml");
+		driver.get("http://localhost:" + port +"/" + baseURL + "/iniciarSesion.xhtml");
 		Thread.sleep(1000);
 		new POInicioSesion().rellenaFormulario(driver, "test4", "test"); // Inicia
 																			// sesion
@@ -406,7 +407,7 @@ public class SDI2_Tests {
 
 		cerrarSesion(); // Cierra sesion
 
-		driver.get("http://localhost:" + port +"/sdi2-12/iniciarSesion.xhtml");
+		driver.get("http://localhost:" + port +"/" + baseURL + "/iniciarSesion.xhtml");
 		Thread.sleep(1000);
 		new POInicioSesion().rellenaFormulario(driver, "test5", "test"); // Inicia
 																			// sesion
@@ -468,7 +469,7 @@ public class SDI2_Tests {
 		registrarViaje("CiudadTest", 2);
 		cerrarSesion();
 
-		driver.get("http://localhost:" + port +"/sdi2-12/iniciarSesion.xhtml");
+		driver.get("http://localhost:" + port +"/" + baseURL + "/iniciarSesion.xhtml");
 		Thread.sleep(1000);
 		new POInicioSesion().rellenaFormulario(driver, "test6", "test"); // Inicia
 																			// sesion
@@ -498,7 +499,7 @@ public class SDI2_Tests {
 		Thread.sleep(500);
 		cerrarSesion(); // Cierra sesion
 
-		driver.get("http://localhost:" + port +"/sdi2-12/iniciarSesion.xhtml");
+		driver.get("http://localhost:" + port +"/" + baseURL + "/iniciarSesion.xhtml");
 		Thread.sleep(1000);
 		new POInicioSesion().rellenaFormulario(driver, "test7", "test"); // Inicia
 																			// sesion
@@ -565,7 +566,7 @@ public class SDI2_Tests {
 
 		cerrarSesion();
 
-		driver.get("http://localhost:" + port +"/sdi2-12/iniciarSesion.xhtml");
+		driver.get("http://localhost:" + port +"/" + baseURL + "/iniciarSesion.xhtml");
 		Thread.sleep(1000);
 		new POInicioSesion().rellenaFormulario(driver, "test8", "test"); // Inicia
 																			// sesion
@@ -677,7 +678,7 @@ public class SDI2_Tests {
 	@Test
 	public void t17_i18N1() {
 
-		driver.get("http://localhost:" + port +"/sdi2-12/");
+		driver.get("http://localhost:" + port +"/" + baseURL + "/");
 
 		SeleniumUtils.EsperaCargaPagina(driver, "text", "List trips", tiempoEspera);
 
@@ -741,7 +742,7 @@ public class SDI2_Tests {
 	 */
 	@Test
 	public void t19_OpFiltrado() throws InterruptedException {
-		driver.get("http://localhost:" + port +"/sdi2-12/");
+		driver.get("http://localhost:" + port +"/" + baseURL + "/");
 
 		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver,
 				"class", "ui-column-filter", tiempoEspera);
@@ -770,7 +771,7 @@ public class SDI2_Tests {
 	 */
 	@Test
 	public void t20_OpOrden() throws InterruptedException {
-		driver.get("http://localhost:" + port +"/sdi2-12/");
+		driver.get("http://localhost:" + port +"/" + baseURL + "/");
 
 		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver,
 				"class", "sortable-column-icon", tiempoEspera);

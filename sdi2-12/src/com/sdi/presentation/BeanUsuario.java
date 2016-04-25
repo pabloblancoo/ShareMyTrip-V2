@@ -8,7 +8,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
-import com.sdi.business.exception.BusinessException;
 import com.sdi.business.exception.EntityAlreadyExistsException;
 import com.sdi.infrastructure.Factories;
 import com.sdi.model.User;
@@ -156,10 +155,9 @@ public class BeanUsuario implements Serializable {
 	 */
 	public String iniciarSesion() {
 
-		User user = null;
-		try{
-			user = Factories.services.getUserService().iniciarSesion(login, password);
-		} catch(BusinessException e){
+		User user = Factories.services.getUserService().iniciarSesion(login, password);
+		
+		if(user == null){
 			context.addMessage(null, new FacesMessage(
 					FacesMessage.SEVERITY_ERROR, "Error",
 					"Usuario o contraseña incorrecta"));

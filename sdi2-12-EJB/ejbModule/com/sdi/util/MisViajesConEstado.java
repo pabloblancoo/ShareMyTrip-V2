@@ -3,8 +3,6 @@ package com.sdi.util;
 import java.util.Date;
 import java.util.ResourceBundle;
 
-import javax.faces.context.FacesContext;
-
 import com.sdi.model.Trip;
 import com.sdi.model.TripStatus;
 
@@ -14,10 +12,7 @@ public class MisViajesConEstado {
 	private String relacion;
 	private boolean seleccionado;
 
-	public MisViajesConEstado(Trip viaje, String relacion) {
-		ResourceBundle msgs = FacesContext.getCurrentInstance()
-				.getApplication()
-				.getResourceBundle(FacesContext.getCurrentInstance(), "msgs");
+	public MisViajesConEstado(Trip viaje, String relacion,ResourceBundle msgs ) {
 
 		this.viaje = viaje;
 		if (!viaje.getStatus().equals(TripStatus.CANCELLED)) {
@@ -35,10 +30,7 @@ public class MisViajesConEstado {
 		return relacion;
 	}
 
-	public String isCancelable() {
-		ResourceBundle msgs = FacesContext.getCurrentInstance()
-				.getApplication()
-				.getResourceBundle(FacesContext.getCurrentInstance(), "msgs");
+	public String isCancelable(ResourceBundle msgs) {
 
 		if (!viaje.getClosingDate().after(new Date())) {
 			return null;

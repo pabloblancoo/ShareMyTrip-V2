@@ -21,7 +21,7 @@
                          sortMode="multiple">
 						<p:column>
 							<p:selectBooleanCheckbox id="check"
-								rendered="#{viajev.isCancelable() != null}"
+								rendered="#{viajev.isCancelable(msgs) != null}"
 								value="#{viajev.seleccionado}" />
 						</p:column>
 						<p:column headerText="#{msgs.listTripDeparture}"
@@ -54,13 +54,13 @@
 						</p:column>
 						<p:column headerText="#{msgs.ownTripOptions}">
 							<p:commandLink id="cancelarViaje"
-								value="#{viajev.isCancelable()}"
-								rendered="#{viajev.isCancelable() != null}" type="submit"
+								value="#{viajev.isCancelable(msgs)}"
+								rendered="#{viajev.isCancelable(msgs) != null}" type="submit"
 								inmediate="true" update="tabla"
 								actionListener="#{misViajes.cancelar(viajev)}" />
 								<br/>
 							<p:commandLink id="editarViaje" value="#{msgs.ownTripEditTrip}"
-								rendered="#{viajev.isCancelable() != null and viajev.relacion == msgs.tripPromoter}" type="submit"
+								rendered="#{viajev.isCancelable(msgs) != null and viajev.relacion == msgs.tripPromoter}" type="submit"
 								action="#{misViajes.editar(viajev)}" />
 						</p:column>
 

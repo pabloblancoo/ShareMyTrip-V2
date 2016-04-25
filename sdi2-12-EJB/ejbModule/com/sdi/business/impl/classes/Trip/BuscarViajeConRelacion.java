@@ -38,17 +38,17 @@ public class BuscarViajeConRelacion {
 			if (plaza != null) {
 				if (plaza.getStatus().equals(SeatStatus.ACCEPTED)) {
 					misViajes.add(new MisViajesConEstado(viaje, msgs
-							.getString("ownTripAccepted")));
+							.getString("ownTripAccepted"), msgs));
 				} else {
 					misViajes.add(new MisViajesConEstado(viaje, msgs
-							.getString("ownTripExcluded")));
+							.getString("ownTripExcluded"), msgs));
 				}
 			} else if (plaza == null && viaje.getAvailablePax() > 0) {
 				misViajes.add(new MisViajesConEstado(viaje, msgs
-						.getString("ownTripPending")));
+						.getString("ownTripPending"), msgs));
 			} else {
 				misViajes.add(new MisViajesConEstado(viaje, msgs
-						.getString("ownTripNoSeat")));
+						.getString("ownTripNoSeat"), msgs));
 			}
 		}
 		
