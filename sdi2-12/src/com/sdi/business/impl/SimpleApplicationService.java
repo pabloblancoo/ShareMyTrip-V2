@@ -8,10 +8,12 @@ import com.sdi.business.ApplicationService;
 import com.sdi.business.impl.classes.Application.AceptarSolicitud;
 import com.sdi.business.impl.classes.Application.BuscarPendientesYViajeros;
 import com.sdi.business.impl.classes.Application.BuscarSolicitudes;
+import com.sdi.business.impl.classes.Application.CancelarParticipacion;
 import com.sdi.business.impl.classes.Application.ExcluirSolicitud;
 import com.sdi.business.impl.classes.Application.SolicitarPlaza;
 import com.sdi.model.Application;
 import com.sdi.model.Trip;
+import com.sdi.util.MisViajesConEstado;
 import com.sdi.util.Viajero;
 
 public class SimpleApplicationService implements ApplicationService {
@@ -39,6 +41,11 @@ public class SimpleApplicationService implements ApplicationService {
 	@Override
 	public Map<String, Object> buscarPendientesYViajeros(List<Application> peticiones, Long id, ResourceBundle msgs) {
 		return new BuscarPendientesYViajeros().run(peticiones, id, msgs);
+	}
+
+	@Override
+	public MisViajesConEstado cancelarParticipacion(MisViajesConEstado trip, Long idUsuario) {
+		return new CancelarParticipacion().run(trip, idUsuario);
 	}
 
 

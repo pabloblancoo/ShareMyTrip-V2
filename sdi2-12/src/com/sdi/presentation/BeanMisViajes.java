@@ -8,14 +8,10 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
+import com.sdi.business.TripService;
 import com.sdi.infrastructure.Factories;
-import com.sdi.model.Application;
-import com.sdi.model.Seat;
-import com.sdi.model.SeatStatus;
 import com.sdi.model.Trip;
 import com.sdi.model.TripStatus;
-import com.sdi.persistence.SeatDao;
-import com.sdi.persistence.TripDao;
 import com.sdi.util.MisViajesConEstado;
 
 @ManagedBean(name = "misViajes")
@@ -39,8 +35,9 @@ public class BeanMisViajes {
 				.getUsuario();
 
 		if (usuario != null) {
-			cargarViajesPromotor(viajesDB, usuario.getId());
-			cargarViajes(viajesDB, usuario.getId());
+			TripService ts = Factories.services.createTripService();
+			ts.buscarViajesPromotor(viajesDB, usuario.getId(), msgs);
+			ts.buscarViajesConRelacion(viajesDB, usuario.getId(), msgs);
 		}
 
 		if (viajes == null || viajesDB.size() != viajes.size()) {
@@ -56,61 +53,6 @@ public class BeanMisViajes {
 		this.viajes = viajes;
 	}
 
-	/**
-	 * Metodo que cargar los viajes en los que es promotor el usuario pasado
-	 * como parametro
-	 * 
-	 * @param misViajes
-	 *            lista a la que se quieren añadir los viajes
-	 * @param idUsuario
-	 *            id del usuario del que se buscan los viajes
-	 */
-	private void cargarViajesPromotor(List<MisViajesConEstado> misViajes,
-			Long idUsuario) {
-		List<Trip> viajes = Factories.persistence.newTripDao()
-				.findByPromoterId(idUsuario);
-		for (Trip viaje : viajes) {
-			misViajes.add(new MisViajesConEstado(viaje, msgs
-					.getString("tripPromoter")));
-		}
-	}
-
-	/**
-	 * Metodo que cargar los viajes con relacion(excepto promotor) al usuario
-	 * que se pasa como parametro
-	 * 
-	 * @param misViajes
-	 *            lista a la que se quieren añadir los viajes
-	 * @param idUsuario
-	 *            id del usuario del que se buscan los viajes
-	 */
-	private void cargarViajes(List<MisViajesConEstado> misViajes, Long idUsuario) {
-
-		List<Application> peticiones = Factories.persistence
-				.newApplicationDao().findByUserId(idUsuario);
-		SeatDao sd = Factories.persistence.newSeatDao();
-		TripDao td = Factories.persistence.newTripDao();
-
-		for (Application peticion : peticiones) {
-			Seat plaza = sd.findByUserAndTrip(idUsuario, peticion.getTripId());
-			Trip viaje = td.findById(peticion.getTripId());
-			if (plaza != null) {
-				if (plaza.getStatus().equals(SeatStatus.ACCEPTED)) {
-					misViajes.add(new MisViajesConEstado(viaje, msgs
-							.getString("ownTripAccepted")));
-				} else {
-					misViajes.add(new MisViajesConEstado(viaje, msgs
-							.getString("ownTripExcluded")));
-				}
-			} else if (plaza == null && viaje.getAvailablePax() > 0) {
-				misViajes.add(new MisViajesConEstado(viaje, msgs
-						.getString("ownTripPending")));
-			} else {
-				misViajes.add(new MisViajesConEstado(viaje, msgs
-						.getString("ownTripNoSeat")));
-			}
-		}
-	}
 
 	/**
 	 * Metodo que se encarga de cancelar la peticion(y plaza si ha sido
@@ -153,27 +95,9 @@ public class BeanMisViajes {
 
 		if (!trip.getViaje().getPromoterId().equals(idUsuario)) {
 
-			Long idTrip = trip.getViaje().getId();
-
-			SeatDao sd = Factories.persistence.newSeatDao();
-			Seat plaza = sd.findByUserAndTrip(idUsuario, idTrip);
-
-			sd.delete(new Long[] { idUsuario, idTrip });
-			Factories.persistence.newApplicationDao().delete(
-					new Long[] { idUsuario, idTrip });
-
-			if (plaza != null && plaza.getStatus().equals(SeatStatus.ACCEPTED)) {
-				TripDao td = Factories.persistence.newTripDao();
-
-				Trip viaje = td.findById(idTrip);
-				viaje.setAvailablePax(viaje.getAvailablePax() + 1);
-
-				td.update(viaje);
-				System.out.println("Plaza liberada en el viaje[id:" + idTrip
-						+ "]");
-
-			}
-
+			Trip viaje = Factories.services.createApplicationService().cancelarParticipacion(trip, idUsuario).getViaje();
+			trip.setViaje(viaje);
+			
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", msgs
@@ -185,8 +109,8 @@ public class BeanMisViajes {
 
 			Trip viaje = trip.getViaje();
 			viaje.setStatus(TripStatus.CANCELLED);
-
-			Factories.persistence.newTripDao().update(viaje);
+			
+			Factories.services.createTripService().cancelarViaje(viaje);
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", msgs

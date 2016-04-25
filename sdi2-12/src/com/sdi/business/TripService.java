@@ -1,11 +1,13 @@
 package com.sdi.business;
 
 import java.util.List;
+import java.util.ResourceBundle;
 
 import com.sdi.business.exception.EntityAlreadyExistsException;
 import com.sdi.business.exception.EntityNotFoundException;
 import com.sdi.model.Trip;
 import com.sdi.model.User;
+import com.sdi.util.MisViajesConEstado;
 
 public interface TripService {
 
@@ -22,4 +24,9 @@ public interface TripService {
 	void deleteTrip(Long id) throws EntityNotFoundException;
 	
 	User findPromotor(Long id);
+	
+	void buscarViajesPromotor(List<MisViajesConEstado> misViajes, Long idUsuario, ResourceBundle msgs); 
+	void buscarViajesConRelacion(List<MisViajesConEstado> misViajes, Long idUsuario, ResourceBundle msgs); 
+
+	void cancelarViaje(Trip viaje);
 }

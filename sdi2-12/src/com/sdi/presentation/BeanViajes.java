@@ -197,7 +197,6 @@ public class BeanViajes {
 		
 		Viajero viajeroU = Factories.services.createApplicationService().accept(viajero, viaje);
 		
-		viaje.setAvailablePax(viaje.getAvailablePax() - 1);
 		viajeros.add(viajeroU);
 
 		System.out.println("Plaza confirmada para "

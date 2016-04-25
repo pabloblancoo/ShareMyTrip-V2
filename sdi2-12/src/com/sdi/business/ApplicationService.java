@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import com.sdi.model.Application;
 import com.sdi.model.Trip;
+import com.sdi.util.MisViajesConEstado;
 import com.sdi.util.Viajero;
 
 public interface ApplicationService {
@@ -18,4 +19,5 @@ public interface ApplicationService {
 	public List<Application> buscarSolicitudes(Long id);
 	public Map<String, Object> buscarPendientesYViajeros(List<Application> peticiones, Long id, ResourceBundle msgs);
 
+	public MisViajesConEstado cancelarParticipacion(MisViajesConEstado trip, Long idUsuario);
 }
