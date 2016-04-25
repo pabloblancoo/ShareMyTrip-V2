@@ -1,4 +1,4 @@
-package com.sdi.business.impl;
+package com.sdi.business.impl.EjbUser;
 
 import javax.ejb.Local;
 

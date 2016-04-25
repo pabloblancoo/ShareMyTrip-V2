@@ -18,7 +18,7 @@ import com.sdi.model.Trip;
 import com.sdi.model.User;
 import com.sdi.util.MisViajesConEstado;
 
-public class SimpleTripsService implements TripService {
+public class EjbTripsService implements TripService {
 
 	@Override
 	public List<Trip> getViajes() throws Exception {

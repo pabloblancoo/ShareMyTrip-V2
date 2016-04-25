@@ -16,7 +16,7 @@ import com.sdi.model.Trip;
 import com.sdi.util.MisViajesConEstado;
 import com.sdi.util.Viajero;
 
-public class SimpleApplicationService implements ApplicationService {
+public class EjbApplicationService implements ApplicationService {
 
 	@Override
 	public Viajero accept(Viajero viajero, Trip viaje) {

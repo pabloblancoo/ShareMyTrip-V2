@@ -9,12 +9,12 @@ public class SimpleServicesFactory implements ServicesFactory {
 
 	@Override
 	public TripService createTripService() {
-		return new SimpleTripsService();
+		return new EjbTripsService();
 	}
 
 	@Override
 	public ApplicationService createApplicationService() {
-		return new SimpleApplicationService();
+		return new EjbApplicationService();
 	}
 
 	@Override

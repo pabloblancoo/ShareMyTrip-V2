@@ -13,7 +13,7 @@ public class LocalEjbServicesLocator implements ServicesFactory {
 
 	private static final String USER_SERVICE_JNDI_KEY = "java:global/"
 			+ "sdi2-12/" + "sdi2-12-EJB/" + "EjbUserService!"
-			+ "com.sdi.business.impl.LocalUserService";
+			+ "com.sdi.business.impl.EjbUser.LocalUserService";
 
 	@Override
 	public TripService createTripService() {
