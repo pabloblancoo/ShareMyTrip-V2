@@ -14,17 +14,33 @@ public class RemoteEjbServicesLocator implements ServicesFactory {
 	private static final String USER_SERVICE_JNDI_KEY = "java:global/"
 			+ "sdi2-12/" + "sdi2-12-EJB/" + "EjbUserService!"
 			+ "com.sdi.business.impl.EjbUser.RemoteUserService";
+	
+	private static final String APPLICATION_SERVICE_JNDI_KEY = "java:global/"
+			+ "sdi2-12/" + "sdi2-12-EJB/" + "EjbApplicationService!"
+			+ "com.sdi.business.impl.EjbApplication.RemoteApplicationService";
+	
+	private static final String TRIP_SERVICE_JNDI_KEY = "java:global/"
+			+ "sdi2-12/" + "sdi2-12-EJB/" + "EjbTripsService!"
+			+ "com.sdi.business.impl.EjbTrips.RemoteTripsService";
 
 	@Override
 	public TripService createTripService() {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			Context ctx = new InitialContext();
+			return (TripService) ctx.lookup(TRIP_SERVICE_JNDI_KEY);
+		} catch (NamingException e) {
+			throw new RuntimeException("JNDI problem", e);
+		}
 	}
 
 	@Override
 	public ApplicationService createApplicationService() {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			Context ctx = new InitialContext();
+			return (ApplicationService) ctx.lookup(APPLICATION_SERVICE_JNDI_KEY);
+		} catch (NamingException e) {
+			throw new RuntimeException("JNDI problem", e);
+		}
 	}
 
 	@Override
