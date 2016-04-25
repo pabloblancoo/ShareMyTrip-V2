@@ -6,10 +6,12 @@ import java.util.ResourceBundle;
 import com.sdi.business.TripService;
 import com.sdi.business.exception.EntityAlreadyExistsException;
 import com.sdi.business.exception.EntityNotFoundException;
+import com.sdi.business.impl.classes.Trip.ActualizarViaje;
 import com.sdi.business.impl.classes.Trip.BuscarPromotor;
 import com.sdi.business.impl.classes.Trip.BuscarViajeConRelacion;
 import com.sdi.business.impl.classes.Trip.BuscarViajesPromotor;
 import com.sdi.business.impl.classes.Trip.CancelarViaje;
+import com.sdi.business.impl.classes.Trip.RegistrarViaje;
 import com.sdi.business.impl.classes.Trip.ViajeBuscar;
 import com.sdi.business.impl.classes.Trip.ViajesConPlazasYSinCerrar;
 import com.sdi.model.Trip;
@@ -30,12 +32,12 @@ public class SimpleTripsService implements TripService {
 
 	@Override
 	public void saveTrip(Trip trip) throws EntityAlreadyExistsException {
-
+		new RegistrarViaje().run(trip);
 	}
 
 	@Override
 	public void updateTrip(Trip trip) throws EntityNotFoundException {
-
+		new ActualizarViaje().run(trip);
 	}
 
 	@Override
@@ -69,5 +71,7 @@ public class SimpleTripsService implements TripService {
 	public void cancelarViaje(Trip viaje) {
 		new CancelarViaje().run(viaje);
 	}
+	
+	
 
 }

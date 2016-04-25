@@ -13,6 +13,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import com.sdi.business.exception.EntityAlreadyExistsException;
+import com.sdi.business.exception.EntityNotFoundException;
 import com.sdi.infrastructure.Factories;
 import com.sdi.model.AddressPoint;
 import com.sdi.model.Trip;
@@ -399,7 +401,20 @@ public class BeanViaje implements Serializable {
 						trip.setPromoterId(usuario.getId());
 
 						try {
-							Factories.persistence.newTripDao().save(trip);
+							try {
+								Factories.services.createTripService().saveTrip(trip);
+							} catch (EntityAlreadyExistsException e) {
+								System.out.println("El viaje ya existe");
+								FacesContext
+								.getCurrentInstance()
+								.addMessage(
+										null,
+										new FacesMessage(
+												FacesMessage.SEVERITY_ERROR,
+												"Error",
+												msgs.getString("errorDuplicatedTrip")));
+								return null;
+							}
 						} catch (PersistenceException e) {
 							FacesContext
 									.getCurrentInstance()
@@ -623,7 +638,12 @@ public class BeanViaje implements Serializable {
 						trip.setPromoterId(usuario.getId());
 
 						try {
-							Factories.persistence.newTripDao().update(trip);
+							try {
+								Factories.services.createTripService().updateTrip(trip);
+							} catch (EntityNotFoundException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						} catch (PersistenceException e) {
 							FacesContext
 									.getCurrentInstance()
