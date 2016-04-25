@@ -21,6 +21,9 @@ import com.sdi.persistence.PersistenceException;
  * @author alb
  */
 public class JdbcTemplate {
+	
+	private static String CONFIG_FILE = "/persistence.properties";
+	private JdbcHelper jdbc = new JdbcHelper(CONFIG_FILE);
 
 	private Object generatedKey;
 
@@ -42,7 +45,7 @@ public class JdbcTemplate {
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
-			con = Jdbc.getCurrentConnection();
+			con = jdbc.createConnection();
 			ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			bindSqlParameters(args, ps);
 
@@ -77,7 +80,7 @@ public class JdbcTemplate {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			con = Jdbc.getCurrentConnection();
+			con = jdbc.createConnection();
 			ps = con.prepareStatement(sql);
 			bindSqlParameters(args, ps);
 			rs = ps.executeQuery();
@@ -112,7 +115,7 @@ public class JdbcTemplate {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			con = Jdbc.getCurrentConnection();
+			con = jdbc.createConnection();
 			ps = con.prepareStatement(sql);
 			bindSqlParameters(args, ps);
 			rs = ps.executeQuery();
