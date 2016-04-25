@@ -5,11 +5,11 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import com.sdi.business.ApplicationService;
-import com.sdi.business.impl.classes.Viajero.AceptarSolicitud;
-import com.sdi.business.impl.classes.Viajero.BuscarPendientesYViajeros;
-import com.sdi.business.impl.classes.Viajero.BuscarSolicitudes;
-import com.sdi.business.impl.classes.Viajero.ExcluirSolicitud;
-import com.sdi.business.impl.classes.Viajero.SolicitarPlaza;
+import com.sdi.business.impl.classes.Application.AceptarSolicitud;
+import com.sdi.business.impl.classes.Application.BuscarPendientesYViajeros;
+import com.sdi.business.impl.classes.Application.BuscarSolicitudes;
+import com.sdi.business.impl.classes.Application.ExcluirSolicitud;
+import com.sdi.business.impl.classes.Application.SolicitarPlaza;
 import com.sdi.model.Application;
 import com.sdi.model.Trip;
 import com.sdi.util.Viajero;

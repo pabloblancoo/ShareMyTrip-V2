@@ -1,4 +1,4 @@
-package com.sdi.business.impl.classes.Viajero;
+package com.sdi.business.impl.classes.Application;
 
 import java.util.ArrayList;
 import java.util.HashMap;
