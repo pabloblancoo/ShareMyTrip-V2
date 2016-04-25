@@ -1,5 +1,7 @@
 package com.sdi.model;
 
+import java.io.Serializable;
+
 /**
  * This class is not an entity, it is a DTO with the same fields as a row in the
  * table
@@ -8,7 +10,7 @@ package com.sdi.model;
  * @author alb
  * 
  */
-public class User {
+public class User implements Serializable{
 
 	private Long id;
 	private String login;

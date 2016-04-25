@@ -1,5 +1,7 @@
 package com.sdi.model;
 
+import java.io.Serializable;
+
 import javax.xml.crypto.Data;
 
 /**
@@ -10,7 +12,7 @@ import javax.xml.crypto.Data;
  * @author alb
  * 
  */
-public class Rating {
+public class Rating implements Serializable{
 
 	private Long id;
 	private Long seatFromTripId;

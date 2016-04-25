@@ -1,6 +1,8 @@
 package com.sdi.model;
 
-public class Application {
+import java.io.Serializable;
+
+public class Application implements Serializable{
 
 	private Long userId;
 	private Long tripId;
