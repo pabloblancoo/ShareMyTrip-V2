@@ -2,16 +2,17 @@ package com.sdi.ui.admin;
 
 import alb.util.menu.BaseMenu;
 
-import com.sdi.ui.admin.action.ListarUsuarios;
+import com.sdi.ui.admin.action.DeshabilitarUsuarioAction;
+import com.sdi.ui.admin.action.ListarUsuariosAction;
 
 public class MainMenu extends BaseMenu {
 
 	public MainMenu() {
 		menuOptions = new Object[][] { { "Administrador", null },
-				{ "Listado de usuarios", ListarUsuarios.class },
-				{ "Deshabilitar un usuario", ListarUsuarios.class },
-				{ "Listar comentarios y puntuaciones", ListarUsuarios.class },
-				{ "Eliminar comentarios y puntuaciones", ListarUsuarios.class },
+				{ "Listado de usuarios", ListarUsuariosAction.class },
+				{ "Deshabilitar un usuario", DeshabilitarUsuarioAction.class },
+				{ "Listar comentarios y puntuaciones", ListarUsuariosAction.class },
+				{ "Eliminar comentarios y puntuaciones", ListarUsuariosAction.class },
 				
 		};
 	}
