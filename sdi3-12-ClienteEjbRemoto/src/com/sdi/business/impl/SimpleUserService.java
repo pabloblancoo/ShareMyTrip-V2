@@ -1,7 +1,7 @@
 package com.sdi.business.impl;
 
-import com.sdi.business.UserService;
+import com.sdi.business.UserServiceCli;
 
-public class SimpleUserService implements UserService {
+public class SimpleUserService implements UserServiceCli {
 
 }

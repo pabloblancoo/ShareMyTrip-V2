@@ -25,6 +25,9 @@ public interface TripService {
 	
 	User findPromotor(Long id);
 	
+	List<Trip> buscarViajesPromotor(Long idUser);
+	List<Trip> buscarViajesParticipa(Long idUser);
+	
 	void buscarViajesPromotor(List<MisViajesConEstado> misViajes, Long idUsuario, ResourceBundle msgs); 
 	void buscarViajesConRelacion(List<MisViajesConEstado> misViajes, Long idUsuario, ResourceBundle msgs); 
 

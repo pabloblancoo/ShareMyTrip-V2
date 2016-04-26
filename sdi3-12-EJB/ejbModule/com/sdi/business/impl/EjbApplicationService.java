@@ -6,7 +6,6 @@ import java.util.ResourceBundle;
 
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 
 import com.sdi.business.ApplicationService;
 import com.sdi.business.impl.EjbApplication.LocalApplicationService;

@@ -2,7 +2,7 @@ package com.sdi.business.impl;
 
 import com.sdi.business.RatingService;
 import com.sdi.business.ServiceFactory;
-import com.sdi.business.UserService;
+import com.sdi.business.UserServiceCli;
 
 public class SimpleServiceFactory implements ServiceFactory{
 
@@ -12,7 +12,7 @@ public class SimpleServiceFactory implements ServiceFactory{
 	}
 
 	@Override
-	public UserService getUserService() {
+	public UserServiceCli getUserService() {
 		return new SimpleUserService();
 	}
 

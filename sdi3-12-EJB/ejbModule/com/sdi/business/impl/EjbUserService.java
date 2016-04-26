@@ -1,8 +1,9 @@
 package com.sdi.business.impl;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 
 import com.sdi.business.UserService;
 import com.sdi.business.exception.BusinessException;
@@ -10,6 +11,7 @@ import com.sdi.business.exception.EntityAlreadyExistsException;
 import com.sdi.business.impl.EjbUser.LocalUserService;
 import com.sdi.business.impl.EjbUser.RemoteUserService;
 import com.sdi.business.impl.classes.User.IniciarSesion;
+import com.sdi.business.impl.classes.User.ListarUsuarios;
 import com.sdi.business.impl.classes.User.Registrarse;
 import com.sdi.model.User;
 
@@ -26,6 +28,11 @@ public class EjbUserService implements UserService, RemoteUserService, LocalUser
 	public User iniciarSesion(String login, String password)
 			throws BusinessException {
 		return new IniciarSesion().run(login, password);
+	}
+
+	@Override
+	public List<User> listar() {
+		return new ListarUsuarios().run();
 	}
 
 }
