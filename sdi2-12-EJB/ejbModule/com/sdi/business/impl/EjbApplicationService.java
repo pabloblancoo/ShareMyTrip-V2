@@ -23,7 +23,7 @@ import com.sdi.util.MisViajesConEstado;
 import com.sdi.util.Viajero;
 
 @Stateless
-@TransactionAttribute(TransactionAttributeType.REQUIRED)
+@TransactionAttribute()
 public class EjbApplicationService implements ApplicationService , LocalApplicationService, RemoteApplicationService {
 
 	@Override

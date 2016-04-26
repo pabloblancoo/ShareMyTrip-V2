@@ -14,7 +14,7 @@ import com.sdi.business.impl.classes.User.Registrarse;
 import com.sdi.model.User;
 
 @Stateless
-@TransactionAttribute(TransactionAttributeType.REQUIRED)
+@TransactionAttribute()
 public class EjbUserService implements UserService, RemoteUserService, LocalUserService{
 
 	@Override

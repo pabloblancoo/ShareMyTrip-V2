@@ -530,8 +530,9 @@ public class SDI2_Tests {
 		t03_IdVal(); // Inicia sesion Test
 
 		element = driver.findElement(By.id("form-nav-bar:listado"));
+		Thread.sleep(1000);
 		element.click();
-
+		Thread.sleep(1000);
 		// Esperamos que aparezcan los botones de ordenacion
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "class",
 				"sortable-column-icon", tiempoEspera);

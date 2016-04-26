@@ -25,7 +25,7 @@ import com.sdi.model.User;
 import com.sdi.util.MisViajesConEstado;
 
 @Stateless
-@TransactionAttribute(TransactionAttributeType.REQUIRED)
+@TransactionAttribute()
 public class EjbTripsService implements TripService, LocalTripsService, RemoteTripsService {
 
 	@Override
