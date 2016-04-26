@@ -11,5 +11,6 @@ public interface UserService {
 	public void registrarse(User user) throws EntityAlreadyExistsException;
 	public User iniciarSesion(String login, String password) throws BusinessException;
 	public List<User> listar();
+	public void actualizar(User user);
 
 }

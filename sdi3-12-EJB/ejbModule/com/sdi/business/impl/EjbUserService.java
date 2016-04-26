@@ -10,6 +10,7 @@ import com.sdi.business.exception.BusinessException;
 import com.sdi.business.exception.EntityAlreadyExistsException;
 import com.sdi.business.impl.EjbUser.LocalUserService;
 import com.sdi.business.impl.EjbUser.RemoteUserService;
+import com.sdi.business.impl.classes.User.ActualizarUsuario;
 import com.sdi.business.impl.classes.User.IniciarSesion;
 import com.sdi.business.impl.classes.User.ListarUsuarios;
 import com.sdi.business.impl.classes.User.Registrarse;
@@ -33,6 +34,12 @@ public class EjbUserService implements UserService, RemoteUserService, LocalUser
 	@Override
 	public List<User> listar() {
 		return new ListarUsuarios().run();
+	}
+
+	@Override
+	public void actualizar(User user) {
+		new ActualizarUsuario().run(user);
+		
 	}
 
 }
