@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.sdi.business.impl.RemoteEjbServicesLocator;
-import com.sdi.infrastructure.Factories;
 import com.sdi.model.Trip;
 
 public class Main {

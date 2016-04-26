@@ -11,15 +11,15 @@ import com.sdi.business.UserService;
 
 public class RemoteEjbServicesLocator implements ServicesFactory {
 
-	private static final String USER_SERVICE_JNDI_KEY = "java:global/"
+	private static final String USER_SERVICE_JNDI_KEY = "/"
 			+ "sdi3-12/" + "sdi3-12-EJB/" + "EjbUserService!"
 			+ "com.sdi.business.impl.EjbUser.RemoteUserService";
 	
-	private static final String APPLICATION_SERVICE_JNDI_KEY = "java:global/"
+	private static final String APPLICATION_SERVICE_JNDI_KEY = "/"
 			+ "sdi3-12/" + "sdi3-12-EJB/" + "EjbApplicationService!"
 			+ "com.sdi.business.impl.EjbApplication.RemoteApplicationService";
 	
-	private static final String TRIP_SERVICE_JNDI_KEY = "java:global/"
+	private static final String TRIP_SERVICE_JNDI_KEY = "/"
 			+ "sdi3-12/" + "sdi3-12-EJB/" + "EjbTripsService!"
 			+ "com.sdi.business.impl.EjbTrips.RemoteTripsService";
 
