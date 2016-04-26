@@ -149,4 +149,9 @@ public class TripDaoJdbcImpl implements TripDao {
 				+ seach + "%", "%" + seach + "%");
 	}
 
+	@Override
+	public List<Trip> findLastMonthOrderedTrips() {
+		return jdbcTemplate.queryForList("TRIP_FIND_LAST_MONT_ORDER", new TripMapper());
+	}
+
 }

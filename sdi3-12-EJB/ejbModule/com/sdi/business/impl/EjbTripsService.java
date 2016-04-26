@@ -5,7 +5,6 @@ import java.util.ResourceBundle;
 
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 
 import com.sdi.business.TripService;
 import com.sdi.business.exception.EntityAlreadyExistsException;
@@ -17,9 +16,11 @@ import com.sdi.business.impl.classes.Trip.BuscarPromotor;
 import com.sdi.business.impl.classes.Trip.BuscarViajeConRelacion;
 import com.sdi.business.impl.classes.Trip.BuscarViajesPromotor;
 import com.sdi.business.impl.classes.Trip.CancelarViaje;
+import com.sdi.business.impl.classes.Trip.ListarViajes;
 import com.sdi.business.impl.classes.Trip.RegistrarViaje;
 import com.sdi.business.impl.classes.Trip.ViajeBuscar;
 import com.sdi.business.impl.classes.Trip.ViajesConPlazasYSinCerrar;
+import com.sdi.business.impl.classes.Trip.ViajesOrdenadorUltimoMes;
 import com.sdi.model.Trip;
 import com.sdi.model.User;
 import com.sdi.util.MisViajesConEstado;
@@ -30,7 +31,7 @@ public class EjbTripsService implements TripService, LocalTripsService, RemoteTr
 
 	@Override
 	public List<Trip> getViajes() throws Exception {
-		return null;
+		return new ListarViajes().run();
 	}
 
 	@Override
@@ -78,6 +79,11 @@ public class EjbTripsService implements TripService, LocalTripsService, RemoteTr
 	@Override
 	public void cancelarViaje(Trip viaje) {
 		new CancelarViaje().run(viaje);
+	}
+
+	@Override
+	public List<Trip> getViajesOrdenadorUltimoMes() {
+		return new ViajesOrdenadorUltimoMes().run();
 	}
 	
 	

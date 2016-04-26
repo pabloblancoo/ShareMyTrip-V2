@@ -29,4 +29,6 @@ public interface TripService {
 	void buscarViajesConRelacion(List<MisViajesConEstado> misViajes, Long idUsuario, ResourceBundle msgs); 
 
 	void cancelarViaje(Trip viaje);
+
+	List<Trip> getViajesOrdenadorUltimoMes();
 }
