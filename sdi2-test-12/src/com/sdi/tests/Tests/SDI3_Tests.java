@@ -25,10 +25,15 @@ public class SDI3_Tests {
 	String port = "8280";
 	String baseURL = "sdi3-12-WEB";
 	int tiempoEspera = 20;
-
+	
+	
 	public SDI3_Tests() {
 	}
 
+	public void numeroTest(int test){
+		System.out.println("Iniciado el test " + test);
+	}
+	
 	@Before
 	public void run() {
 		// Creamos el driver para Firefox. Recomendable usar Firefox.
@@ -50,6 +55,7 @@ public class SDI3_Tests {
 	 */
 	@Test
 	public void t01_RegVal() throws InterruptedException {
+		numeroTest(1);
 		driver.get("http://localhost:" + port +"/" + baseURL + "/registrarse.xhtml");
 		new PORegistro().rellenaFormulario(driver, "test", "test", "test",
 				"test@test.com", "test", "test");
@@ -65,7 +71,7 @@ public class SDI3_Tests {
 	 */
 	@Test
 	public void t02_RegInval() {
-
+		numeroTest(2);
 		driver.get("http://localhost:" + port +"/" + baseURL + "/registrarse.xhtml");
 		new PORegistro().rellenaFormulario(driver, "test2", "test2", "test2",
 				"test2@test.com", "test2", "test");
@@ -82,6 +88,7 @@ public class SDI3_Tests {
 	@Test
 	public void t03_IdVal() {
 
+		numeroTest(3);
 		driver.get("http://localhost:" + port +"/" + baseURL + "/iniciarSesion.xhtml");
 		new POInicioSesion().rellenaFormulario(driver, "test", "test");
 
@@ -95,6 +102,7 @@ public class SDI3_Tests {
 	@Test
 	public void t04_IdInval() {
 
+		numeroTest(4);
 		driver.get("http://localhost:" + port +"/" + baseURL + "/iniciarSesion.xhtml");
 		new POInicioSesion().rellenaFormulario(driver, "test2", "test2");
 
@@ -110,6 +118,8 @@ public class SDI3_Tests {
 	 */
 	@Test
 	public void t05_AccInval() {
+
+		numeroTest(5);
 		driver.get("http://localhost:" + port +"/" + baseURL + "/a/misDatos.xhtml");
 		SeleniumUtils.EsperaCargaPagina(driver, "text", "List", tiempoEspera);
 
@@ -123,6 +133,7 @@ public class SDI3_Tests {
 	@Test
 	public void t06_RegViajeVal() throws InterruptedException {
 
+		numeroTest(6);
 		t03_IdVal();
 
 		// Sesion iniciada
@@ -154,6 +165,7 @@ public class SDI3_Tests {
 	@Test
 	public void t07_RegViajeInVal() throws InterruptedException {
 
+		numeroTest(7);
 		t03_IdVal();
 
 		// Sesion iniciada
@@ -190,6 +202,7 @@ public class SDI3_Tests {
 	@Test
 	public void t08_EditViajeVal() throws InterruptedException {
 
+		numeroTest(8);
 		t03_IdVal();
 
 		// Sesion iniciada
@@ -228,7 +241,7 @@ public class SDI3_Tests {
 	 */
 	@Test
 	public void t09_EditViajeInVal() {
-
+		numeroTest(9);
 		t03_IdVal();
 
 		// Sesion iniciada
@@ -267,7 +280,7 @@ public class SDI3_Tests {
 	 */
 	@Test
 	public void t10_CancelViajeVal() {
-
+		numeroTest(10);
 		t03_IdVal();
 
 		WebElement element = driver
@@ -291,7 +304,7 @@ public class SDI3_Tests {
 	 */
 	@Test
 	public void t11_CancelMulViajeVal() throws InterruptedException {
-
+		numeroTest(11);
 		t06_RegViajeVal();
 		WebElement element = driver.findElement(By
 				.id("form-nav-bar:cerrarSesion"));
@@ -327,7 +340,7 @@ public class SDI3_Tests {
 	 */
 	@Test
 	public void t12_Ins1ViajeAceptVal() throws InterruptedException {
-
+		numeroTest(12);
 		t06_RegViajeVal();
 		cerrarSesion();
 
@@ -384,7 +397,7 @@ public class SDI3_Tests {
 	 */
 	@Test
 	public void t13_Ins2ViajeAceptVal() throws InterruptedException {
-
+		numeroTest(13);
 		driver.get("http://localhost:" + port +"/" + baseURL + "/iniciarSesion.xhtml");
 		Thread.sleep(1000);
 		new POInicioSesion().rellenaFormulario(driver, "test4", "test"); // Inicia
@@ -464,7 +477,7 @@ public class SDI3_Tests {
 	 */
 	@Test
 	public void t14_Ins3ViajeAceptInval() throws InterruptedException {
-
+		numeroTest(14);
 		t03_IdVal();
 		registrarViaje("CiudadTest", 2);
 		cerrarSesion();
@@ -599,7 +612,7 @@ public class SDI3_Tests {
 	 */
 	@Test
 	public void t15_CancelNoPromotorVal() throws InterruptedException {
-
+		numeroTest(15);
 		t06_RegViajeVal();
 		WebElement element = driver.findElement(By
 				.id("form-nav-bar:cerrarSesion"));
@@ -644,7 +657,7 @@ public class SDI3_Tests {
 	 */
 	@Test
 	public void t16_Rech1ViajeVal() throws InterruptedException {
-
+		numeroTest(16);
 		t03_IdVal(); // Inicia sesion Test
 
 		WebElement element = driver.findElement(By.id("form-nav-bar:listado"));
@@ -678,7 +691,7 @@ public class SDI3_Tests {
 	 */
 	@Test
 	public void t17_i18N1() {
-
+		numeroTest(17);
 		driver.get("http://localhost:" + port +"/" + baseURL + "/");
 
 		SeleniumUtils.EsperaCargaPagina(driver, "text", "List trips", tiempoEspera);
@@ -712,7 +725,7 @@ public class SDI3_Tests {
 	 */
 	@Test
 	public void t18_i18N2() {
-
+		numeroTest(18);
 		t17_i18N1();
 
 		WebElement element = driver
@@ -743,6 +756,7 @@ public class SDI3_Tests {
 	 */
 	@Test
 	public void t19_OpFiltrado() throws InterruptedException {
+		numeroTest(19);
 		driver.get("http://localhost:" + port +"/" + baseURL + "/");
 
 		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver,
@@ -772,6 +786,7 @@ public class SDI3_Tests {
 	 */
 	@Test
 	public void t20_OpOrden() throws InterruptedException {
+		numeroTest(20);
 		driver.get("http://localhost:" + port +"/" + baseURL + "/");
 
 		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver,
@@ -801,7 +816,7 @@ public class SDI3_Tests {
 	 */
 	@Test
 	public void t21_OpPag() throws InterruptedException {
-
+		numeroTest(21);
 		// Creamos 6 viajes para que al menos exita una 2 pagina(los 3 de los
 		// otros test y 3 aqui)
 		t06_RegViajeVal();
