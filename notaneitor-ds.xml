@@ -5,7 +5,7 @@ jndi-name="java:jboss/datasources/NotaneitorDS"
 enabled="true"
 use-java-context="true"
 pool-name="NotaneitorDS">
-<connection-url>jdbc:hsqldb:hsql://localhost/test</connection-url>
+<connection-url>jdbc:hsqldb:hsql://localhost/</connection-url>
 <driver>hsqldb.jar</driver>
 <pool></pool>
 <security>
