@@ -6,12 +6,15 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 
 import com.sdi.business.RatingService;
+import com.sdi.business.impl.EjbRating.LocalRatingService;
+import com.sdi.business.impl.EjbRating.RemoteRatingService;
+import com.sdi.business.impl.classes.rating.EliminarRating;
 import com.sdi.business.impl.classes.rating.ListadoRatings;
 import com.sdi.model.Rating;
 
 @Stateless
 @TransactionAttribute()
-public class EjbRatingService implements RatingService{
+public class EjbRatingService implements RatingService,LocalRatingService,RemoteRatingService{
 
 	@Override
 	public List<Rating> getRatings() {
@@ -28,6 +31,12 @@ public class EjbRatingService implements RatingService{
 	public List<Rating> getRatingsByUser(long idUser) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public boolean eliminarRating(long id) {
+		return new EliminarRating().run(id);
+		
 	}
 	
 	

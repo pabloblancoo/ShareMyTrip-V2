@@ -11,5 +11,7 @@ public interface RatingService {
 	public List<Rating> getRatingsByTrip(long idTrip);
 	
 	public List<Rating> getRatingsByUser(long idUser);
+	
+	public boolean eliminarRating(long id);
 
 }

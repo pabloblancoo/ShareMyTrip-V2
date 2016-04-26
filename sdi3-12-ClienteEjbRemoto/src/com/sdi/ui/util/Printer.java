@@ -2,6 +2,8 @@ package com.sdi.ui.util;
 
 import java.util.List;
 
+import com.sdi.model.Rating;
+
 import alb.util.console.Console;
 
 public class Printer {
@@ -92,5 +94,9 @@ public class Printer {
 //
 //		// order by a.fechafinal
 //	}
+	public static void printRating(Rating r){
+		Console.print("Comentario: " + r.getId());
+		Console.print("Comentario: " + r.getComment());
+	}
 
 }
