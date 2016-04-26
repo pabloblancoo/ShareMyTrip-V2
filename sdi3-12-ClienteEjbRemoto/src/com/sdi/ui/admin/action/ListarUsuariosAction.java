@@ -22,7 +22,9 @@ public class ListarUsuariosAction implements Action{
 			List<Trip> promotor = ts.buscarViajesPromotor(user.getId());
 			List<Trip> participado = ts.buscarViajesParticipa(user.getId());
 			
-			Console.printf("%s ha promovido %s y ha participado en %s\n", user.getName(), promotor.size() + "", participado.size() + "");
+			Console.printf("%s %s (a.k.a %s) con email %s ha promovido %s viaje/s y ha participado en %s viaje/s\n",
+					user.getName(), user.getSurname(), user.getLogin(), user.getEmail(),
+					promotor.size() + "", participado.size() + "");
 		}
 		
 	}

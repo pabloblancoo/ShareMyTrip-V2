@@ -10,6 +10,7 @@ import com.sdi.business.TripService;
 import com.sdi.business.UserService;
 import com.sdi.business.impl.RemoteEjbServicesLocator;
 import com.sdi.model.Trip;
+import com.sdi.model.TripStatus;
 import com.sdi.model.User;
 import com.sdi.model.UserStatus;
 
@@ -34,7 +35,9 @@ public class DeshabilitarUsuarioAction implements Action {
 		
 		List<Trip> viajes = ts.buscarViajesParticipa(usuarios.get(indice).getId());
 		for(Trip viaje : viajes){
-			as.exclude(usuarios.get(indice),  viaje);
+			if(viaje.getStatus().equals(TripStatus.OPEN)){
+				as.exclude(usuarios.get(indice),  viaje);
+			}
 		}
 		
 		Console.printf("Usuario %s deshabilitado correctamente.\n", usuarios.get(indice).getName() );
