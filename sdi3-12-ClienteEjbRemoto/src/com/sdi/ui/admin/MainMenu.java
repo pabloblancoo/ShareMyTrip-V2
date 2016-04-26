@@ -2,6 +2,7 @@ package com.sdi.ui.admin;
 
 import alb.util.menu.BaseMenu;
 
+import com.sdi.ui.admin.action.EliminarComentariosAction;
 import com.sdi.ui.admin.action.ListarUsuarios;
 
 public class MainMenu extends BaseMenu {
@@ -11,7 +12,7 @@ public class MainMenu extends BaseMenu {
 				{ "Listado de usuarios", ListarUsuarios.class },
 				{ "Deshabilitar un usuario", ListarUsuarios.class },
 				{ "Listar comentarios y puntuaciones", ListarUsuarios.class },
-				{ "Eliminar comentarios y puntuaciones", ListarUsuarios.class },
+				{ "Eliminar comentarios y puntuaciones", EliminarComentariosAction.class },
 				
 		};
 	}
