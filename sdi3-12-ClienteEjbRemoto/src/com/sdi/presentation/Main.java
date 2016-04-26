@@ -11,14 +11,14 @@ public class Main {
 	public static void main(String[] args) {
 		List<Trip> trips = new ArrayList<>();
 		try {
-			trips = new RemoteEjbServicesLocator().getTripService().getViajes();
+			trips = new RemoteEjbServicesLocator().getTripService().getViajesConPlazasYSinCerrar();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		for (Trip t : trips) {
-			System.out.println(t.getId());
+			System.out.println(t);
 			
 		}
 		
