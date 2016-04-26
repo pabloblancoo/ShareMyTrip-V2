@@ -6,7 +6,6 @@ import com.sdi.business.RatingService;
 import com.sdi.business.ServicesFactory;
 import com.sdi.business.TripService;
 import com.sdi.business.impl.RemoteEjbServicesLocator;
-import com.sdi.infrastructure.Factories;
 import com.sdi.model.Rating;
 import com.sdi.model.Trip;
 import com.sdi.ui.util.Printer;

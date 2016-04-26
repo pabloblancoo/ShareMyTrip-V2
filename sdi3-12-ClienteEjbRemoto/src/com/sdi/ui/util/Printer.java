@@ -1,7 +1,5 @@
 package com.sdi.ui.util;
 
-import java.util.List;
-
 import com.sdi.model.Rating;
 import com.sdi.model.Trip;
 

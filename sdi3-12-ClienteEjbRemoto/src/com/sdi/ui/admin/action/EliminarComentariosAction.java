@@ -3,7 +3,6 @@ package com.sdi.ui.admin.action;
 import java.util.List;
 
 import com.sdi.business.RatingService;
-import com.sdi.business.ServicesFactory;
 import com.sdi.business.impl.RemoteEjbServicesLocator;
 import com.sdi.model.Rating;
 import com.sdi.ui.util.Printer;
