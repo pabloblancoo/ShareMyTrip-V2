@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/application_7.xsd" id="Application_ID" version="7">
-  <display-name>sdi2-12</display-name>
+  <display-name>sdi3-12</display-name>
   <module>
-    <ejb>sdi2-12-EJB.jar</ejb>
+    <ejb>sdi3-12-EJB.jar</ejb>
   </module>
   <module>
     <web>
-      <web-uri>sdi2-12-WEB.war</web-uri>
-      <context-root>sdi2-12-WEB</context-root>
+      <web-uri>sdi3-12-WEB.war</web-uri>
+      <context-root>sdi3-12-WEB</context-root>
     </web>
   </module>
 </application>

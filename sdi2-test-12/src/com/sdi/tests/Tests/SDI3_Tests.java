@@ -18,15 +18,15 @@ import com.sdi.tests.utils.SeleniumUtils;
 
 //Ordenamos las pruebas por el nombre del método
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class SDI2_Tests {
+public class SDI3_Tests {
 
 	WebDriver driver;
 	List<WebElement> elementos = null;
 	String port = "8280";
-	String baseURL = "sdi2-12-WEB";
+	String baseURL = "sdi3-12-WEB";
 	int tiempoEspera = 20;
 
-	public SDI2_Tests() {
+	public SDI3_Tests() {
 	}
 
 	@Before
