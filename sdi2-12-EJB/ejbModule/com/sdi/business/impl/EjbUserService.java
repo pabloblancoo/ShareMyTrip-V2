@@ -1,6 +1,8 @@
 package com.sdi.business.impl;
 
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 
 import com.sdi.business.UserService;
 import com.sdi.business.exception.BusinessException;
@@ -12,6 +14,7 @@ import com.sdi.business.impl.classes.User.Registrarse;
 import com.sdi.model.User;
 
 @Stateless
+@TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class EjbUserService implements UserService, RemoteUserService, LocalUserService{
 
 	@Override

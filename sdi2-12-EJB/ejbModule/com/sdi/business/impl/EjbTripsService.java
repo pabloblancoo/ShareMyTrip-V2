@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 
 import com.sdi.business.TripService;
 import com.sdi.business.exception.EntityAlreadyExistsException;
@@ -23,6 +25,7 @@ import com.sdi.model.User;
 import com.sdi.util.MisViajesConEstado;
 
 @Stateless
+@TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class EjbTripsService implements TripService, LocalTripsService, RemoteTripsService {
 
 	@Override

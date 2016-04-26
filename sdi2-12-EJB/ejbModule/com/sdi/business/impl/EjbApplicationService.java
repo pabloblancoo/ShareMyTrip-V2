@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 
 import com.sdi.business.ApplicationService;
 import com.sdi.business.impl.EjbApplication.LocalApplicationService;
@@ -21,6 +23,7 @@ import com.sdi.util.MisViajesConEstado;
 import com.sdi.util.Viajero;
 
 @Stateless
+@TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class EjbApplicationService implements ApplicationService , LocalApplicationService, RemoteApplicationService {
 
 	@Override
