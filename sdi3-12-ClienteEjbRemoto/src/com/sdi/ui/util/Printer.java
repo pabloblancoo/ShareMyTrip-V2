@@ -2,6 +2,9 @@ package com.sdi.ui.util;
 
 import java.util.List;
 
+import com.sdi.model.Rating;
+import com.sdi.model.Trip;
+
 import alb.util.console.Console;
 
 public class Printer {
@@ -92,5 +95,17 @@ public class Printer {
 //
 //		// order by a.fechafinal
 //	}
+	public static void printRating(Rating r){
+		Console.print("ID: " + r.getId());
+		Console.print("Comentario: " + r.getComment());
+	}
+
+	public static void printComentarioViaje(Trip t, Rating r) {
+		Console.print("Destino: " + t.getDestination().getAddress());
+		Console.print("ID promotor: " + t.getPromoterId());
+		Console.print("ID valorado: " + r.getSeatAboutUserId());
+		Console.print("Valoracion: " + r.getValue());
+		Console.print("Comentario: " + t.getComments());
+	}
 
 }

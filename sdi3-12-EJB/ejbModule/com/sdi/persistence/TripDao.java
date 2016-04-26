@@ -16,4 +16,6 @@ public interface TripDao extends GenericDao<Trip, Long> {
 
 	List<Trip> find(String seach);
 
+	List<Trip> findLastMonthOrderedTrips();
+
 }

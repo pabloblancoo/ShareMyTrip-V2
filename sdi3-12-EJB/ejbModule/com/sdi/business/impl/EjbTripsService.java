@@ -17,10 +17,12 @@ import com.sdi.business.impl.classes.Trip.BuscarViajeConRelacion;
 import com.sdi.business.impl.classes.Trip.BuscarViajesPorPromotor;
 import com.sdi.business.impl.classes.Trip.BuscarViajesPromotor;
 import com.sdi.business.impl.classes.Trip.CancelarViaje;
+import com.sdi.business.impl.classes.Trip.ListarViajes;
 import com.sdi.business.impl.classes.Trip.ListarViajesParticipa;
 import com.sdi.business.impl.classes.Trip.RegistrarViaje;
 import com.sdi.business.impl.classes.Trip.ViajeBuscar;
 import com.sdi.business.impl.classes.Trip.ViajesConPlazasYSinCerrar;
+import com.sdi.business.impl.classes.Trip.ViajesOrdenadorUltimoMes;
 import com.sdi.model.Trip;
 import com.sdi.model.User;
 import com.sdi.util.MisViajesConEstado;
@@ -31,7 +33,7 @@ public class EjbTripsService implements TripService, LocalTripsService, RemoteTr
 
 	@Override
 	public List<Trip> getViajes() throws Exception {
-		return null;
+		return new ListarViajes().run();
 	}
 
 	@Override
@@ -82,6 +84,10 @@ public class EjbTripsService implements TripService, LocalTripsService, RemoteTr
 	}
 
 	@Override
+	public List<Trip> getViajesOrdenadorUltimoMes() {
+		return new ViajesOrdenadorUltimoMes().run();
+	}
+	
 	public List<Trip> buscarViajesPromotor(Long idUser) {
 		return new BuscarViajesPorPromotor().run(idUser);
 	}
