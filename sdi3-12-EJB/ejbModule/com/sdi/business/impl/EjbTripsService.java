@@ -14,9 +14,11 @@ import com.sdi.business.impl.EjbTrips.RemoteTripsService;
 import com.sdi.business.impl.classes.Trip.ActualizarViaje;
 import com.sdi.business.impl.classes.Trip.BuscarPromotor;
 import com.sdi.business.impl.classes.Trip.BuscarViajeConRelacion;
+import com.sdi.business.impl.classes.Trip.BuscarViajesPorPromotor;
 import com.sdi.business.impl.classes.Trip.BuscarViajesPromotor;
 import com.sdi.business.impl.classes.Trip.CancelarViaje;
 import com.sdi.business.impl.classes.Trip.ListarViajes;
+import com.sdi.business.impl.classes.Trip.ListarViajesParticipa;
 import com.sdi.business.impl.classes.Trip.RegistrarViaje;
 import com.sdi.business.impl.classes.Trip.ViajeBuscar;
 import com.sdi.business.impl.classes.Trip.ViajesConPlazasYSinCerrar;
@@ -84,6 +86,15 @@ public class EjbTripsService implements TripService, LocalTripsService, RemoteTr
 	@Override
 	public List<Trip> getViajesOrdenadorUltimoMes() {
 		return new ViajesOrdenadorUltimoMes().run();
+	}
+	
+	public List<Trip> buscarViajesPromotor(Long idUser) {
+		return new BuscarViajesPorPromotor().run(idUser);
+	}
+
+	@Override
+	public List<Trip> buscarViajesParticipa(Long idUser) {
+		return new ListarViajesParticipa().run(idUser);
 	}
 	
 	

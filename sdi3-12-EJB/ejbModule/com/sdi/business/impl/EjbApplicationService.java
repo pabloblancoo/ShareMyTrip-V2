@@ -6,7 +6,6 @@ import java.util.ResourceBundle;
 
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 
 import com.sdi.business.ApplicationService;
 import com.sdi.business.impl.EjbApplication.LocalApplicationService;
@@ -16,9 +15,11 @@ import com.sdi.business.impl.classes.Application.BuscarPendientesYViajeros;
 import com.sdi.business.impl.classes.Application.BuscarSolicitudes;
 import com.sdi.business.impl.classes.Application.CancelarParticipacion;
 import com.sdi.business.impl.classes.Application.ExcluirSolicitud;
+import com.sdi.business.impl.classes.Application.ExcluirUsuario;
 import com.sdi.business.impl.classes.Application.SolicitarPlaza;
 import com.sdi.model.Application;
 import com.sdi.model.Trip;
+import com.sdi.model.User;
 import com.sdi.util.MisViajesConEstado;
 import com.sdi.util.Viajero;
 
@@ -54,6 +55,12 @@ public class EjbApplicationService implements ApplicationService , LocalApplicat
 	@Override
 	public MisViajesConEstado cancelarParticipacion(MisViajesConEstado trip, Long idUsuario) {
 		return new CancelarParticipacion().run(trip, idUsuario);
+	}
+
+	@Override
+	public void exclude(User user, Trip viaje) {
+		new ExcluirUsuario().run(user, viaje);
+		
 	}
 
 
