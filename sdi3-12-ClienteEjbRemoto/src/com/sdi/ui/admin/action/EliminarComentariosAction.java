@@ -17,7 +17,7 @@ public class EliminarComentariosAction implements Action{
 		
 		RatingService r = new RemoteEjbServicesLocator().getRatingService();
 		List<Rating> ratings = r.getRatings();
-		if (ratings == null) {
+		if (ratings == null || ratings.isEmpty()) {
 			Console.println("No hay comentarios");
 		} else {
 			for (Rating rating : ratings) {
