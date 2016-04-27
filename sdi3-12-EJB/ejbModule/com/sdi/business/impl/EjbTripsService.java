@@ -5,8 +5,9 @@ import java.util.ResourceBundle;
 
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
+import javax.jws.WebMethod;
+import javax.jws.WebService;
 
-import com.sdi.business.TripService;
 import com.sdi.business.exception.EntityAlreadyExistsException;
 import com.sdi.business.exception.EntityNotFoundException;
 import com.sdi.business.impl.EjbTrips.LocalTripsService;
@@ -29,7 +30,8 @@ import com.sdi.util.MisViajesConEstado;
 
 @Stateless
 @TransactionAttribute()
-public class EjbTripsService implements TripService, LocalTripsService, RemoteTripsService {
+@WebService(name="TripService")
+public class EjbTripsService implements LocalTripsService, RemoteTripsService {
 
 	@Override
 	public List<Trip> getViajes() throws Exception {
@@ -88,6 +90,7 @@ public class EjbTripsService implements TripService, LocalTripsService, RemoteTr
 		return new ViajesOrdenadorUltimoMes().run();
 	}
 	
+	@WebMethod(operationName="buscarViajesPorPromotor")
 	public List<Trip> buscarViajesPromotor(Long idUser) {
 		return new BuscarViajesPorPromotor().run(idUser);
 	}

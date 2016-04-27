@@ -4,8 +4,8 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
+import javax.jws.WebService;
 
-import com.sdi.business.UserService;
 import com.sdi.business.exception.BusinessException;
 import com.sdi.business.exception.EntityAlreadyExistsException;
 import com.sdi.business.impl.EjbUser.LocalUserService;
@@ -18,7 +18,8 @@ import com.sdi.model.User;
 
 @Stateless
 @TransactionAttribute()
-public class EjbUserService implements UserService, RemoteUserService, LocalUserService{
+@WebService(name="UserService")
+public class EjbUserService implements RemoteUserService, LocalUserService{
 
 	@Override
 	public void registrarse(User user) throws EntityAlreadyExistsException {

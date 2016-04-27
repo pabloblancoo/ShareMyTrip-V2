@@ -6,8 +6,9 @@ import java.util.ResourceBundle;
 
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
+import javax.jws.WebMethod;
+import javax.jws.WebService;
 
-import com.sdi.business.ApplicationService;
 import com.sdi.business.impl.EjbApplication.LocalApplicationService;
 import com.sdi.business.impl.EjbApplication.RemoteApplicationService;
 import com.sdi.business.impl.classes.Application.AceptarSolicitud;
@@ -25,7 +26,8 @@ import com.sdi.util.Viajero;
 
 @Stateless
 @TransactionAttribute()
-public class EjbApplicationService implements ApplicationService , LocalApplicationService, RemoteApplicationService {
+@WebService(name="ApplicationService")
+public class EjbApplicationService implements  LocalApplicationService, RemoteApplicationService {
 
 	@Override
 	public Viajero accept(Viajero viajero, Trip viaje) {
@@ -58,6 +60,7 @@ public class EjbApplicationService implements ApplicationService , LocalApplicat
 	}
 
 	@Override
+	@WebMethod(operationName="excludeUser")
 	public void exclude(User user, Trip viaje) {
 		new ExcluirUsuario().run(user, viaje);
 		
