@@ -2,6 +2,7 @@ package com.sdi.rest.impl;
 
 import java.util.List;
 
+import com.sdi.business.exception.BusinessException;
 import com.sdi.infrastructure.Factories;
 import com.sdi.model.Trip;
 import com.sdi.model.User;
@@ -24,6 +25,16 @@ public class ServiceRestImpl implements ServiceRest {
 	@Override
 	public List<User> listaUsuariosPendientes(long idViaje) {
 		return Factories.services.getUserService().getUsuariosViaje(idViaje);
+	}
+
+	@Override
+	public User iniciarSesion(String usuario, String password) {
+		try{
+			return Factories.services.getUserService().iniciarSesion(usuario, password);
+		} catch(BusinessException e){
+			return null;
+		}
+		
 	}
 
 }
