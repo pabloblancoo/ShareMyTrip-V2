@@ -1,11 +1,11 @@
-package com.sdi.presentation.rest.impl;
+package com.sdi.rest.impl;
 
 import java.util.List;
 
 import com.sdi.infrastructure.Factories;
 import com.sdi.model.Trip;
 import com.sdi.model.User;
-import com.sdi.presentation.rest.ServiceRest;
+import com.sdi.rest.ServiceRest;
 
 public class ServiceRestImpl implements ServiceRest {
 

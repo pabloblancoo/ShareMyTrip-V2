@@ -1,4 +1,4 @@
-package com.sdi.presentation.rest;
+package com.sdi.rest;
 
 import java.util.List;
 
