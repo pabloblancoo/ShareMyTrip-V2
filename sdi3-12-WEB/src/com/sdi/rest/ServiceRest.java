@@ -34,7 +34,6 @@ public interface ServiceRest {
 	
 	@POST
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	@Path("{usuario,password}")
-	public User iniciarSesion(@PathParam("usuario") String usuario, @PathParam("password") String password);
+	public User iniciarSesion(User datos);
 
 }

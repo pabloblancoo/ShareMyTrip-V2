@@ -28,9 +28,9 @@ public class ServiceRestImpl implements ServiceRest {
 	}
 
 	@Override
-	public User iniciarSesion(String usuario, String password) {
+	public User iniciarSesion(User datos) {
 		try{
-			return Factories.services.getUserService().iniciarSesion(usuario, password);
+			return Factories.services.getUserService().iniciarSesion(datos.getLogin(), datos.getPassword());
 		} catch(BusinessException e){
 			return null;
 		}
