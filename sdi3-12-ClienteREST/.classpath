@@ -26,5 +26,6 @@
 	<classpathentry kind="lib" path="lib/resteasy-jackson-provider-3.0.16.Final.jar"/>
 	<classpathentry kind="lib" path="lib/resteasy-jaxb-provider-3.0.16.Final.jar"/>
 	<classpathentry kind="lib" path="lib/resteasy-jaxrs-3.0.16.Final.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/AlbUtil"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
