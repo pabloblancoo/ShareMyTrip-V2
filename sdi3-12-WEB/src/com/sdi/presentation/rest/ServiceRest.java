@@ -13,24 +13,20 @@ import com.sdi.model.User;
 
 public interface ServiceRest {
 
-//	@GET
-//	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-//	@Path("{idUser}")
-//	public List<Trip> listarViajesUsuario(@PathParam("idUser") long idUser);
-//	
-//	
-//	@GET
-//	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-//	@Path("{idViaje}")
-//	public List<User> listaUsuariosPendientes(@PathParam("idViaje") long idViaje);
-//	
-//	@GET
-//	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-//	@Path("{idViaje,idUsuario}")
-//	public void aceptarViajero(@PathParam("idViaje") long idViaje, @PathParam("idUsuario") long idUsuario);
-//	
+	@GET
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	@Path("{idUser}")
+	public List<Trip> listarViajesUsuario(@PathParam("idUser") long idUser);
 	
-	public List<Trip> listarViajesUsuario(long idUser);
-	public List<User> listaUsuariosPendientes(long idViaje);
-	public void aceptarViajero(long idViaje, long idUsuario);
+	
+	@GET
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	@Path("{idViaje}")
+	public List<User> listaUsuariosPendientes(@PathParam("idViaje") long idViaje);
+	
+	@GET
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	@Path("{idViaje,idUsuario}")
+	public void aceptarViajero(@PathParam("idViaje") long idViaje, @PathParam("idUsuario") long idUsuario);
+
 }
