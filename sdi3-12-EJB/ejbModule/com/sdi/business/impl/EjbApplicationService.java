@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 
@@ -25,7 +24,6 @@ import com.sdi.util.MisViajesConEstado;
 import com.sdi.util.Viajero;
 
 @Stateless
-@TransactionAttribute()
 @WebService(name="ApplicationService")
 public class EjbApplicationService implements  LocalApplicationService, RemoteApplicationService {
 

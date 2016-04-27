@@ -3,7 +3,6 @@ package com.sdi.business.impl;
 import java.util.List;
 
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
 import javax.jws.WebService;
 
 import com.sdi.business.RatingService;
@@ -14,7 +13,6 @@ import com.sdi.business.impl.classes.rating.ListadoRatings;
 import com.sdi.model.Rating;
 
 @Stateless
-@TransactionAttribute()
 @WebService(name="RatingService")
 public class EjbRatingService implements RatingService,LocalRatingService,RemoteRatingService{
 
