@@ -2,11 +2,15 @@ package com.sdi.model;
 
 import java.io.Serializable;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * This class represents a value type
  * 
  * @author alb
  */
+@XmlRootElement(name = "waypoint")
 public class Waypoint implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -19,11 +23,11 @@ public class Waypoint implements Serializable{
 		this.lat = lat;
 		this.lon = lon;
 	}
-
+	@XmlElement
 	public Double getLat() {
 		return lat;
 	}
-
+	@XmlElement
 	public Double getLon() {
 		return lon;
 	}
