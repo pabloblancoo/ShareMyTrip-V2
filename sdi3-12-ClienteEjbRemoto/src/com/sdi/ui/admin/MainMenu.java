@@ -6,6 +6,7 @@ import com.sdi.ui.admin.action.DeshabilitarUsuarioAction;
 import com.sdi.ui.admin.action.EliminarComentariosAction;
 import com.sdi.ui.admin.action.ListarComentariosAction;
 import com.sdi.ui.admin.action.ListarUsuariosAction;
+import com.sdi.util.LogConfig;
 
 public class MainMenu extends BaseMenu {
 
@@ -20,6 +21,9 @@ public class MainMenu extends BaseMenu {
 	}
 
 	public static void main(String[] args) {
+		
+		LogConfig.config();
+		
 		new MainMenu().execute();
 	}
 
