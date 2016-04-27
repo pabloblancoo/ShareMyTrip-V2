@@ -11,6 +11,7 @@ import javax.ws.rs.core.MediaType;
 import com.sdi.model.Trip;
 import com.sdi.model.User;
 
+@Path("/ServiceRst")
 public interface ServiceRest {
 
 	@GET
