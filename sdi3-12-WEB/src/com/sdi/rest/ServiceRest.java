@@ -29,8 +29,8 @@ public interface ServiceRest {
 	
 	@PUT
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	@Path("{idViaje,idUsuario}")
-	public void aceptarViajero(@PathParam("idViaje") long idViaje, @PathParam("idUsuario") long idUsuario);
+	//idViaje, idUsuario
+	public void aceptarViajero(List<Long> datos);
 	
 	@POST
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
