@@ -31,6 +31,11 @@ public class EjbApplicationService implements  LocalApplicationService, RemoteAp
 	public Viajero accept(Viajero viajero, Trip viaje) {
 		return new AceptarSolicitud().run(viajero, viaje);
 	}
+	
+	@Override
+	public Viajero accept(long idViaje, long idViajero){
+		return new AceptarSolicitud().run(idViaje, idViajero);
+	}
 
 	@Override
 	public Trip exclude(Viajero viajero, Trip viaje) {

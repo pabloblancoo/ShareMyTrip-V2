@@ -17,7 +17,7 @@ public class ServiceRestImpl implements ServiceRest {
 
 	@Override
 	public void aceptarViajero(long idViaje, long idUsuario) {
-//		Factories.services.getApplicationService().accept(viajero, viaje)
+		Factories.services.getApplicationService().accept(idViaje, idUsuario);
 		
 	}
 

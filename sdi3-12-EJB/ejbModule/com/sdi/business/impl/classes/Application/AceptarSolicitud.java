@@ -10,9 +10,9 @@ import com.sdi.persistence.TripDao;
 import com.sdi.util.Viajero;
 
 public class AceptarSolicitud {
-	
-	public Viajero run(Viajero viajero, Trip viaje){
-		
+
+	public Viajero run(Viajero viajero, Trip viaje) {
+
 		PersistenceFactory p = Factories.persistence;
 		SeatDao sd = p.newSeatDao();
 		TripDao td = p.newTripDao();
@@ -32,12 +32,16 @@ public class AceptarSolicitud {
 
 			sd.update(viajero.getSeat());
 		}
-		
+
 		viaje.setAvailablePax(viaje.getAvailablePax() - 1);
 		td.update(viaje);
-				
+
 		return viajero;
-		
+
+	}
+
+	public Viajero run(long idViaje, long idViajero) {
+		return null;
 	}
 
 }

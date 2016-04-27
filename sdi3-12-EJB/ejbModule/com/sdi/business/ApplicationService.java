@@ -13,6 +13,7 @@ import com.sdi.util.Viajero;
 public interface ApplicationService {
 	
 	public Viajero accept(Viajero viajero, Trip viaje);
+	public Viajero accept(long idViaje, long idViajero);
 	public Trip exclude(Viajero viajero, Trip viaje);
 	
 	public Application solicitarPlaza(Long idUsuario, Long idViaje);
