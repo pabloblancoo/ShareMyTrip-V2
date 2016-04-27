@@ -97,6 +97,8 @@ public class EjbTripsService implements LocalTripsService, RemoteTripsService {
 	public List<Trip> buscarViajesParticipa(Long idUser) {
 		return new ListarViajesParticipa().run(idUser);
 	}
+
+	
 	
 	
 

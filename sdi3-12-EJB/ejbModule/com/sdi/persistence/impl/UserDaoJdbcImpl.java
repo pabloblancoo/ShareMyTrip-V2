@@ -77,4 +77,9 @@ public class UserDaoJdbcImpl implements UserDao {
 				new UserMapper(), login);
 	}
 
+	@Override
+	public List<User> findUsersByTrip(long idViaje) {
+		return jdbcTemplate.queryForList("USER_FIND_BY_TRIP_ID",new UserMapper());
+	}
+
 }

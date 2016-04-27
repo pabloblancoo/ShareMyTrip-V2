@@ -18,16 +18,12 @@ public class ServiceRestImpl implements ServiceRest {
 	@Override
 	public void aceptarViajero(long idViaje, long idUsuario) {
 		Factories.services.getApplicationService().accept(idViaje, idUsuario);
-		
+
 	}
 
 	@Override
 	public List<User> listaUsuariosPendientes(long idViaje) {
-		List<User> users = new ArrayList<>();
-		
-		
-		
-		return users;
+		return Factories.services.getUserService().getUsuariosViaje(idViaje);
 	}
 
 }
