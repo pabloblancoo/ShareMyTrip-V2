@@ -40,8 +40,34 @@ public class AceptarSolicitud {
 
 	}
 
-	public Viajero run(long idViaje, long idViajero) {
-		return null;
+	public void run(long idViaje, long idViajero) {
+		
+		PersistenceFactory p = Factories.persistence;
+		SeatDao sd = p.newSeatDao();
+		TripDao td = p.newTripDao();
+		
+		Seat seat = sd.findByUserAndTrip(idViajero, idViaje);
+
+		if (seat == null) {
+			seat = new Seat();
+			seat.setComment("");
+			seat.setStatus(SeatStatus.ACCEPTED);
+			seat.setTripId(idViaje);
+			seat.setUserId(idViajero);
+
+			sd.save(seat);
+
+		} else {
+			seat.setStatus(SeatStatus.ACCEPTED);
+
+			sd.update(seat);
+		}
+
+		Trip viaje = td.findById(idViaje);
+		viaje.setAvailablePax(viaje.getAvailablePax() - 1);
+		td.update(viaje);
+
+		
 	}
 
 }

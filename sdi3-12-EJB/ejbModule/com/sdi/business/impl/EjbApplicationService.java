@@ -33,8 +33,8 @@ public class EjbApplicationService implements  LocalApplicationService, RemoteAp
 	}
 	
 	@Override
-	public Viajero acceptarUsuario(long idViaje, long idViajero){
-		return new AceptarSolicitud().run(idViaje, idViajero);
+	public void acceptarUsuario(long idViaje, long idViajero){
+		new AceptarSolicitud().run(idViaje, idViajero);
 	}
 
 	@Override
