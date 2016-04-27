@@ -18,6 +18,10 @@ public class Waypoint implements Serializable{
 	private Double lat;
 	private Double lon;
 
+	
+	public Waypoint() {
+		
+	}
 	public Waypoint(Double lat, Double lon) {
 		super();
 		this.lat = lat;

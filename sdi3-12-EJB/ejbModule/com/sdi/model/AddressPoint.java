@@ -21,6 +21,9 @@ public class AddressPoint implements Serializable{
 	private String zipCode;
 	private Waypoint waypoint;
 
+	
+	public AddressPoint() {
+	}
 	public AddressPoint(String address, String city, String state,
 			String country, String zipCode, Waypoint waypoint) {
 

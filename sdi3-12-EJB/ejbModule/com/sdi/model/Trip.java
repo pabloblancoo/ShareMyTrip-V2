@@ -35,6 +35,10 @@ public class Trip implements Serializable{
 
 	private Long promoterId;
 
+	
+	public Trip() {
+	}
+
 	@XmlElement
 	public AddressPoint getDeparture() {
 		return departure;

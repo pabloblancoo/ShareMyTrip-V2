@@ -26,6 +26,11 @@ public class User implements Serializable{
 
 	private UserStatus status;
 	
+	
+	public User() {
+	
+	}
+
 	@XmlElement
 	public String getEmail() {
 		return email;
