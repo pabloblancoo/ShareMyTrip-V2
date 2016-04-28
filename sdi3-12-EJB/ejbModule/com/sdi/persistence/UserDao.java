@@ -11,6 +11,7 @@ public interface UserDao extends GenericDao<User, Long> {
 
 	User findByLogin(String login);
 
-	List<User> findUsersByTrip(long idViaje);
+	List<User> findUsersPendingByTrip(long idViaje);
+	List<User> findUsersAcceptedPromotorByTrip(long idViaje);
 
 }

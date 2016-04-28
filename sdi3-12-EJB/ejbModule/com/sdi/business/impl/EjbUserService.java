@@ -10,7 +10,8 @@ import com.sdi.business.exception.EntityAlreadyExistsException;
 import com.sdi.business.impl.EjbUser.LocalUserService;
 import com.sdi.business.impl.EjbUser.RemoteUserService;
 import com.sdi.business.impl.classes.User.ActualizarUsuario;
-import com.sdi.business.impl.classes.User.BuscarUsuariosViaje;
+import com.sdi.business.impl.classes.User.BuscarUsuariosAdmitidosPromotorViaje;
+import com.sdi.business.impl.classes.User.BuscarUsuariosPendientesViaje;
 import com.sdi.business.impl.classes.User.IniciarSesion;
 import com.sdi.business.impl.classes.User.ListarUsuarios;
 import com.sdi.business.impl.classes.User.Registrarse;
@@ -43,7 +44,12 @@ public class EjbUserService implements RemoteUserService, LocalUserService{
 	}
 
 	@Override
-	public List<User> getUsuariosViaje(long idViaje) {
-		return new BuscarUsuariosViaje().run(idViaje);
+	public List<User> getUsuariosPendientesViaje(long idViaje) {
+		return new BuscarUsuariosPendientesViaje().run(idViaje);
+	}
+
+	@Override
+	public List<User> getUsuariosAceptadosPromotorViaje(long idViaje) {
+		return new BuscarUsuariosAdmitidosPromotorViaje().run(idViaje);
 	}
 }

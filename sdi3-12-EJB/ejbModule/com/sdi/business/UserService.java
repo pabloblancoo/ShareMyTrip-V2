@@ -12,6 +12,7 @@ public interface UserService {
 	public User iniciarSesion(String login, String password) throws BusinessException;
 	public List<User> listar();
 	public void actualizar(User user);
-	public List<User> getUsuariosViaje(long idViaje);
+	public List<User> getUsuariosPendientesViaje(long idViaje);
+	public List<User> getUsuariosAceptadosPromotorViaje(long idViaje);
 
 }

@@ -24,7 +24,7 @@ public class ServiceRestImpl implements ServiceRest {
 
 	@Override
 	public List<User> listaUsuariosPendientes(long idViaje) {
-		return Factories.services.getUserService().getUsuariosViaje(idViaje);
+		return Factories.services.getUserService().getUsuariosPendientesViaje(idViaje);
 	}
 
 	@Override

@@ -5,9 +5,9 @@ import java.util.List;
 import com.sdi.infrastructure.Factories;
 import com.sdi.model.User;
 
-public class BuscarUsuariosViaje {
+public class BuscarUsuariosPendientesViaje {
 
 	public List<User> run(long idViaje){
-		return Factories.persistence.newUserDao().findUsersByTrip(idViaje);
+		return Factories.persistence.newUserDao().findUsersPendingByTrip(idViaje);
 	}
 }

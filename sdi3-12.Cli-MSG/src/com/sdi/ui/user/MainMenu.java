@@ -34,9 +34,7 @@ public class MainMenu extends BaseMenu {
 			new MainMenu().execute();
 
 		}
-		
-		new MainMenu().execute();
-		
+				
 	}
 
 }

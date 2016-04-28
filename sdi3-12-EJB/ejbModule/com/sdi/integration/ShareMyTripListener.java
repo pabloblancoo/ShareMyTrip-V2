@@ -46,7 +46,7 @@ public class ShareMyTripListener implements MessageListener {
 		
 		List<User> usuarios = new ArrayList<>();
 		try {
-			usuarios = Factories.services.getUserService().getUsuariosViaje(mapMsg.getLong("idViaje"));
+			usuarios = Factories.services.getUserService().getUsuariosAceptadosPromotorViaje(mapMsg.getLong("idViaje"));
 		} catch (JMSException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -54,10 +54,17 @@ public class ShareMyTripListener implements MessageListener {
 		String idUsuarios = "";
 		
 		for (int i = 0; i < usuarios.size(); i++) {
-			if(i==0)
-				idUsuarios += usuarios.get(i).getId();
-			else
-				idUsuarios += "-" + usuarios.get(i).getId();
+			try {
+				if(!usuarios.get(i).getId().equals(mapMsg.getLong("idUser"))){
+					if(i==0)
+						idUsuarios += usuarios.get(i).getId();
+					else
+						idUsuarios += "-" + usuarios.get(i).getId();
+				}
+			} catch (JMSException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		try {
