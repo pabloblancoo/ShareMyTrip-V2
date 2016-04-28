@@ -21,19 +21,18 @@ public class EnviarMensaje {
 
 		initialize();
 
-		for (int i = 0; i < 100; i++) {
-
-			MapMessage msg = createMessage(idViaje, idUsuario);
-			if (msg == null)
-				System.out.println("Error en el mensaje");
-			else {
-				try {
-					sender.send(msg);
-				} catch (JMSException e) {
-					e.printStackTrace();
-				}
+		MapMessage msg = createMessage(idViaje, idUsuario);
+		if (msg == null)
+			System.out.println("Error en el mensaje");
+		else {
+			try {
+				sender.send(msg);
+				System.out.println("El mensaje ha salido correctamente");
+			} catch (JMSException e) {
+				e.printStackTrace();
 			}
 		}
+
 		close();
 	}
 
