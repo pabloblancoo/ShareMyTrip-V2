@@ -5,11 +5,11 @@ import java.util.List;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.GenericType;
 
-import com.sdi.modelo.Trip;
-import com.sdi.ui.user.MainMenu;
-
 import alb.util.console.Console;
 import alb.util.menu.Action;
+
+import com.sdi.modelo.Trip;
+import com.sdi.util.Contexto;
 
 public class ConectarseAction implements Action{
 
@@ -18,8 +18,8 @@ public class ConectarseAction implements Action{
 		GenericType<List<Trip>> listm = new GenericType<List<Trip>>() {};
 
 		List<Trip> res = ClientBuilder.newClient()
-				.target( MainMenu.REST_SERVICE_URL +"viajes-participa/" )
-				.path( MainMenu.usuario.getId().toString() )
+				.target( Contexto.REST_SERVICE_URL +"viajes-participa/" )
+				.path( Contexto.usuario.getId().toString() )
 				.request()
 				.get()
 				.readEntity( listm );

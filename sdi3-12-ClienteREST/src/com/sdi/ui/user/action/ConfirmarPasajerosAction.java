@@ -13,7 +13,7 @@ import alb.util.menu.Action;
 
 import com.sdi.modelo.Trip;
 import com.sdi.modelo.User;
-import com.sdi.ui.user.MainMenu;
+import com.sdi.util.Contexto;
 
 public class ConfirmarPasajerosAction implements Action{
 
@@ -23,8 +23,8 @@ public class ConfirmarPasajerosAction implements Action{
 		GenericType<List<User>> listp = new GenericType<List<User>>() {};
 		
 		List<Trip> viajes = ClientBuilder.newClient()
-			 .target( MainMenu.REST_SERVICE_URL +"viajes/" )
-			 .path( MainMenu.usuario.getId().toString() )
+			 .target( Contexto.REST_SERVICE_URL +"viajes/" )
+			 .path( Contexto.usuario.getId().toString() )
 			.request()
 			.get()
 			.readEntity( listv );
@@ -36,7 +36,7 @@ public class ConfirmarPasajerosAction implements Action{
 		int iv = Console.readInt("Indica el viaje para el que quieres ver las peticiones");
 		
 		List<User> users = ClientBuilder.newClient()
-				 .target( MainMenu.REST_SERVICE_URL +"pendientes/" )
+				 .target( Contexto.REST_SERVICE_URL +"pendientes/" )
 				 .path( viajes.get(iv).getId().toString() )
 				.request()
 				.get()
@@ -53,7 +53,7 @@ public class ConfirmarPasajerosAction implements Action{
 		datos.add(users.get(iu).getId());
 
 		ClientBuilder.newClient()
-		 	.target( MainMenu.REST_SERVICE_URL )
+		 	.target( Contexto.REST_SERVICE_URL )
 		 	.request()
 		 	.put(Entity.entity(datos, MediaType.APPLICATION_JSON));
 		

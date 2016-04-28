@@ -9,7 +9,7 @@ import alb.util.console.Console;
 import alb.util.menu.Action;
 
 import com.sdi.modelo.Trip;
-import com.sdi.ui.user.MainMenu;
+import com.sdi.util.Contexto;
 
 public class ListarViajesAction implements Action{
 
@@ -19,8 +19,8 @@ public class ListarViajesAction implements Action{
 		GenericType<List<Trip>> listm = new GenericType<List<Trip>>() {};
 		
 		List<Trip> res = ClientBuilder.newClient()
-			 .target( MainMenu.REST_SERVICE_URL +"viajes/" )
-			 .path( MainMenu.usuario.getId().toString() )
+			 .target( Contexto.REST_SERVICE_URL +"viajes/" )
+			 .path( Contexto.usuario.getId().toString() )
 			.request()
 			.get()
 			.readEntity( listm );

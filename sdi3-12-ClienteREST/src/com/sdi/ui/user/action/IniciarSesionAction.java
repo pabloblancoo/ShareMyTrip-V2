@@ -8,7 +8,7 @@ import alb.util.console.Console;
 import alb.util.menu.Action;
 
 import com.sdi.modelo.User;
-import com.sdi.ui.user.MainMenu;
+import com.sdi.util.Contexto;
 
 public class IniciarSesionAction implements Action{
 
@@ -21,7 +21,7 @@ public class IniciarSesionAction implements Action{
 		u.setPassword(Console.readString("Password"));
 		
 		u = ClientBuilder.newClient()
-			.target(MainMenu. REST_SERVICE_URL )
+			.target(Contexto. REST_SERVICE_URL )
 			.request()
 			.post(Entity.entity(u, MediaType.APPLICATION_JSON))
 			.readEntity(User.class);
@@ -30,7 +30,7 @@ public class IniciarSesionAction implements Action{
 			throw new Exception();
 		}
 		
-		MainMenu.usuario = u;
+		Contexto.usuario = u;
 		
 	}
 
