@@ -1,4 +1,4 @@
-package com.sdi.ui.admin.action;
+package com.sdi.ui.user.action;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ import alb.util.menu.Action;
 
 import com.sdi.modelo.Trip;
 import com.sdi.modelo.User;
-import com.sdi.ui.admin.MainMenu;
+import com.sdi.ui.user.MainMenu;
 
 public class ConfirmarPasajerosAction implements Action{
 

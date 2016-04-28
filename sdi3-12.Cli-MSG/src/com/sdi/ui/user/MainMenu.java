@@ -1,11 +1,11 @@
-package com.sdi.ui.admin;
+package com.sdi.ui.user;
 
 import alb.util.console.Console;
 import alb.util.menu.BaseMenu;
 import alb.util.menu.NotYetImplementedAction;
 
 import com.sdi.modelo.User;
-import com.sdi.ui.admin.action.IniciarSesionAction;
+import com.sdi.ui.user.action.IniciarSesionAction;
 import com.sdi.util.LogConfig;
 
 public class MainMenu extends BaseMenu {
@@ -18,7 +18,7 @@ public class MainMenu extends BaseMenu {
 
 	public MainMenu() {
 		menuOptions = new Object[][] {
-				{ "Administrador", null },
+				{ "Usuario - " + usuario.getLogin(), null },
 				{ "Conectarse al grupo de un viaje", NotYetImplementedAction.class },
 		};
 	}

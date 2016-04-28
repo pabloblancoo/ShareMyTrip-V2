@@ -1,4 +1,4 @@
-package com.sdi.ui.admin.action;
+package com.sdi.ui.user.action;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import alb.util.console.Console;
 import alb.util.menu.Action;
 
 import com.sdi.modelo.Trip;
-import com.sdi.ui.admin.MainMenu;
+import com.sdi.ui.user.MainMenu;
 
 public class ListarViajesAction implements Action{
 

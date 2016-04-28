@@ -1,4 +1,4 @@
-package com.sdi.ui.admin.action;
+package com.sdi.ui.user.action;
 
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -8,7 +8,7 @@ import alb.util.console.Console;
 import alb.util.menu.Action;
 
 import com.sdi.modelo.User;
-import com.sdi.ui.admin.MainMenu;
+import com.sdi.ui.user.MainMenu;
 
 public class IniciarSesionAction implements Action{
 
