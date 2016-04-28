@@ -17,8 +17,10 @@ public class ShareMyTripListener implements MessageListener {
 		//Esto recibe el mensaje y hace con ello que quieras
 		MapMessage mapMsg = (MapMessage) msg;
 		try {
-			System.out.println(mapMsg.getString("command"));
-			System.out.println(mapMsg.getString("iduser"));
+			System.out.println("ID viaje: " + mapMsg.getLong("idViaje"));
+			System.out.println("ID usuario: " + mapMsg.getLong("idUser"));
+			System.out.println("Mensaje: " + mapMsg.getString("mensaje"));
+			
 			System.out.println("Mensaje leido correctamente");
 		} catch (JMSException e) {
 			// TODO Auto-generated catch block

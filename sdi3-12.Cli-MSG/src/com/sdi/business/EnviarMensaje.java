@@ -17,11 +17,11 @@ public class EnviarMensaje {
 	private Session session;
 	private MessageProducer sender;
 
-	public void enviarMensaje(long idViaje, long idUsuario) {
+	public void enviarMensaje(long idViaje, long idUsuario,String mensaje) {
 
 		initialize();
 
-		MapMessage msg = createMessage(idViaje, idUsuario);
+		MapMessage msg = createMessage(idViaje, idUsuario,mensaje);
 		if (msg == null)
 			System.out.println("Error en el mensaje");
 		else {
@@ -61,16 +61,15 @@ public class EnviarMensaje {
 
 	}
 
-	private MapMessage createMessage(long idViaje, long idUsuario) {
+	private MapMessage createMessage(long idViaje, long idUsuario,String mensaje) {
 
 		MapMessage msg;
 		try {
 			msg = session.createMapMessage();
 
-			msg.setString("command", "new");
-			msg.setString("iduser", "123456");
-			msg.setString("email", "jms@email.es");
-			msg.setString("surname", "JMS Surname");
+			msg.setLong("idViaje", idViaje);
+			msg.setLong("idUser", idUsuario);
+			msg.setString("mensaje", mensaje);
 			return msg;
 		} catch (JMSException e) {
 			// TODO Auto-generated catch block

@@ -30,8 +30,8 @@ public class ConectarseAction implements Action{
 		}
 		
 		long idViaje = Console.readLong("Seleccione id del viaje");
-		
-		new EnviarMensaje().enviarMensaje(idViaje, Contexto.usuario.getId());
+		String mensaje = Console.readString("Mensaje:");
+		new EnviarMensaje().enviarMensaje(idViaje, Contexto.usuario.getId(),mensaje);
 
 	}
 
