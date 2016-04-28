@@ -43,7 +43,7 @@ public class BeanViajes {
 			System.out.println("Error al cargar los viajes");
 		}
 
-		if(viajes == null){
+		if(viajesDB == null){
 			System.out.println("LA BASE DE DATOS NO ESTA FUNCIONANDO, CONTACTE CON EL ADMINISTRADOR");
 			msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
 					msgs.getString("errorDBNotWorks"));
@@ -51,7 +51,7 @@ public class BeanViajes {
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 			
 		}
-		if ((viajesDB != null && viajes.size() != viajesDB.size())) {
+		if ((viajes == null) ||(viajesDB != null && viajes.size() != viajesDB.size())) {
 			viajes = viajesDB;
 			System.out.println("Viajes cargados: " + viajes.size());
 		}
