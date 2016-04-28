@@ -8,7 +8,6 @@ import javax.ws.rs.core.GenericType;
 import alb.util.console.Console;
 import alb.util.menu.Action;
 
-import com.sdi.business.EnviarMensaje;
 import com.sdi.business.LeerMensajes;
 import com.sdi.modelo.Trip;
 import com.sdi.util.Contexto;
@@ -39,14 +38,7 @@ public class ConectarseAction implements Action {
 				existeViaje = true;
 			}
 		}
-		if (existeViaje) {
-			String mensaje = Console.readString("Mensaje:");
-			new EnviarMensaje().enviarMensaje(idViaje,
-					Contexto.usuario.getId(), mensaje);
-			
-		}
-
-		else {
+		if (!existeViaje) {
 			Console.println("Viaje no existe");
 		}
 

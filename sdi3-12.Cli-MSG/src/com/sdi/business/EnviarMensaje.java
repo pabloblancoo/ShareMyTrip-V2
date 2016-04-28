@@ -28,7 +28,7 @@ public class EnviarMensaje {
 		else {
 			try {
 				sender.send(msg);
-				System.out.println("El mensaje ha salido del cliente correctamente");
+//				System.out.println("El mensaje ha salido del cliente correctamente");
 			} catch (JMSException e) {
 				e.printStackTrace();
 			}

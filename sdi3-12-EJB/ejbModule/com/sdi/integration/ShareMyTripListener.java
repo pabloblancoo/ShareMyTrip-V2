@@ -27,7 +27,7 @@ public class ShareMyTripListener implements MessageListener {
 			System.out.println("ID usuario: " + mapMsg.getLong("idUser"));
 			System.out.println("Mensaje: " + mapMsg.getString("mensaje"));
 			
-			System.out.println("El mensaje ha llegado al servidor correctamente");
+//			System.out.println("El mensaje ha llegado al servidor correctamente");
 		} catch (JMSException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
