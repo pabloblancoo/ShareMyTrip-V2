@@ -2,7 +2,6 @@ package com.sdi.ui.user.action;
 
 import java.util.List;
 
-import javax.crypto.spec.IvParameterSpec;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.GenericType;
 
