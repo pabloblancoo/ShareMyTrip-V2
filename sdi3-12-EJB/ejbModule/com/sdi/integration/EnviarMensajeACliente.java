@@ -41,7 +41,7 @@ public class EnviarMensajeACliente {
 		Topic topic = (Topic) Jndi.find(Contexto.RECIEVE_TOPIC);
 		try {
 			con = factory.createTopicConnection("sdi", "password");
-			con.setClientID("clave");
+
 			session = con.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
 			sender = session.createPublisher(topic);
 			con.start();
