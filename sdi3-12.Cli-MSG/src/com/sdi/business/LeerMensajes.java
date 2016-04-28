@@ -33,7 +33,7 @@ public class LeerMensajes {
 			con.setClientID("clave");
 			session = con.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
 
-			subscriber = session.createDurableSubscriber(topic,"clave");
+			subscriber = session.createDurableSubscriber(topic,Contexto.usuario.getId()+"");
 			subscriber.setMessageListener(new ClienteListener());
 			con.start();
 		} catch (JMSException e) {
