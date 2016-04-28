@@ -31,7 +31,7 @@ public class LeerMensajes {
 			con = factory.createTopicConnection("sdi", "password");
 			session = con.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
 
-			subscriber = session.createSubscriber(topic);
+			subscriber = session.createDurableSubscriber(topic,"clave");
 			subscriber.setMessageListener(new ClienteListener());
 			con.start();
 		} catch (JMSException e) {

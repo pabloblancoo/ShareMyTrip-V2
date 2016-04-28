@@ -1,22 +1,23 @@
 package com.sdi.integration;
 
-import javax.jms.Connection;
-import javax.jms.ConnectionFactory;
-import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.MapMessage;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
+import javax.jms.Topic;
+import javax.jms.TopicConnection;
+import javax.jms.TopicConnectionFactory;
+import javax.jms.TopicSession;
 
 public class EnviarMensajeACliente {
 	
-	private Connection con;
-	private Session session;
+	private TopicConnection con;
+	private TopicSession session;
 	private MessageProducer sender;
 	
 	public void enviarMensaje(long idViaje, String idUsuarios, String mensaje, long idUser){
 		initialize();
-		
+
 		MapMessage msg = createMessage(idViaje, idUsuarios,mensaje,idUser);
 		if (msg == null)
 			System.out.println("Error en el mensaje");
@@ -33,14 +34,16 @@ public class EnviarMensajeACliente {
 		close();
 	}
 
+
 	private void initialize() {
-		ConnectionFactory factory = (ConnectionFactory) Jndi
+		TopicConnectionFactory factory = (TopicConnectionFactory) Jndi
 				.find(Contexto.JMS_CONNECTION_FACTORY);
-		Destination queue = (Destination) Jndi.find(Contexto.RECIEVE_TOPIC);
+		Topic topic = (Topic) Jndi.find(Contexto.RECIEVE_TOPIC);
 		try {
-			con = factory.createConnection("sdi", "password");
-			session = con.createSession(false, Session.AUTO_ACKNOWLEDGE);
-			sender = session.createProducer(queue);
+			con = factory.createTopicConnection("sdi", "password");
+			con.setClientID("clave");
+			session = con.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
+			sender = session.createPublisher(topic);
 			con.start();
 		} catch (JMSException e) {
 			e.printStackTrace();

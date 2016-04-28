@@ -12,12 +12,12 @@ public class GrupoAction implements Action{
 	@Override
 	public void execute() throws Exception {
 		if(Contexto.trip != null){
-			
-			String mensaje = Console.readString("Mensaje");
+
 			Console.println("Escriba 'exit' para salir del grupo");
+			LeerMensajes recibir = new LeerMensajes();
+			String mensaje = Console.readString("Mensaje");
 			
 			EnviarMensaje enviar = new EnviarMensaje();
-			LeerMensajes recibir = new LeerMensajes();
 			while (!mensaje.equals("exit")){
 				enviar.enviarMensaje(Contexto.trip.getId(),Contexto.usuario.getId(), mensaje);
 				mensaje = Console.readString("Mensaje");
