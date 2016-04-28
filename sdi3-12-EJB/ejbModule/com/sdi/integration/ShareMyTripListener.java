@@ -51,10 +51,13 @@ public class ShareMyTripListener implements MessageListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		List<Long> idUsuarios = new ArrayList<>();
+		String idUsuarios = "";
 		
-		for (User u : usuarios) {
-			idUsuarios.add(u.getId());
+		for (int i = 0; i < usuarios.size(); i++) {
+			if(i==0)
+				idUsuarios += usuarios.get(i).getId();
+			else
+				idUsuarios += "-" + usuarios.get(i).getId();
 		}
 		
 		try {

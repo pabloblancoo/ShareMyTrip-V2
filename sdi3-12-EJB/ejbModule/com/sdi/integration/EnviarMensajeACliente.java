@@ -1,7 +1,5 @@
 package com.sdi.integration;
 
-import java.util.List;
-
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.Destination;
@@ -16,7 +14,7 @@ public class EnviarMensajeACliente {
 	private Session session;
 	private MessageProducer sender;
 	
-	public void enviarMensaje(long idViaje, List<Long> idUsuarios, String mensaje){
+	public void enviarMensaje(long idViaje, String idUsuarios, String mensaje){
 		initialize();
 		
 		MapMessage msg = createMessage(idViaje, idUsuarios,mensaje);
@@ -50,14 +48,14 @@ public class EnviarMensajeACliente {
 
 	}
 	
-	private MapMessage createMessage(long idViaje, List<Long> idUsuario,String mensaje) {
+	private MapMessage createMessage(long idViaje, String idUsuario,String mensaje) {
 
 		MapMessage msg;
 		try {
 			msg = session.createMapMessage();
 
 			msg.setLong("idViaje", idViaje);
-			msg.setObject("idUsers", idUsuario);
+			msg.setString("idUsers", idUsuario);
 			msg.setString("mensaje", mensaje);
 			return msg;
 		} catch (JMSException e) {
