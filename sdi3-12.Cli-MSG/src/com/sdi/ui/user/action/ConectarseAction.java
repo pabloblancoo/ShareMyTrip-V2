@@ -33,6 +33,7 @@ public class ConectarseAction implements Action {
 		boolean existeViaje = false;
 		for (Trip viaje : res) {
 			if (idViaje == viaje.getId()) {
+				Contexto.trip = viaje;
 				existeViaje = true;
 			}
 		}
