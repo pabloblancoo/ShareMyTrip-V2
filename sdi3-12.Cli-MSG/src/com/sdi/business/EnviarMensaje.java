@@ -14,6 +14,7 @@ import com.sdi.util.Jndi;
 public class EnviarMensaje {
 
 	private Connection con;
+	
 	private Session session;
 	private MessageProducer sender;
 
@@ -36,6 +37,7 @@ public class EnviarMensaje {
 		close();
 	}
 
+	
 	private void close() {
 		try {
 			con.close();
