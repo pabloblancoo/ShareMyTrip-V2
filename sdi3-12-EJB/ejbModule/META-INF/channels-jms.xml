@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messaging-deployment xmlns="urn:jboss:messaging-deployment:1.0">
+	<hornetq-server>
+		<jms-destinations>
+			<jms-queue name="SendMgs">
+				<entry name="queue/SendMgs" />
+				<entry name="java:jboss/exported/jms/queue/SendMgs" />
+				<durable>true</durable>
+			</jms-queue>
+			<jms-topic name="ReceiveMgs">
+				<entry name="topic/ReceiveMgs" />
+				<entry name="java:jboss/exported/jms/topic/ReceiveMgs" />
+			</jms-topic>
+		</jms-destinations>
+	</hornetq-server>
+</messaging-deployment>
