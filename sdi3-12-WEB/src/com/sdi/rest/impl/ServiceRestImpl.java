@@ -37,4 +37,9 @@ public class ServiceRestImpl implements ServiceRest {
 		
 	}
 
+	@Override
+	public List<Trip> listarViajesUsuarioPromotorOAdmitido(long idUser) {
+		return Factories.services.getTripService().getViajesPorUsuarioPromotorOAceptado(idUser);
+	}
+
 }

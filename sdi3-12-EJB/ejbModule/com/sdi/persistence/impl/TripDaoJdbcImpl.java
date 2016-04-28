@@ -154,4 +154,10 @@ public class TripDaoJdbcImpl implements TripDao {
 		return jdbcTemplate.queryForList("TRIP_FIND_LAST_MONT_ORDER", new TripMapper());
 	}
 
+	@Override
+	public List<Trip> findByUserPromoterOrAccept(Long idUser) {
+		return jdbcTemplate.queryForList("TRIPS_FIND_BY_USER_ID",
+				new TripMapper(), idUser, idUser);
+	}
+
 }

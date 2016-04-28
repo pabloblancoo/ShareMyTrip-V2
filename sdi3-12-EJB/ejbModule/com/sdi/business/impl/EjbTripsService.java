@@ -19,6 +19,7 @@ import com.sdi.business.impl.classes.Trip.BuscarViajesPromotor;
 import com.sdi.business.impl.classes.Trip.CancelarViaje;
 import com.sdi.business.impl.classes.Trip.ListarViajes;
 import com.sdi.business.impl.classes.Trip.ListarViajesParticipa;
+import com.sdi.business.impl.classes.Trip.ListarViajesUsuarioPromotorOAceptado;
 import com.sdi.business.impl.classes.Trip.RegistrarViaje;
 import com.sdi.business.impl.classes.Trip.ViajeBuscar;
 import com.sdi.business.impl.classes.Trip.ViajesConPlazasYSinCerrar;
@@ -96,6 +97,11 @@ public class EjbTripsService implements LocalTripsService, RemoteTripsService {
 	@Override
 	public List<Trip> buscarViajesParticipa(Long idUser) {
 		return new ListarViajesParticipa().run(idUser);
+	}
+
+	@Override
+	public List<Trip> getViajesPorUsuarioPromotorOAceptado(Long idUser) {
+		return new ListarViajesUsuarioPromotorOAceptado().run(idUser);
 	}
 
 	

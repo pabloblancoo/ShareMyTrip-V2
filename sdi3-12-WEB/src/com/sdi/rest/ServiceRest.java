@@ -36,4 +36,8 @@ public interface ServiceRest {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public User iniciarSesion(User datos);
 
+	@GET
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	@Path("viajes-participa/{idUser}")
+	public List<Trip> listarViajesUsuarioPromotorOAdmitido(@PathParam("idUser") long idUser);
 }

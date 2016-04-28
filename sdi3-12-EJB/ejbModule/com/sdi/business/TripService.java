@@ -34,5 +34,6 @@ public interface TripService {
 	void cancelarViaje(Trip viaje);
 
 	List<Trip> getViajesOrdenadorUltimoMes();
+	List<Trip> getViajesPorUsuarioPromotorOAceptado(Long idUser);
 
 }

@@ -2,9 +2,9 @@ package com.sdi.ui.user;
 
 import alb.util.console.Console;
 import alb.util.menu.BaseMenu;
-import alb.util.menu.NotYetImplementedAction;
 
 import com.sdi.modelo.User;
+import com.sdi.ui.user.action.ConectarseAction;
 import com.sdi.ui.user.action.IniciarSesionAction;
 import com.sdi.util.LogConfig;
 
@@ -19,7 +19,7 @@ public class MainMenu extends BaseMenu {
 	public MainMenu() {
 		menuOptions = new Object[][] {
 				{ "Usuario - " + usuario.getLogin(), null },
-				{ "Conectarse al grupo de un viaje", NotYetImplementedAction.class },
+				{ "Conectarse al grupo de un viaje", ConectarseAction.class },
 		};
 	}
 
