@@ -29,6 +29,10 @@ public class BeanViajes {
 	List<Application> peticiones;
 
 	public List<Trip> getViajes() {
+		FacesMessage msg = null;
+		ResourceBundle msgs = FacesContext.getCurrentInstance()
+				.getApplication()
+				.getResourceBundle(FacesContext.getCurrentInstance(), "msgs");
 		promotor = null;
 		viajeros = new ArrayList<>();
 
@@ -39,8 +43,15 @@ public class BeanViajes {
 			System.out.println("Error al cargar los viajes");
 		}
 
-		if (viajes == null
-				|| (viajesDB != null && viajes.size() != viajesDB.size())) {
+		if(viajes == null){
+			System.out.println("LA BASE DE DATOS NO ESTA FUNCIONANDO, CONTACTE CON EL ADMINISTRADOR");
+			msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
+					msgs.getString("errorDBNotWorks"));
+
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+			
+		}
+		if ((viajesDB != null && viajes.size() != viajesDB.size())) {
 			viajes = viajesDB;
 			System.out.println("Viajes cargados: " + viajes.size());
 		}
