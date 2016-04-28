@@ -61,7 +61,7 @@ public class ShareMyTripListener implements MessageListener {
 		}
 		
 		try {
-			new EnviarMensajeACliente().enviarMensaje(mapMsg.getLong("idViaje"), idUsuarios, mapMsg.getString("mensaje"));
+			new EnviarMensajeACliente().enviarMensaje(mapMsg.getLong("idViaje"), idUsuarios, mapMsg.getString("mensaje"),mapMsg.getLong("idUser"));
 		} catch (JMSException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

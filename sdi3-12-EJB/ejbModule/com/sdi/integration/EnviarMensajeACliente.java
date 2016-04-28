@@ -14,10 +14,10 @@ public class EnviarMensajeACliente {
 	private Session session;
 	private MessageProducer sender;
 	
-	public void enviarMensaje(long idViaje, String idUsuarios, String mensaje){
+	public void enviarMensaje(long idViaje, String idUsuarios, String mensaje, long idUser){
 		initialize();
 		
-		MapMessage msg = createMessage(idViaje, idUsuarios,mensaje);
+		MapMessage msg = createMessage(idViaje, idUsuarios,mensaje,idUser);
 		if (msg == null)
 			System.out.println("Error en el mensaje");
 		else {
@@ -48,7 +48,7 @@ public class EnviarMensajeACliente {
 
 	}
 	
-	private MapMessage createMessage(long idViaje, String idUsuario,String mensaje) {
+	private MapMessage createMessage(long idViaje, String idUsuario,String mensaje, long idUser) {
 
 		MapMessage msg;
 		try {
@@ -57,6 +57,7 @@ public class EnviarMensajeACliente {
 			msg.setLong("idViaje", idViaje);
 			msg.setString("idUsers", idUsuario);
 			msg.setString("mensaje", mensaje);
+			msg.setLong("idUser", idUser);
 			return msg;
 		} catch (JMSException e) {
 			// TODO Auto-generated catch block

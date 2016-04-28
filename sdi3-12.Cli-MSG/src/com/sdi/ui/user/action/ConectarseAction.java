@@ -2,7 +2,6 @@ package com.sdi.ui.user.action;
 
 import java.util.List;
 
-import javax.jms.MessageConsumer;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.GenericType;
 
@@ -27,10 +26,11 @@ public class ConectarseAction implements Action {
 				.path(Contexto.usuario.getId().toString()).request().get()
 				.readEntity(listm);
 
+		Console.println();
 		for (Trip viaje : res) {
 			Console.println(viaje);
 		}
-
+		Console.println();
 		long idViaje = Console.readLong("Seleccione id del viaje");
 		boolean existeViaje = false;
 		for (Trip viaje : res) {

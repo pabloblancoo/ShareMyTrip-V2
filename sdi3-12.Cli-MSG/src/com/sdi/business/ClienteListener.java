@@ -15,8 +15,11 @@ public class ClienteListener implements MessageListener{
 		
 		MapMessage mapMsg = (MapMessage) arg0;
 		try {
-			System.out.println(mapMsg.getString("mensaje"));
-			System.out.println(mapMsg.getString("idUsers"));
+			long idUser = mapMsg.getLong("idUser");
+			String mensaje = mapMsg.getString("mensaje");
+			
+			System.out.println(idUser + " -> " + mensaje);
+//			System.out.println(mapMsg.getString("idUsers"));
 			
 			System.out.println("El mensaje ha llegado al cliente correctamente");
 		} catch (JMSException e) {
