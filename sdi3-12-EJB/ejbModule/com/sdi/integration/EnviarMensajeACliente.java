@@ -10,7 +10,7 @@ import javax.jms.MapMessage;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
 
-public class EnviarMensaje {
+public class EnviarMensajeACliente {
 	
 	private Connection con;
 	private Session session;
@@ -25,7 +25,7 @@ public class EnviarMensaje {
 		else {
 			try {
 				sender.send(msg);
-				System.out.println("El mensaje ha salido correctamente");
+				System.out.println("El mensaje ha salido del servidor correctamente");
 			} catch (JMSException e) {
 				e.printStackTrace();
 			}
