@@ -8,7 +8,6 @@ import javax.ws.rs.core.GenericType;
 import alb.util.console.Console;
 import alb.util.menu.Action;
 
-import com.sdi.business.LeerMensajes;
 import com.sdi.modelo.Trip;
 import com.sdi.util.Contexto;
 
@@ -42,7 +41,7 @@ public class ConectarseAction implements Action {
 			Console.println("Viaje no existe");
 		}
 
-		new LeerMensajes().leerMensajes();
+//		new LeerMensajes().leerMensajes();
 	}
 
 }

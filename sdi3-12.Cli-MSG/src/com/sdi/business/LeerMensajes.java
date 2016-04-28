@@ -17,11 +17,10 @@ public class LeerMensajes {
 	private TopicSession session;
 	private TopicSubscriber subscriber ;
 
-	public void leerMensajes() {
+	
+	public LeerMensajes() {
 
 		initialize();
-		
-		
 	}
 	
 	private void initialize() {
@@ -42,7 +41,7 @@ public class LeerMensajes {
 	}
 	
 
-	private void close() {
+	public void close() {
 		try {
 			con.close();
 		} catch (JMSException e) {

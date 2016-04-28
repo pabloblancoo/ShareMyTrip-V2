@@ -18,12 +18,12 @@ public class GrupoAction implements Action{
 			
 			EnviarMensaje enviar = new EnviarMensaje();
 			LeerMensajes recibir = new LeerMensajes();
-			recibir.leerMensajes();
 			while (!mensaje.equals("exit")){
 				enviar.enviarMensaje(Contexto.trip.getId(),Contexto.usuario.getId(), mensaje);
 				mensaje = Console.readString("Mensaje");
 			}
-			
+			recibir.close();
+			enviar.close();
 		}
 		else
 			Console.println("No estas conectado a ningun grupo");

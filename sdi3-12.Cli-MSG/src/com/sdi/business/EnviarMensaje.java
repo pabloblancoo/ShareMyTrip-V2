@@ -18,9 +18,14 @@ public class EnviarMensaje {
 	private Session session;
 	private MessageProducer sender;
 
+	
+	public EnviarMensaje() {
+		initialize();
+	}
+
+
 	public void enviarMensaje(long idViaje, long idUsuario,String mensaje) {
 
-		initialize();
 
 		MapMessage msg = createMessage(idViaje, idUsuario,mensaje);
 		if (msg == null)
@@ -34,11 +39,10 @@ public class EnviarMensaje {
 			}
 		}
 
-		close();
 	}
 
 	
-	private void close() {
+	public void close() {
 		try {
 			con.close();
 		} catch (JMSException e) {
