@@ -30,7 +30,7 @@ public class LeerMensajes {
 		try {
 			con = factory.createTopicConnection("sdi", "password");
 
-			con.setClientID("clave");
+			con.setClientID(Contexto.usuario.getId()+"");
 			session = con.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
 
 			subscriber = session.createDurableSubscriber(topic,Contexto.usuario.getId()+"");
