@@ -8,6 +8,7 @@ import javax.ws.rs.core.GenericType;
 import alb.util.console.Console;
 import alb.util.menu.Action;
 
+import com.sdi.business.EnviarMensaje;
 import com.sdi.modelo.Trip;
 import com.sdi.util.Contexto;
 
@@ -27,6 +28,10 @@ public class ConectarseAction implements Action{
 		for(Trip viaje : res){
 			Console.println(viaje);
 		}
+		
+		long idViaje = Console.readLong("Seleccione id del viaje");
+		
+		new EnviarMensaje().enviarMensaje(idViaje, Contexto.usuario.getId());
 
 	}
 
