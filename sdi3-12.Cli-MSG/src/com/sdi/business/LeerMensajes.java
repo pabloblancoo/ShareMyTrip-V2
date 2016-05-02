@@ -15,33 +15,28 @@ public class LeerMensajes {
 
 	private TopicConnection con;
 	private TopicSession session;
-	private TopicSubscriber subscriber ;
+	private TopicSubscriber subscriber;
 
-	
-	public LeerMensajes() {
+	public LeerMensajes() throws JMSException {
 
 		initialize();
 	}
-	
-	private void initialize() {
+
+	private void initialize() throws JMSException {
 		TopicConnectionFactory factory = (TopicConnectionFactory) Jndi
 				.find(Contexto.JMS_CONNECTION_FACTORY);
 		Topic topic = (Topic) Jndi.find(Contexto.RECIEVE_TOPIC);
-		try {
 			con = factory.createTopicConnection("sdi", "password");
+			con.setClientID(Contexto.usuario.getId() + "");
 
-			con.setClientID(Contexto.usuario.getId()+"");
 			session = con.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
 
-			subscriber = session.createDurableSubscriber(topic,Contexto.usuario.getId()+"");
+			subscriber = session.createDurableSubscriber(topic,
+					Contexto.usuario.getId() + "");
 			subscriber.setMessageListener(new ClienteListener());
 			con.start();
-		} catch (JMSException e) {
-			e.printStackTrace();
-		}
 
 	}
-	
 
 	public void close() {
 		try {
