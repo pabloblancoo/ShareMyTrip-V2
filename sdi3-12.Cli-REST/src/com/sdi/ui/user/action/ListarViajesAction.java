@@ -11,24 +11,27 @@ import alb.util.menu.Action;
 import com.sdi.modelo.Trip;
 import com.sdi.util.Contexto;
 
-public class ListarViajesAction implements Action{
+public class ListarViajesAction implements Action {
 
 	@Override
 	public void execute() throws Exception {
-		
-		GenericType<List<Trip>> listm = new GenericType<List<Trip>>() {};
-		
+
+		GenericType<List<Trip>> listm = new GenericType<List<Trip>>() {
+		};
+
 		List<Trip> res = ClientBuilder.newClient()
-			 .target( Contexto.REST_SERVICE_URL +"viajes/" )
-			 .path( Contexto.usuario.getId().toString() )
-			.request()
-			.get()
-			.readEntity( listm );
-		
-		for(Trip viaje : res){
-			Console.println(viaje);
-		}
-		
+				.target(Contexto.REST_SERVICE_URL + "viajes/")
+				.path(Contexto.usuario.getId().toString()).request().get()
+				.readEntity(listm);
+		if (!res.isEmpty()) {
+
+			for (Trip viaje : res) {
+				Console.println(viaje);
+			}
+		} else
+
+			System.out.println("No tienes viajes");
+
 	}
 
 }
