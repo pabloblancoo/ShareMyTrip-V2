@@ -63,7 +63,6 @@ public class EnviarMensajeACliente {
 			msg.setLong("idUser", idUser);
 			return msg;
 		} catch (JMSException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -73,7 +72,6 @@ public class EnviarMensajeACliente {
 		try {
 			con.close();
 		} catch (JMSException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

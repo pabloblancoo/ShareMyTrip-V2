@@ -26,7 +26,6 @@ public class ClienteListener implements MessageListener{
 			
 //			System.out.println("El mensaje ha llegado al cliente correctamente");
 		} catch (JMSException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

@@ -641,7 +641,6 @@ public class BeanViaje implements Serializable {
 							try {
 								Factories.services.getTripService().updateTrip(trip);
 							} catch (EntityNotFoundException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 						} catch (PersistenceException e) {

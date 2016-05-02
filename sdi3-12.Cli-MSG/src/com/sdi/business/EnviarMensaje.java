@@ -46,7 +46,6 @@ public class EnviarMensaje {
 		try {
 			con.close();
 		} catch (JMSException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -78,7 +77,6 @@ public class EnviarMensaje {
 			msg.setString("mensaje", mensaje);
 			return msg;
 		} catch (JMSException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;

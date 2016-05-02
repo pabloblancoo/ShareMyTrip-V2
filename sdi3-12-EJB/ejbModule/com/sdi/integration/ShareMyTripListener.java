@@ -29,7 +29,6 @@ public class ShareMyTripListener implements MessageListener {
 			
 //			System.out.println("El mensaje ha llegado al servidor correctamente");
 		} catch (JMSException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -48,7 +47,6 @@ public class ShareMyTripListener implements MessageListener {
 		try {
 			usuarios = Factories.services.getUserService().getUsuariosAceptadosPromotorViaje(mapMsg.getLong("idViaje"));
 		} catch (JMSException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		String idUsuarios = "";
@@ -62,7 +60,6 @@ public class ShareMyTripListener implements MessageListener {
 						idUsuarios += "-" + usuarios.get(i).getId();
 				}
 			} catch (JMSException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -70,7 +67,6 @@ public class ShareMyTripListener implements MessageListener {
 		try {
 			new EnviarMensajeACliente().enviarMensaje(mapMsg.getLong("idViaje"), idUsuarios, mapMsg.getString("mensaje"),mapMsg.getLong("idUser"));
 		} catch (JMSException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
