@@ -23,7 +23,7 @@ public class EjbRatingService implements RatingService,LocalRatingService,Remote
 
 	@Override
 	public List<Rating> getRatingsByTrip(long idTrip) {
-		return new ListadoRatings().run();
+		return new ListadoRatings().run(idTrip);
 	}
 
 	@Override
