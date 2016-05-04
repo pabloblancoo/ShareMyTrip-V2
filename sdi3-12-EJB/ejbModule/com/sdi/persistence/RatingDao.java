@@ -11,5 +11,7 @@ public interface RatingDao extends GenericDao<Rating, Long> {
 			Long fromTripId);
 
 	List<Rating> findByAboutUser(Long aboutUserId);
+	
+	List<Rating> findByTripId(Long tripId);
 
 }

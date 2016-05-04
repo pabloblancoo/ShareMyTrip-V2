@@ -11,4 +11,9 @@ public class ListadoRatings {
 		return Factories.persistence.newRatingDao().findAll();
 
 	}
+	
+	public List<Rating> run(Long id){
+		return Factories.persistence.newRatingDao().findByTripId(id);
+	}
+	
 }

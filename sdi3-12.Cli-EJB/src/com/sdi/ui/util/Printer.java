@@ -96,6 +96,7 @@ public class Printer {
 	public static void printRating(Rating r){
 		Console.print("ID: " + r.getId());
 		Console.print("Comentario: " + r.getComment());
+		Console.println();
 	}
 
 	public static void printComentarioViaje(Trip t, Rating r) {
@@ -104,6 +105,7 @@ public class Printer {
 		Console.print("ID valorado: " + r.getSeatAboutUserId());
 		Console.print("Valoracion: " + r.getValue());
 		Console.print("Comentario: " + t.getComments());
+		Console.println();
 	}
 
 }

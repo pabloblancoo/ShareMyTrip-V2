@@ -83,4 +83,10 @@ public class RatingDaoJdbcImpl implements RatingDao {
 				new RatingMapper(), aboutUserId);
 	}
 
+	@Override
+	public List<Rating> findByTripId(Long tripId) {
+		return jdbcTemplate.queryForList("RATING_FIND_BY_TRIP_ID",
+				new RatingMapper(), tripId);
+	}
+
 }

@@ -23,13 +23,11 @@ public class EjbRatingService implements RatingService,LocalRatingService,Remote
 
 	@Override
 	public List<Rating> getRatingsByTrip(long idTrip) {
-		// TODO Auto-generated method stub
-		return null;
+		return new ListadoRatings().run();
 	}
 
 	@Override
 	public List<Rating> getRatingsByUser(long idUser) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
