@@ -104,6 +104,7 @@ public class Printer {
 		Console.print("ID valorado: " + r.getSeatAboutUserId());
 		Console.print("Valoracion: " + r.getValue());
 		Console.print("Comentario: " + t.getComments());
+		Console.println();
 	}
 
 }
