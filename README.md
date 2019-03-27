@@ -55,3 +55,6 @@ Proyecto que contienes los test web con la tecnologia Selenium
 
 * <a href ="https://github.com/pabloblancoo">Pablo Blanco Pacho</a>
 * <a href ="https://github.com/SantiMA10">Santiago Martin Agra</a>
+
+## Links de interes
+* [ShareMyTrip v1](https://github.com/SantiMA10/ShareMyTrip-v1)
